@@ -1,15 +1,15 @@
 # Análisis Econométrico — MAE, Universidad Alberto Hurtado
 
-Course material for Análisis Econométrico (Magíster en Economía, ILADES/UAH), maintained by Ramiro de Elejalde.
+Material del curso Análisis Econométrico (Magíster en Economía, ILADES/UAH), mantenido por Ramiro de Elejalde.
 
-## Structure
+## Estructura
 
-- `Syllabus_Analisis_Econometrico_2026.docx` — course syllabus
-- `Cronograma_Analisis_Econometrico_2026.xlsx` — weekly schedule
-- `slides/` — lecture slides
-- `problem-sets/` — problem sets (without solutions)
-- `TA/` — ayudantía material
+- `Syllabus_Analisis_Econometrico_2026.docx` — programa del curso
+- `Cronograma_Analisis_Econometrico_2026.xlsx` — cronograma semanal
+- `slides/` — diapositivas de clases
+- `problem-sets/` — guías de ejercicios (sin soluciones)
+- `TA/` — material de ayudantía
 
-## Note
+## Nota
 
-Grades, student submissions, and answer keys are kept out of this repo on purpose.
+Las notas, entregas de estudiantes y pautas de corrección se mantienen fuera de este repositorio a propósito.
