@@ -1,0 +1,24 @@
+# OS / editor cruft
+.DS_Store
+~$*.docx
+~$*.xlsx
+~$*.doc
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.toc
+*.vrb
+*.bbl
+*.synctex.gz
+*.dvi
+*.nav
+*.snm
+
+# Never commit grades, student submissions, or solutions from here
+notas*.xlsx
+entregas/
+*_sol.pdf
+*solucion*
+*pauta*
