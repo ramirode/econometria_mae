@@ -1,0 +1,151 @@
+% !TeX spellcheck = es_ES
+% !TEX encoding = UTF-8 Unicode
+\documentclass[t, compress, spanish, aspectratio=169]{beamer}
+%\documentclass[handout]{beamer}    % for the handout
+
+\usetheme[progressbar=frametitle]{metropolis}
+
+%\usetheme[secheader]{Madrid}
+%\usetheme{Frankfurt}
+%\usetheme{Warsaw}
+%\usetheme{Berlin}
+%\usetheme{CambridgeUS}
+
+%\usecolortheme{beaver}     % Fondo Blanco y letras Negras - Titulos en Rojo con fondo gris
+%\usecolortheme{dove}       % Para el Handout
+%\usecolortheme{seahorse}   % Fondo Blanco y letras Negras - Titulos en Celeste
+%\usecolortheme{dolphin}    % Fondo Blanco y letras Negras - Titulos en Celeste
+%\usecolortheme{seagull}    % Fondo Blanco y letras Negras - Titulos en Gris
+%\usecolortheme{crane}      % Fondo Blanco y letras Negras - Titulos en Amarillo
+%\usecolortheme{wolverine}  % Fondo Blanco y Letras negras - Titulos en negro con fondo amarillo
+%\usecolortheme{lily}       % Fondo Blanco y letras Negras - Titulos en Azul
+%\usecolortheme{fly}        % Fondo Gris y letras Negras - Titulos en Rojo
+%\usecolortheme{beetle}     % Fondo Gris y letras Negras - Titulos en blanco
+%\usecolortheme{albatross}  % Fondo Azul y letras blancas
+%\usecolortheme{orchid}     % Default
+%\usecolortheme{rose}       % Default
+%\usecolortheme{whale}      % Default
+
+\setbeamertemplate{navigation symbols}{} % Gets rid of navigation symbols
+%\setbeamercovered{transparent}
+
+\usepackage{dsfont} % Double stroke fonts for math symbols
+% \usepackage[T1]{fontenc}  % Helps with hyphenation for languages with accented characters. Note: Does not work with XeLaTex
+% \usepackage[latin1]{inputenc} % Allows to type in latin (accents). Note: Does not work with XeLaTex
+% \usefonttheme[onlymath]{serif}  % Changes fonts for math to serif
+\usepackage[english]{babel} % Manages differences between languages: hyphenation etc
+
+\usepackage{appendixnumberbeamer} % Does not include backup slides in the number of pages
+
+\usepackage{ragged2e}  % Text alignment
+\justifying
+
+\usepackage{graphicx} % Format for graphics: additional options for includefigure
+\usepackage{pgf} % Tool for graphics
+
+\usepackage{booktabs} % Format for tables: top, bottom and mid lines
+\usepackage[scale=2]{ccicons}
+\usepackage{threeparttable} % Format for tables
+\usepackage{lscape} % Landscape for tables
+
+% Customized commands
+  \newcommand{\vs}{\vskip0pt plus.5fill}
+  \newcommand{\SR}{\mathbb{R}}
+  \DeclareMathOperator{\plim}{plim}
+  \DeclareMathOperator{\Var}{Var}
+  \DeclareMathOperator{\Avar}{AVar}
+  \DeclareMathOperator{\Cov}{Cov}
+  \DeclareMathOperator{\E}{\mathbb{E}}
+  \newcommand{\pto}{\stackrel{p}{\longrightarrow}}
+  \newcommand{\dto}{\stackrel{d}{\longrightarrow}}
+  \newcommand{\adistr}{\stackrel{a}{\sim}}
+  \newcommand{\epsi}{\varepsilon}
+  \newcommand{\tmle}{\hat \theta_{ML}}
+  \newcommand{\tgmm}{\hat \theta_{GMM}}
+  \newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+  \def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+
+
+\title [Bootstrap] {Bootstrap}
+\author[de Elejalde]{Ramiro de Elejalde}
+\institute [UAH-ILADES] {Facultad de Econom\'ia y Finanzas \\ Universidad Alberto Hurtado}
+\date[\today] {}
+\subject{Empirical IO}
+\begin{document}
+%------------------------------------------------------------
+\begin{frame}
+	\titlepage
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\section{Bootstrap}
+\begin{frame}
+    \frametitle{Bootstrap (Efron (1979, 1982))}
+    \begin{itemize}
+    \item <1-> Idea: Obtener muestras aleatorias a partir de la muestra disponible para intentar replicar la aleatoriedad en el muestreo. 
+    \item <2-> Para que se utiliza
+    \begin{itemize}
+        \item Calcular los errores est\'andar cuando es complicado calcularlos con los m\'etodos convencionales.
+        \item Obtener refinamientos asint\'oticos.
+    \end{itemize}
+    \item <3-> Se puede aplicar a una muestra i.i.d. (corte transversal o datos de panel) para estimadores $\sqrt{N}$ consistentes y asintoticamente normales y \emph{suaves}.
+    \item <4-> Hay que tener cuidado para aplicarlos a otro tipo de datos (series temporales) y a estimadores que no son suaves (regresi\'on cuart\'ilica, estimaci\'on no param\'etrica, etc.)
+    \end{itemize}
+\end{frame}
+% --------------------------------------------------- Slide --
+\subsection{Procedimiento}
+\begin{frame}
+    \frametitle{Procedimiento}
+    \begin{itemize}  [<+->]
+        \item $\hat \theta$ es un estimador $\sqrt{N}$ consistente y asint\'oticamente normal de $\theta$.
+        \item Muestra i.i.d. $\{y_i,x_i\}_{i=1}^{N}$
+        \item Estad\'istico de inter\'es: $s.e.(\hat \theta)$
+        \item Procedimiento
+        \begin{enumerate}
+            \item Tomar $B$ muestras de tama\~no $N$ con reemplazo.
+            \item Para cada muestra $b$, estimar $\hat \theta^*_b$.
+            \item Calcular 
+            \begin{align*}
+                \widehat{\Var_{boot}} (\hat \theta)=\frac{1}{B}\sum_{b=1}^B(\hat \theta^*_b-\bar{\hat{\theta}}^*)^2
+            \end{align*}
+            donde
+            \begin{align*}
+                \bar{\hat{\theta}}^*= \frac{1}{B}\sum_{b=1}^B \hat \theta^*_b.
+            \end{align*}
+        \end{enumerate}
+    \end{itemize}
+\end{frame}
+% --------------------------------------------------- Slide --
+\subsection{Tipos de bootstrap}
+\begin{frame}
+    \frametitle{Tipos de bootstrap}
+    \begin{itemize} 
+        \item <1-> \alert{Bootstrap no param\'etrico}
+        \item <2-> \alert{Bootstrap param\'etrico}
+        \item[] <2-> Para $y|x \approx F(x,\theta_0)$ obtener muestras de $y|x \sim F(x,\hat \theta)$.
+        \item <3-> \alert{Bootstrap residual}
+        \item[] <3-> Para el modelo de regresi\'on $y_i=\beta'x_i+u_i$ obtener muestras de $u_i$.
+        \item <4-> \alert{Panel bootstrap}
+        \item[] <4-> Obtener muestras de individuos (historias completas)
+        \item <5-> \alert{Moving blocks}
+        \item[] <5-> Para series de tiempo, dividir la muestra en r bloques que no se superponen y obtener muestras de bloques.
+        \item <6-> Para calcular el s.e. un n\'umero razonable es 400/500 muestras.
+    \end{itemize}
+\end{frame}
+%% --------------------------------------------------- Slide --
+%\subsection{Bootstrap en Stata}
+%\begin{frame}
+%    \frametitle{Bootstrap en Stata}
+%    \begin{itemize}
+%        \item Comando  bootstrap \emph{exp}, reps(500) saving(\emph{filename}, replace): \emph{comando}
+%        \item Ejemplo: Para la tarea 2 de conducta en la industria de refinamiento de az\'ucar. Calcular
+%        \begin{itemize}
+%        	\item SE de la media del \'indice de Lerner
+%        	\item SE de la estimaci\'on de demanda
+%        	\item SE del par\'ametro de conducta
+%        \end{itemize}
+%        \item Ir a do file en p\'agina web del curso.
+%    \end{itemize}
+%\end{frame}
+\end{document}

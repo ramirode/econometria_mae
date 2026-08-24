@@ -1,0 +1,511 @@
+% !TeX spellcheck = es_ES
+% !TEX encoding = UTF-8 Unicode
+\documentclass[t, compress, spanish, aspectratio=169]{beamer}
+%\documentclass[t, compress, spanish]{beamer} % for the presentation
+%\documentclass[handout]{beamer}    % for the handout
+
+\usetheme[progressbar=frametitle, subsectionpage=progressbar]{metropolis}
+
+%\usetheme[secheader]{Madrid}
+%\usetheme{Frankfurt}
+%\usetheme{Warsaw}
+%\usetheme{Berlin}
+%\usetheme{CambridgeUS}
+
+%\usecolortheme{beaver}     % Fondo Blanco y letras Negras - Titulos en Rojo con fondo gris
+%\usecolortheme{dove}       % Para el Handout
+%\usecolortheme{seahorse}   % Fondo Blanco y letras Negras - Titulos en Celeste
+%\usecolortheme{dolphin}    % Fondo Blanco y letras Negras - Titulos en Celeste
+%\usecolortheme{seagull}    % Fondo Blanco y letras Negras - Titulos en Gris
+%\usecolortheme{crane}      % Fondo Blanco y letras Negras - Titulos en Amarillo
+%\usecolortheme{wolverine}  % Fondo Blanco y Letras negras - Titulos en negro con fondo amarillo
+%\usecolortheme{lily}       % Fondo Blanco y letras Negras - Titulos en Azul
+%\usecolortheme{fly}        % Fondo Gris y letras Negras - Titulos en Rojo
+%\usecolortheme{beetle}     % Fondo Gris y letras Negras - Titulos en blanco
+%\usecolortheme{albatross}  % Fondo Azul y letras blancas
+%\usecolortheme{orchid}     % Default
+%\usecolortheme{rose}       % Default
+%\usecolortheme{whale}      % Default
+
+\setbeamertemplate{navigation symbols}{} % Gets rid of navigation symbols
+%\setbeamercovered{transparent}
+
+\usepackage{dsfont} % Double stroke fonts for math symbols
+% \usepackage[T1]{fontenc}  % Helps with hyphenation for languages with accented characters. Note: Does not work with XeLaTex
+% \usepackage[latin1]{inputenc} % Allows to type in latin (accents). Note: Does not work with XeLaTex
+% \usefonttheme[onlymath]{serif}  % Changes fonts for math to serif
+\usepackage[spanish]{babel} % Manages differences between languages: hyphenation etc
+\selectlanguage{spanish}
+\usepackage[utf8]{inputenc}
+
+\usepackage{appendixnumberbeamer} % Does not include backup slides in the number of pages
+
+\usepackage{ragged2e}  % Text alignment
+\justifying
+
+\usepackage{graphicx} % Format for graphics: additional options for includefigure
+\usepackage{pgf} % Tool for graphics
+
+\usepackage{booktabs} % Format for tables: top, bottom and mid lines
+\usepackage[scale=2]{ccicons}
+\usepackage{threeparttable} % Format for tables
+\usepackage{lscape} % Landscape for tables
+
+% Customized commands
+  \newcommand{\vs}{\vskip0pt plus.5fill}
+  \newcommand{\SR}{\mathbb{R}}
+  \DeclareMathOperator{\plim}{plim}
+  \DeclareMathOperator{\Var}{Var}
+  \DeclareMathOperator{\Avar}{AVar}
+  \DeclareMathOperator{\Cov}{Cov}
+  \DeclareMathOperator{\E}{\mathbb{E}}
+  \newcommand{\pto}{\stackrel{p}{\longrightarrow}}
+  \newcommand{\dto}{\stackrel{d}{\longrightarrow}}
+  \newcommand{\adistr}{\stackrel{a}{\sim}}
+  \newcommand{\epsi}{\varepsilon}
+  \newcommand{\tmle}{\hat \theta_{ML}}
+  \newcommand{\tgmm}{\hat \theta_{GMM}}
+  \newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+  \def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+  \newcommand{\term}[1]{\structure{\textbf{#1}}} % label/definition markup, distinct from \alert (reserved for genuine callouts)
+
+\title [Introducci\'on] {An\'alisis Econom\'etrico\\
+    Introducci\'on}
+\author[de Elejalde]{Ramiro de Elejalde}
+\institute [UAH] {Facultad de Econom\'ia y Finanzas \\ Universidad Alberto Hurtado}
+\date[\today] {}
+\subject{Econometr\'ia}
+\begin{document}
+    
+    %------------------------------------------------------------
+    
+    \begin{frame}
+        \titlepage
+    \end{frame}
+    
+    %------------------------------------------------------------
+    \section*{Preliminares}
+    \begin{frame}
+        \frametitle{Cuestiones dom\'esticas}
+        \begin{itemize}
+			\item \term{Profesor}: Ramiro de Elejalde \\
+			Email: ramirode@gmail.com 
+			\item  \term{Horario de oficina}: No hay un horario fijo, enviar un correo para fijar una cita, o interactuar por el chat de Microsoft Teams.
+            \item  \term{Ayudante}: Alexis Silva
+			\item  \term{Horario de la Ayudant\'ia}: Por confirmar.
+			\item \term{Evaluaci\'on}: Tareas 5\% + controles 10\% (15\%), 2 evaluaciones escritas 40\% (20\% cada una), trabajo grupal 15\% y examen final 30\%.
+        \end{itemize}
+    \end{frame}
+    
+    %------------------------------------------------------------
+    \begin{frame}
+        \frametitle{Cuestiones dom\'esticas}
+        \begin{itemize}
+            \item \term{Bibliograf\'ia} 
+            \begin{itemize}
+                \item Wooldridge, J. M. (2010), \emph{Econometric Analysis of Cross Section and Panel Data.} MIT Press.
+                \item Angrist, J. D. and J-S Pischke (2009), \emph{Mostly Harmless Econometrics: An Empiricist's Companion.} Princeton University Press.
+                \item Stock, J. H. and M.W. Watson (2006), \emph{Introduction to econometrics, 2nd Edition.} Addison-Wesley.
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+    
+    % --------------------------------------------------- Slide --
+    \begin{frame}
+        \frametitle{Programa}
+        \begin{enumerate}
+            \item Introducci\'on
+            \item Esperanza condicional y modelo lineal de regresi\'on
+            \item Teor\'ia asint\'otica
+            \item Modelo de regresi\'on lineal: Estimaci\'on por MCO
+            \item Modelo de regresi\'on lineal: Inferencia por MCO
+            \item Temas adicionales de MCO
+            \item Variables instrumentales
+        \end{enumerate}
+    \end{frame}
+    
+    % --------------------------------------------------- Slide --
+    \begin{frame}
+        \frametitle{Outline}
+        \tableofcontents
+        \term{Referencias}: Cap. 1 de Wooldridge, y cap. 1, 2 y 3 de Stock and Watson.
+    \end{frame}
+    
+    % --------------------------------------------------- Slide --
+    \section{Introducci\'on}
+    
+    \subsection{Efecto causal y experimentos ideales}
+    
+    \begin{frame}
+        \frametitle{Efecto causal}
+        La teor\'ia econom\'ia propone relaciones relevantes, muchas veces con implicaciones de pol\'itica, pero no cuantifica las magnitudes de los efectos causales.
+        \begin{itemize}
+            \item \term{Ejemplos}:
+            \begin{itemize}
+                \item ?`Cu\'al es el efecto de reducir el tama\~no de clase en el rendimiento de los estudiantes?
+                %Pol\'iticas para mejorar la educaci\'on primaria y secundaria: Liceos Bicentenario  de excelencia en Chile, pago por incentivos para docentes, pago por incentivos a estudiantes, clases adicionales para alumnos que tienen mayores dificultades (No child left behind), vouchers para crear incentivos directos asociados a la calidad en el sector privado y la competencia del sector privado mejore el desempe\~no de las escuelas p\'ublicas, computadoras gratis, etc.. Una de las pol\'iticas m\'as evaluadas en reducir el tama\~no de clase. Costos: Contratar m\'as maestros y posiblemente construir m\'as aulas. Beneficios: Inclusive si tenemos una idea clara de cuanto valoramos que mejore digamos medio punto el rendimiento acad\'emico. Primero necesitamos conocer si reducir el tama\~no de clase tiene un efecto positivo sobre el rendimiento acad\'emico y para poder hacer un an\'alisis costo beneficio tenemos que cuantificar en cuanto aumenta el rendimiento acad\'emico.
+                \item ?`Cu\'al es el efecto de tener hijos sobre la oferta laboral de las madres?
+                %En pa\'ises desarrollados, principalmente Europa, existen problemas de envejecimiento de la poblaci\'on porque los individuos deciden ser padres a mayor edad y tener menos hijos. Pol\'iticas p\'ublicas tendientes a reducir el costo de tener hijos: subsidios directos por hijo como el cheque beb\'e en Espa\~nar o asignaci\'on universal por hijo en Argentina, extensi\'on del per\'iodo de licencia prenatal (6 semanas) y postnatal (24 semanas) y derecho a sala cuna para todas las mujeres de aquellas empresas con m\'as de 20 trabajadoras en Chile. Un costo importante de tener hijos es su efecto en la disminuci\'on de ingresos de los padres.
+                \item ?`Cu\'al es el efecto de un aumento del precio sobre la cantidad demandada?
+                %Cigarrillos y alcohol para fijar impuestos a los cigarrillos, bencina para la pol\'itica para disminuir la inestabilidad en el corto plazo del precio de la bencina (SIPCO: Sistema de Protecci\'on al Contribuyente del Impuesto Espec\'ifico a los Combustibles sancionado el 11 de Marzo de 2011  si el alza del petr\'oleo supera en un 12,5% un determinado precio de referencia establecido por el Ministerio de Econom\'ia, el SIPCO opera bajando parte del Impuesto Espec\'ifico a los Combustibles (IEC)), energ\'ia para fijar precios a la Ramsey, de bienes diferenciados para que las firmas lo utilicen para fijar precios que maximicen sus beneficios, para encontrar evidencia de acuerdos colusivos (los precios cambian por cambios en demanda, cambios en costos o cambios en los comportamientos competitivos de las firmas)
+            \end{itemize}
+            \item \term{Predicci\'on versus causalidad}
+            \begin{itemize}
+                \item ?`Cu\'al ser\'a la tasa de inflación en el mes siguiente en Chile?
+                \item Ejemplo: Correlación no implica causalidad \url{https://www.latercera.com/tendencias/noticia/ninos-bajan-tres-decimas-notas-hora-uso-del-celular/123002/}
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+    % --------------------------------------------------- Slide --
+    
+    \begin{frame}
+        \frametitle{Experimento ideal}
+        \term{Experimentos aleatorios controlados} (Randomized controlled trials o RCT)
+        \begin{itemize}
+            \item Grupo de tratamiento
+            \item Grupo de control
+            \item \term{Asignaci\'on aleatoria} al grupo de control o tratamiento
+            \item Ejemplos: Medicina, agricultura y, en forma m\'as reciente, en ciencias sociales (PROGRESA, Rand Health Insurance Experiment, Tennessee class size experiment).
+            % Ejemplos de ciencias sociales: Programa de educacion, salud y alimentaci\'on (PROGRESA) para educaci\'on, Rand Health Insurance Experiment para salud, Tennessee class size experiment en 1980s, etc.
+        \end{itemize}
+        \bigskip
+        \term{Experimento ideal}
+        \begin{itemize} 
+            \item ?`C\'omo dise\~nar\'ia el experimento ideal para medir el efecto del tama\~no de clase sobre el rendimiento educativo?
+            % En cada escuela hay dos tama\~nos de clase. Los alumnos se asignan aleatoriamente a un tipo de clase.
+            % Si no puede imaginarse un experimento ideal, no podra contestar su pregunta.
+            % Una vez que se imagina el experimento ideal, puede pensar en los problemas dado que sus datos son observacionales
+        \end{itemize}
+    \end{frame}
+    % --------------------------------------------------- Slide --
+    
+    \begin{frame}
+        \frametitle{Datos observacionales versus experimentales}
+        \term{Datos experimentales}
+        \begin{itemize}
+            \item Provienen de experimentos dise\~nados para evaluar el efecto causal de un tratamiento o pol\'itica.
+        \end{itemize}
+        \bigskip
+        \term{Datos observacionales} (no experimentales)
+        \begin{itemize}
+            \item Obtenidos a trav\'es de censos, encuestas o datos administrativos.
+            \item Fuentes de datos para Chile: Censo de poblaci\'on y vivienda (censos), CASEN, ENIA (encuestas), y SII, Aduana, DEMRE, Ministerio de Educaci\'on, Superintendencia de Salud, y Superintendencia de Entidades Financieras (datos administrativos).
+            %Encuestas: CASEN (Encuesta de Caracterizaci\'on Socioecon\'omica Nacional) es un encuesta que se usa ara medir la pobreza y la distribuci\'on del ingreso y se realiza cada 2 o 3 a\~nos con 60,000 hogares en 2011, datos administrativos: ISAPRES.				
+        \end{itemize}
+    \end{frame}
+    % --------------------------------------------------- Slide --
+    
+    \begin{frame}
+        \frametitle{Datos observacionales versus experimentales}
+        Dificultades para medir un efecto causal con datos observacionales
+        \begin{itemize} 
+            \item \term{Omisi\'on de variable relevante}
+            \item[] Hay una variable no observada que afecta tanto al tratamiento como al resultado.
+            %Tama\~no de clase y rendimiento acad\'emico, clases de menor tama\~no en mejores escuelas o escuelas mas caras. Diferencias de tama\~no de clase tienen que ver con diferencias socio-econ\'omicas de los alumnos o diferencias de calidad de educaci\'on o ambos.
+            %Fertilidad y oferta de trabajo: Mujeres que deciden tener muchos hijos son distintas a mujeres que desean tener menos hijos. Preferencias: apego al trabajo, realizacion individual, etc.
+            %Discriminacio en creditos: Diferencias de capacidades de pago entre personas de distintas razas (ingreso).
+            \item \term{Simultaneidad o causalidad reversa}
+            \item[] El resultado afecta al tratamiento.
+            %Efecto del precio sobre la demanda: la demanda y precio se determinan en forma simultanea en equilibrio.
+            %Efecto del n\'umero de policias sobre el crimen: Un mayor n\'umero de policias reduce el crimen, pero un mayor n\'umero de crimenes hace que aumente el n\'umero de policias.
+            \item \term{Error de medida} en alguna de las variables observadas
+            %Individuos pueden mentir en sus respuestas, por ejemplo, ingreso. Puede haber errores de medida en salarios o educacion.
+            \item \term{Selecci\'on en la muestra}
+            \item[] Disponibilidad de datos depende de un proceso de selecci\'on relacionado con la variable dependiente.
+            % Rendimientos de la educacion en mujeres: Las mujeres con un salario potencial menor no participan del mercado del trabajo           
+        \end{itemize}
+    \end{frame}
+    % --------------------------------------------------- Slide --
+    
+    \subsubsection{Predicci\'on versus causalidad}
+    
+    \begin{frame}
+        \frametitle{Predicci\'on versus causalidad}
+        Para realizar una predicci\'on no es necesario medir una relaci\'on causal.
+        \begin{itemize} 
+            \item \term{Predicci\'on}
+            \item [] ?`Cu\'al ser\'a la tasa de crecimiento del PIB en el pr\'oximo en Chile?
+            \item \term{Causalidad}
+            \item [] ?`Cu\'al es el efecto de la reforma tributaria en la tasa de crecimiento del PIB en el 2015 en Chile?				
+            %Si observamos que la tasa de inflaci\'on est\'a muy correlada, podemos utilizar la inflaci\'on del mes anterior para predecir la inflaci\'on en el mes siguiente. Sin embargo, no creemos que la inflaci\'on en este per\'iodo cause la inflaci\'on del per\'iodo siguiente. (Puede que en parte si a trav\'es de expectativas o mecanismos de indexaci\'on, pero es muy probable que haya otros factores inobservados que afectan a ambos como precios de commodities, pol\'itica monetaria del Banco Central, etc.)
+            %Educaci\'on y salarios: 
+            %Predicci\'on: Un ejecutivo de cuentas tiene que decidir si otorgar un pr\'estamo a un individuo y no posee informaci\'on del ingreso. Pero tiene informaci\'on observable por ejemplo el nivel educativo. Por lo tanto, le interesa predecir el ingreso del individuo en base del nivel de ingreso. Si ambos est\'an muy correlados su predicci\'on puede ser aceptable.
+            %Efecto causal: El ministro de educaci\'on quiere justificar una beca de estudios para individuos de bajos recursos que han dejado la escuela. En este caso el ministro no puede justificar el gasto meramente en una correlaci\'on. Porque si la correlaci\'on mide factores como habilidad innata o contactos sociales que est\'an educaci\'on e ingresos futuros, los resultados de la pol\'itica pueden ser muy distintos a los esperados.
+        \end{itemize}
+    \end{frame}
+    % --------------------------------------------------- Slide --
+    
+    \subsection{Estructura de datos}
+    
+    \begin{frame}
+        \frametitle{Datos de corte transversal (cross-section)}
+        \begin{itemize}
+            \item Datos para distintas unidades (personas, hogares, firmas, unidades gubernamentales, etc.) para un s\'olo per\'iodo de tiempo.
+            \item El orden de los datos es arbitrario.
+        \end{itemize}
+    \end{frame}
+    % --------------------------------------------------- Slide --
+    
+    \begin{frame}
+        \frametitle{Datos de corte transversal (cross-section)}
+        \begin{itemize}
+            \item \term{Ejemplo}: Datos de 420 distritos educacionales en California, EEUU para 1998
+            %CASEN: datos de corte transversal o secci\'on cruzada (cross section)
+            
+            \begin{table}
+                \centering
+                \begin{tabular}{ccccc}
+                    \hline
+                    observat & dist\_code & enrl\_tot & teachers & testscr \\
+                    \hline
+                    1 & 75119 &  195 & 10.9  & 17.9 \\
+                    2 & 61499 &  240 & 11.15 & 21.5 \\
+                    3 & 61549 & 1550 & 82.9  & 18.7 \\
+                    . &     . &    . &     . &    . \\
+                    . &     . &    . &     . &    . \\
+                    . &     . &    . &     . &    . \\
+                    420 & 72751 & 1778 & 93.8  & 19.0 \\
+                    \hline
+                \end{tabular}
+            \end{table}
+        \end{itemize}
+    \end{frame}
+    
+    % --------------------------------------------------- Slide --
+    \begin{frame}
+        \frametitle{Datos de series de tiempo}
+        \begin{itemize}
+            \item Son observaciones de una variable o varias variables a lo largo de
+            varios periodos de tiempo (a\~nos, trimestres, meses, etc.). 
+            
+            \item Ejemplos: precio de
+            activos financieros y reales, series macroecon\'omicas (tipos de inter\'es, tipos de cambio, tasa de inflaci\'on, PIB, etc.)
+            
+            \item Las observaciones no son independientes: la evoluci\'on temporal
+            puede explotarse con fines predictivos.
+            
+            \item La frecuencia y orden con la que se observan los datos es muy
+            importante.
+        \end{itemize}
+    \end{frame}
+    
+    % --------------------------------------------------- Slide --
+    \begin{frame}
+        \frametitle{Datos de series de tiempo}
+        \begin{itemize}
+            \item \term{Ejemplo}: Datos de inflaci\'on, empleo, desempleo y crecimiento para un pa\'is
+            %Precios de activos financieros (acciones de LAN) o commodities (cobre): Series temporales 
+            
+            \begin{table}
+                \centering
+                \begin{tabular}{cccc}
+                    \hline
+                    year & inflation & unemployment & growth \\ \hline
+                    1975 & 3.8 & 5.8 & 3.6 \\
+                    1976 & 5.4 & 6.4 & 2.8 \\
+                    1977 & 5.3 & 8.9 & 2.9 \\
+                    . & . & . & . \\
+                    . & . & . & . \\
+                    . & . & . & . \\
+                    2013 & 1.3 & 6.3 & 1.5 \\
+                    2014 & 1.1 & 6.9 & 1.2 \\ \hline
+                \end{tabular}%
+            \end{table}
+        \end{itemize}
+    \end{frame}
+    % --------------------------------------------------- Slide --
+    
+    \begin{frame}
+        \frametitle{Datos de panel o longitudinales}
+        \begin{itemize}
+            \item Consisten en una serie temporal por cada unidad de corte transversal. La longitud de las series temporales $(T)$ suele ser mucho m\'as
+            corta que el n\'umero de unidades de corte transversal $(N)$.
+            \item Generalmente $N>T$
+            \item Datos de panel $\neq$ cortes transversales repetidos
+            \item Aportan m\'as informaci\'on y permite responder a preguntas que
+            los cortes transversales no pueden
+            \item Permiten incluir una estructura temporal en el razonamiento econ\'omico
+        \end{itemize}
+    \end{frame}
+    % --------------------------------------------------- Slide --
+    
+    \begin{frame}
+        \frametitle{Datos de panel o longitudinales}
+        \begin{itemize}
+            \item \term{Ejemplo}: Panel de firmas
+            %NLSY: datos de panel o longitudinales
+            \small
+            \begin{table}
+                \centering
+                \begin{tabular}{ccccc}
+                    \hline
+                    firm & year & profit & employment & stock \\ \hline
+                    1 & 1995 & 200 & 150 & 0 \\
+                    1 & 1996 & 3000 & 135 & 0 \\
+                    : & : & : & : & : \\
+                    : & : & : & : & : \\
+                    1 & 2000 & 4566 & 356 & 1 \\
+                    2 & 1995 & 200 & 150 & 0 \\
+                    2 & 1996 & 3000 & 135 & 0 \\
+                    : & : & : & : & : \\
+                    525 & 1995 & 200 & 150 & 0 \\
+                    525 & 1996 & 3000 & 135 & 0 \\
+                    : & : & : & : & : \\
+                    : & : & : & : & : \\
+                    525 & 2000 & 4566 & 356 & 1 \\ \hline
+                \end{tabular}
+            \end{table}
+        \end{itemize}
+    \end{frame}
+    
+    % --------------------------------------------------- Slide --
+    
+    \subsection{Enfoque del curso}
+    \begin{frame}
+        \frametitle{Muestreo aleatorio simple}
+        \begin{itemize}
+            \item Un modelo poblacional
+            %Los residentes en la regi\'on metropoolitana de Santiago, Chile en 2012 (7,003,122)
+            \item Se eligen $N$ individuos en forma aleatoria de una poblaci\'on de inter\'es. Cada individuo tiene la misma probabilidad de ser elegido.
+            \item Denotamos la muestra aleatoria como $\{w_1,w_2,...,w_N\}$.
+            \item Dado el muestreo aleatorio, las $w_i$'s son variables aleatorias \term{independiente e id\'enticamente distribuidas (i.i.d.)}
+            %Seleccionamos una muestra de tama\~no 1000 en forma aleatoria (con reemplazo). Si nos interesa el PIB per capita suponemos que viene de una distribuci\'on log-normal con media USD 23.450 mujeres 51.2 % y hombres 48.8
+            \item Supuesto razonable para datos de corte transversal y datos de panel.
+        \end{itemize}
+    \end{frame}
+    
+    \begin{frame}
+        \frametitle{Regresores estoc\'asticos y teor\'ia asint\'otica}
+        \begin{itemize}
+            \item \term{Regresores estoc\'asticos}
+            \item [] Se asume que los regresores (las $x$'s) son estoc\'asticos. NO se asume que son fijos en muestras repetidas.
+            \item[] Si los regresores son fijos no existe correlaci\'on entre los inobservados y los regresores. No es realista para datos observacionales.
+            %El supuesto de x's fijas es similar a asumir independecia entre las x's y el error, un supuesto poco creible con datos observacionales.
+            \item \term{Teor\'ia asint\'otica}
+            \item [] Distribuci\'on muestral y propiedades de los estimadores cuando el tama\~no de la muestra converge a infinito.
+            %Mencionamos las propiedades en muestras peque\~nas como insesgadez, eficiencia pero nos van a interesar las propiedades asint\'oticas como consistencia, distribuci\'on asint\'otica y eficiencia asint\'otica.
+            \item [] No es necesario hacer supuestos distribucionales como  normalidad.
+            \item [] No  suponemos homoscedasticidad porque no es realista y sus consecuencias poco importantes.
+        \end{itemize}
+    \end{frame}
+%         --------------------------------------------------- Slide --
+\subsection{Trabajo grupal}
+    \begin{frame}
+        \frametitle{Trabajo grupal: Retornos a la educaci\'on}
+        \begin{itemize}
+            \item \term{Pregunta}: ?`Cu\'al es el efecto de un año adicional de educación en los salarios?
+            \item \term{Poblaci\'on}: Personas entre 30 y 65 años que residen y trabajan en Chile. Año: 2024.
+            \item \term{Fuente de datos}: Casen 2024.
+            \item \term{Variables}
+			\begin{itemize}
+				\item $ytrabajocor$: Ingreso del trabajo corregido
+				\item $esc$: Años de escolaridad.
+			\end{itemize}
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+    	\frametitle{Estadísticas descriptivas}
+    	\footnotesize
+    	\begin{center}
+    		\input{tables/desc_stats.tex}
+    	\end{center}
+    \end{frame}
+
+    % --------------------------------------------------- Slide --
+\begin{frame}
+	\frametitle{Trabajo grupal: Retornos a la educaci\'on}
+	\begin{itemize}
+		\item \term{Ecuación empírica}
+		\begin{align*}
+			\log ytrabajocor_i = \beta_0 +\beta_1 esc_i + u_i
+		\end{align*}
+	\end{itemize}
+\end{frame}
+
+    \begin{frame}
+    	\frametitle{Estimación}
+    	\begin{center}
+    		\input{tables/regression_table.tex}
+    	\end{center}
+    \end{frame}
+
+    \begin{frame}
+    	\frametitle{Estimación}
+    	\begin{center}
+    		\includegraphics[width=0.85\textwidth]{figures/scatter_esc_lwage.png}
+    	\end{center}
+    \end{frame}
+
+
+% --------------------------------------------------- Slide --
+\begin{frame}
+    \frametitle{Trabajo grupal: Retornos a la educaci\'on}
+    \begin{itemize}
+        \item Interpretación
+        \item \alert{?`Usted cree que estamos midiendo un efecto causal? }
+        	\begin{itemize}
+        		\item Causas
+        		\item Sesgo
+        		\item Soluciones
+        	\end{itemize}
+        \item Forma funcional
+        \item Heterogeneidad
+    \end{itemize}
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}
+	\frametitle{Trabajo grupal: Retornos a la educaci\'on}
+	\begin{itemize}
+		\item \term{?`Es robusto el resultado?} Agregamos controles de a uno:
+		\begin{itemize}
+			\item Experiencia potencial ($edad - esc - 6$) y su cuadrado
+			\item Dummy mujer
+			\item Dummy rural
+			\item Región (16 dummies) --- \emph{no} comuna: Casen no está diseñada para ser representativa a nivel comunal
+		\end{itemize}
+		\item \term{Otra limitación}: $ytrabajocor$ es ingreso \emph{mensual}, no un salario por hora --- parte del ``efecto'' puede reflejar horas trabajadas, no productividad.
+	\end{itemize}
+\end{frame}
+
+    \begin{frame}
+    	\frametitle{?`Es robusto el resultado?}
+    	\footnotesize
+    	\begin{center}
+    		\input{tables/esc_coef_progression.tex}
+    	\end{center}
+    \end{frame}
+
+    \begin{frame}
+    	\frametitle{?`Es robusto el resultado?}
+    	\begin{center}
+    		\includegraphics[width=0.85\textwidth]{figures/esc_coef_progression_plot.png}
+    	\end{center}
+    	\term{El coeficiente es sorprendentemente estable} entre especificaciones (0.116--0.120), con intervalos de confianza que se solapan.
+    \end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}
+	\frametitle{Trabajo grupal: Ejemplos y fuentes de datos}
+	\begin{itemize}
+		\item \term{Ejemplos de trabajos anteriores (2025)}
+		\begin{itemize}
+			\item Dinámica de precios del cobre y transmisión macroeconómica
+			\item Población migrante y desempleo
+			\item Impacto de la tendencia política del alcalde en la tasa de delitos
+			\item Automatización y empleo
+		\end{itemize}
+		\item \term{Fuentes de datos}
+		\begin{itemize}
+			\item Función de producción/productividad: ENIA (Encuesta Nacional Industrial Anual)
+			\item Educación: Datos de Ministerio de Educación (notas, asistencia, rendimiento en el colegio, universidad)
+			\item Salud, Educación, Empleo: Casen
+			\item Innovación: Encuesta de Innovación
+			\item Etc.
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+
+\end{document}

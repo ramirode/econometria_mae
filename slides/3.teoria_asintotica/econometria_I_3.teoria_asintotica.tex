@@ -1,0 +1,1014 @@
+% !TeX spellcheck = es_ES
+% !TEX encoding = UTF-8 Unicode
+\documentclass[t, compress, spanish, aspectratio=169]{beamer}
+%\documentclass[t, compress, spanish]{beamer} % for the presentation
+%\documentclass[handout]{beamer}    % for the handout
+
+\usetheme[progressbar=frametitle]{metropolis}
+
+%\usetheme[secheader]{Madrid}
+%\usetheme{Frankfurt}
+%\usetheme{Warsaw}
+%\usetheme{Berlin}
+%\usetheme{CambridgeUS}
+
+%\usecolortheme{beaver}     % Fondo Blanco y letras Negras - Titulos en Rojo con fondo gris
+%\usecolortheme{dove}       % Para el Handout
+%\usecolortheme{seahorse}   % Fondo Blanco y letras Negras - Titulos en Celeste
+%\usecolortheme{dolphin}    % Fondo Blanco y letras Negras - Titulos en Celeste
+%\usecolortheme{seagull}    % Fondo Blanco y letras Negras - Titulos en Gris
+%\usecolortheme{crane}      % Fondo Blanco y letras Negras - Titulos en Amarillo
+%\usecolortheme{wolverine}  % Fondo Blanco y Letras negras - Titulos en negro con fondo amarillo
+%\usecolortheme{lily}       % Fondo Blanco y letras Negras - Titulos en Azul
+%\usecolortheme{fly}        % Fondo Gris y letras Negras - Titulos en Rojo
+%\usecolortheme{beetle}     % Fondo Gris y letras Negras - Titulos en blanco
+%\usecolortheme{albatross}  % Fondo Azul y letras blancas
+%\usecolortheme{orchid}     % Default
+%\usecolortheme{rose}       % Default
+%\usecolortheme{whale}      % Default
+
+\setbeamertemplate{navigation symbols}{} % Gets rid of navigation symbols
+%\setbeamercovered{transparent}
+
+\usepackage{dsfont} % Double stroke fonts for math symbols
+% \usepackage[T1]{fontenc}  % Helps with hyphenation for languages with accented characters. Note: Does not work with XeLaTex
+% \usepackage[latin1]{inputenc} % Allows to type in latin (accents). Note: Does not work with XeLaTex
+% \usefonttheme[onlymath]{serif}  % Changes fonts for math to serif
+\usepackage[english]{babel} % Manages differences between languages: hyphenation etc
+
+\usepackage{appendixnumberbeamer} % Does not include backup slides in the number of pages
+
+\usepackage{centernot} % To draw not in math symbols (does not imply)
+
+\usepackage{ragged2e}  % Text alignment
+\justifying
+
+\usepackage{graphicx} % Format for graphics: additional options for includefigure
+\usepackage{pgf} % Tool for graphics
+
+\usepackage{booktabs} % Format for tables: top, bottom and mid lines
+\usepackage[scale=2]{ccicons}
+\usepackage{threeparttable} % Format for tables
+\usepackage{lscape} % Landscape for tables
+
+% Customized commands
+  \newcommand{\vs}{\vskip0pt plus.5fill}
+  \newcommand{\SR}{\mathbb{R}}
+  \DeclareMathOperator{\plim}{plim}
+  \DeclareMathOperator{\Var}{Var}
+  \DeclareMathOperator{\Avar}{AVar}
+  \DeclareMathOperator{\Cov}{Cov}
+  \DeclareMathOperator{\N}{Normal}
+  \DeclareMathOperator{\E}{\mathbb{E}}
+  \DeclareMathOperator{\LP}{\mathbb{L}}
+  \newcommand{\pto}{\stackrel{p}{\longrightarrow}}
+  \newcommand{\dto}{\stackrel{d}{\longrightarrow}}
+  \newcommand{\adistr}{\stackrel{a}{\sim}}
+  \newcommand{\epsi}{\varepsilon}
+  \newcommand{\tmle}{\hat \theta_{ML}}
+  \newcommand{\tgmm}{\hat \theta_{GMM}}
+  \newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+  \def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+
+
+\title [Teor\'ia asint\'otica] {Econometr\'ia I\\
+	Teor\'ia Asint\'otica}
+\author[de Elejalde]{Ramiro de Elejalde}
+\institute [UAH] {Facultad de Econom\'ia y Finanzas \\ Universidad Alberto Hurtado}
+\date[\today] {}
+\subject{Econometr\'ia}
+\begin{document}
+	
+	%------------------------------------------------------------
+	
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+	% --------------------------------------------------- Slide --
+	\begin{frame}
+		%\frametitle{Outline}
+		\small
+		\tableofcontents
+		\alert{Referencias}: Cap. 7 y 8 Hansen (Introduction to Econometrics), y cap. 3 de Wooldridge.
+	\end{frame}
+	
+	% --------------------------------------------------- Slide --
+	\begin{frame}
+		\frametitle{Estimador}
+		\begin{itemize}
+			\item Dada una muestra aleatoria podemos calcular un estimador para ``aproximar'' los  par\'ametros poblacionales de inter\'es.
+			\item Nos interesa que el estimador tenga ``buenas'' propiedades.
+			\item En este curso nos enfocamos en las propiedades del estimador cuando $N\to \infty$, las \alert{propiedades asint\'oticas}.
+			% MCO es insesgado, pero no tiene varianza minima excepto en casos especiales de poco inter\'es (homoscedasticidad). Adem\'as, no conocemos su distribuci\'on pra cualquier N excepto en casos particulares como con inobservado normal. IV no es siquiera insesgado.
+			\begin{enumerate}
+				\item Cuando $N$ crece, la distribuci\'on del estimador se concentra alrededor del par\'ametro (\alert{consistencia})
+				\item Cuando $N$ crece la distribuci\'on del estimador (estandarizada) se acerca a una distribuci\'on normal (\alert{distribuci\'on asint\'otica normal})
+			\end{enumerate}
+			\item En esta unidad vamos a estudiar teoremas que nos permitan obtener las propiedades asint\'oticas de los estimadores que vamos a estudiar durante el curso.
+		\end{itemize}
+	\end{frame}		
+
+	\section{Propiedades en muestras peque\~nas de los estimadores}
+
+    \begin{frame} 
+        \frametitle{Repaso de estad\'istica}      
+        \begin{itemize}
+    		\item <1->\alert{Par\'ametro}: Caracter\'istica de la poblaci\'on de inter\'es. Ejemplo: $\mu=\E(y)$
+    		\item <2-> \alert{Muestra aleatoria}: Muestra de tama\~no $N$ de la poblaci\'on obtenida en forma aleatoria y con reeemplazo $\{y_1,y_2,...,y_N\}$. \\
+		El muestreo aleatorio nos asegura que $y_1, y_2, ...,y_N$ se distribuyen i.i.d.
+    		\item <3-> \alert{Estimador}:  Un estad\'istico (funci\'on de las variables muestrales) que se utiliza para estimar un par\'ametro de inter\'es. Ejemplo: Media muestral $\bar y = \frac{1}{N}\sum_{i=1}^{N} y_i$.
+    		\item <4-> Recordar las propiedades de la varianza $\Var(y)$
+    		\begin{itemize}
+    			\item $\Var(a+bx)=b^2\Var(x)$
+    			\item $\Var(bx+cy)=b^2\Var(x)+c^2\Var(y)+2 bc\Cov(x,y)$
+    		\end{itemize}        
+    	\end{itemize}     
+    \end{frame}    
+	
+	\begin{frame}
+		\frametitle{Propiedades en muestras peque\~nas de los estimadores}
+		\begin{itemize}
+			\item <1->\alert{Insesgadez}: Un estimador $\hat \theta_N$ de un par\'ametro $\theta$ es \alert{insesgado} si,
+			\begin{align*}
+			\E(\hat \theta_N) = \theta \text{ para todo }N.
+			\end{align*}
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Propiedades en muestras peque\~nas de los estimadores}
+		\begin{itemize}
+			\item <1->\alert{Eficiencia}: Un estimador $\hat \theta_N$ de un par\'ametro $\theta$ es \alert{eficiente} si,
+			\begin{align*}
+			\Var(\hat \theta_N) \leq \Var(\tilde \theta_N),
+			\end{align*}
+			para todo $\tilde \theta_N$ en una familia de estimadores de $\theta$ con ciertas propiedades (por ejemplo, insesgados y lineales).
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Ejemplo: Media muestral}
+		\begin{itemize}
+			\item Dada una muestra i.i.d. $\{y_1,...,y_N\}$ con $\E(y_i)=\mu$ y $\Var(y_i)=\sigma^2$
+			\item Par\'ametro: $\mu$.
+			\item Estimador: \alert{media muestral}
+			\begin{align*}
+			\bar y = \frac{1}{N} \sum_i y_i.
+			\end{align*}
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Ejemplo: Media muestral}
+		\begin{itemize}
+			\item Insesgadez: $\E(\bar y)=\mu$
+		\end{itemize}
+	\end{frame}
+
+%	\begin{frame}
+%	\end{frame}
+
+	\begin{frame}
+		\frametitle{Ejemplo: Media muestral}
+		\begin{itemize}
+			\item Eficiencia: $\Var(\bar y)=\frac{\sigma^2}{N}$
+			%            \note [item] {$\Var(\bar y)=\Var(\frac{1}{N} \sum_i y_i)=\frac{1}{N^2} \sum_i \Var(y_i)=\frac{1}{N} \Var(y)$ usar independencia para $\Cov(y_i,y_j)=0$  e id\'enticamente distribuidas para $\Var(y_i)=\Var(y)$ }
+		\end{itemize}
+	\end{frame}
+
+%	\begin{frame}
+%	\end{frame}
+
+	% --------------------------------------------------- Slide --
+	\section{Propiedades asint\'oticas de los estimadores}
+	\begin{frame}
+		\frametitle{Convergencia de variables aleatorias}
+		\begin{itemize}			
+			\item El an\'alisis asint\'otico se ocupa de estudiar la \alert{convergencia de una secuencia de variables aleatorias}. 
+			\item Cuando aplicamos estos conceptos a econometr\'ia, las variables aleatorias son estimadores cuya distribuci\'on depende del tama\~no de la muestra $N$ y buscamos la distribuci\'on del estimador cuando $N \to \infty$.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Ejemplos}
+		\begin{itemize}			
+				\item Una secuencia determin\'istica puede ser $\{a_N\}_{N=1}^{\infty}$ donde $a_N=\{2+\frac{1}{N}\}$.
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Ejemplos}
+		\begin{itemize}			
+				\item Una secuencia de variables aleatorias puede ser
+				\begin{align*}
+				z_N=\left\{ 
+				\begin{array} {l l}
+				0 & \text{con probabilidad } 1-\frac{1}{N}, \\
+				N & \text{con probabilidad } \frac{1}{N},
+				\end{array}
+				\right.
+				\end{align*}
+		\end{itemize}
+	\end{frame}
+
+%	\begin{frame}
+%	\end{frame}
+
+	\begin{frame}
+		\frametitle{Ejemplos}
+		\begin{itemize}			
+				\item La media muestral para una muestra de tama\~no $N$: $\bar y_N$. La secuencia es $\{\bar y_1, \bar y_2,...\}$.
+		\end{itemize}
+	\end{frame}
+	
+%	\begin{frame}
+%	\end{frame}
+%
+%	\begin{frame}
+%	\end{frame}
+
+	% --------------------------------------------------- Slide --
+	\subsection{Convergencia en probabilidad}
+	\begin{frame}
+		\frametitle{Convergencia para secuencias determin\'isticas}
+		\begin{itemize}
+			\item Una secuencia determin\'istica $a_N$  \alert{converge} a $a$ cuando $N \to \infty$ si para todo $\delta>0$ existe $N_\delta < \infty$ tal que,
+			\begin{align*}
+			|a_N-a|\leq \delta \quad  \text{ para todo } N\geq N_\delta.
+			\end{align*}
+			\item Notaci\'on: $a_N \to a$ \'o $\lim a_N=a$
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Convergencia para secuencias determin\'isticas}
+		\begin{itemize}
+			\item \alert{Ejemplo}: La secuencia determin\'istica $\{a_N\}_{N=1}^{\infty}$ donde $a_N=\{2+\frac{1}{N}\}$ converge a $\lim_{N\to \infty } a_N=2$.
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Convergencia en probabilidad}
+		\begin{itemize}
+			\item Una variable aleatoria $z_N$ \alert{converge en probabilidad} a una constante $c$ cuando $N \to \infty$ si para todo $\delta>0$,
+			\begin{align*}
+			\lim_{N\to \infty }\Pr(|z_N-c|\leq \delta)=1
+			\end{align*}
+			\item Notaci\'on: $z_N \pto c$ \'o $\plim z_N=c$
+		\end{itemize}
+	\end{frame}
+	
+%	\begin{frame}
+%	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Convergencia en probabilidad}
+		\begin{itemize}
+			\item\alert{Ejemplo}: Calcule la convergencia en probabilidad de $z_N$
+			\begin{align*}
+			z_N=\left\{ 
+			\begin{array} {l l}
+			0 & \text{con probabilidad } 1-\frac{1}{N}, \\
+			N & \text{con probabilidad } \frac{1}{N},
+			\end{array}
+			\right.
+			\end{align*}
+%			\item <4->\alert{?`Convergencia en probabilidad es lo mismo que convergencia de la media? }$\lim_{N\to\infty}\E(z_N)=c$?
+%			\uncover<5-> {Respuesta: No, en el ejemplo $\lim_{N\to\infty}\E(z_N)=1\neq 0$.}
+		\end{itemize}
+	\end{frame}
+	
+%	\begin{frame}
+%	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Convergencia en probabilidad}
+		\begin{itemize}
+			\item\alert{Ejemplo}: Calcule la convergencia en probabilidad de $z_N$
+			\begin{align*}
+			z_N=\left\{ 
+			\begin{array} {l l}
+			0 & \text{con probabilidad } 1-\frac{1}{N}, \\
+			N & \text{con probabilidad } \frac{1}{N},
+			\end{array}
+			\right.
+			\end{align*}
+			\item {Respuesta: $z_N \pto 0$.}
+%			\item <4->\alert{?`Convergencia en probabilidad es lo mismo que convergencia de la media? }$\lim_{N\to\infty}\E(z_N)=c$?
+%			\uncover<5-> {Respuesta: No, en el ejemplo $\lim_{N\to\infty}\E(z_N)=1\neq 0$.}
+		\end{itemize}
+	\end{frame}
+	
+	
+	% --------------------------------------------------- Slide --
+	\subsection{Consistencia.}
+	\begin{frame}
+		\frametitle{Consistencia}
+		\begin{itemize}
+			\item  \alert{Consistencia}: Un estimador $\hat \theta_N$ de un par\'ametro $\theta$ es \alert{consistente} si,
+			\begin{align*}
+			\hat \theta_N \pto \theta \text{ cuando }N \to \infty.
+			\end{align*}
+		\end{itemize}
+	\end{frame}
+	
+	% --------------------------------------------------- Slide --
+	\begin{frame}
+		\frametitle{Ejemplo: Bernoulli con p=0.78}
+		\vspace{-.25cm}
+		\begin{center}
+			\includegraphics[width=0.35\textwidth]{figures/sample_mean2.png}
+			\includegraphics[width=0.35\textwidth]{figures/sample_mean5.png}
+		\end{center}
+		
+		\begin{center}
+			\includegraphics[width=0.35\textwidth]{figures/sample_mean25.png}
+			\includegraphics[width=0.35\textwidth]{figures/sample_mean100.png}
+		\end{center}
+	\end{frame}
+	
+	% --------------------------------------------------- Slide --
+	\subsection{Ley (d\'ebil) de los grandes n\'umeros (LGN)}
+	\begin{frame}
+		\frametitle{Ley (d\'ebil) de los grandes n\'umeros (LGN)}
+		\begin{itemize}
+			%            \note[item]{Si $z_N$ es una media de variables aleatorias, ciertos teoremas nos ayudan.}
+			
+			\item <1->Dada una muestra i.i.d. de tama\~no $N$, si $\E|y|<\infty$, entonces cuando $N \to \infty$,
+			\begin{align*}
+			\frac{1}{N} \sum_{i=1}^N y_i\pto \E(y).
+			\end{align*}
+			%            \note[item]{WLLN: (Proof) Desigualdad de Chebycheff $\Pr(|\bar y - \mu| > \epsilon) \leq \frac{\sigma^2/N}{\epsilon}$}
+			
+			\item <2-> Extensi\'on para vectores aleatorios. Definimos a $\mathbf{y}: \SR^m \times 1$. Dada una muestra i.i.d. de tama\~no $N$, si $\E|\mathbf{y}|<\infty$, entonces cuando $N \to \infty$,
+			\begin{align*}
+			\frac{1}{N} \sum_{i=1}^N \mathbf{y}_i\pto \E(\mathbf{y}).
+			\end{align*}
+		\end{itemize}
+	\end{frame}
+	
+	% --------------------------------------------------- Slide --
+	\begin{frame}
+		\frametitle{Ejemplos}
+		\begin{itemize}
+			\item \alert{Media muestral}
+			\begin{align*}
+			\bar y = \frac{1}{N}\sum_{i=1}^N y_i \pto \mu
+			\end{align*}
+			donde $\mu=\E(y)$.
+		\end{itemize}
+	\end{frame}
+	
+%	\begin{frame}
+%	\end{frame}
+	
+	% --------------------------------------------------- Slide --
+	\begin{frame}
+		\frametitle{Ejemplos}
+		\begin{itemize}
+			\item \alert{Media muestral de $y_i^2$}
+			\begin{align*}
+			\frac{1}{N}\sum_{i=1}^N y_i^2 \pto \E(y^2)
+			\end{align*}
+		\end{itemize}
+	\end{frame}
+%
+%	\begin{frame}
+%	\end{frame}
+	
+	% --------------------------------------------------- Slide --
+	\begin{frame}
+		\frametitle{Ejemplo: Distribución muestral para $\bar y_N$ de Bernoulli con p=0.78}
+		\vspace{-.25cm}
+		\begin{center}
+			\includegraphics[width=0.35\textwidth]{figures/sample_mean2.png}
+			\includegraphics[width=0.35\textwidth]{figures/sample_mean5.png}
+		\end{center}
+		
+		\begin{center}
+			\includegraphics[width=0.35\textwidth]{figures/sample_mean25.png}
+			\includegraphics[width=0.35\textwidth]{figures/sample_mean100.png}
+		\end{center}
+	\end{frame}
+	
+	% --------------------------------------------------- Slide --
+	\subsection{Teorema de la funci\'on continua}
+	\begin{frame}
+		\frametitle{Teorema de la funci\'on continua}
+		%        \note[item] {?`Qu\'e pasa cuando tenemos una funci\'on de medias como $S^2=\frac{1}{N} \sum_i y_i^2-\bar y^2 $? }
+		\begin{itemize}
+			\item Si $z_N \pto c$ cuando $N \to \infty$, y $g(.)$ es continua en $c$, entonces
+			\begin{align*}
+			g(z_N) \pto g(c) \text{ cuando }N \to \infty.
+			\end{align*}
+		\end{itemize}
+	\end{frame}
+	
+	% --------------------------------------------------- Slide --
+	\begin{frame}
+		\frametitle{Ejemplos}
+		\begin{itemize}
+			\item \alert{Varianza muestral}
+			\begin{align*}
+			S^2 &=\frac{1}{N}\sum_{i=1}^N (y_i-\bar y)^2 \\
+			& = \frac{1}{N}\sum_{i=1}^N y_i^2-\bar y^2\pto \sigma^2,
+			\end{align*}
+			donde $\sigma^2=\Var(y)$.
+		\end{itemize}
+		%        \note[item]{Ya vimos que $\bar y \pto \mu$ y $\frac{1}{N}\sum_{i=1}^N y_i^2 \pto \E(y^2)$}
+		%        \note[item]{Luego $g(x)=x^2$ es continua por lo tanto $\bar y ^2\pto \mu^2$}
+		%        \note[item]{Para finalizar $g(x,y)=x-y$ es continua por lo tanto $S^2=\frac{1}{N}\sum_{i=1}^N y_i^2-\bar y ^2\pto \E(y^2)-\mu^2=\sigma^2$}
+	\end{frame}
+	
+%	\begin{frame}
+%	\end{frame}
+	% --------------------------------------------------- Slide --
+	\begin{frame}
+		\frametitle{Ejemplos}
+		\begin{itemize}
+			\item \alert{Desviaci\'on est\'andar muestral:} $S \pto \sigma$
+		\end{itemize}
+		%        \note[item]{Ya vimos que $\bar y \pto \mu$ y $\frac{1}{N}\sum_{i=1}^N y_i^2 \pto \E(y^2)$}
+		%        \note[item]{Luego $g(x)=x^2$ es continua por lo tanto $\bar y ^2\pto \mu^2$}
+		%        \note[item]{Para finalizar $g(x,y)=x-y$ es continua por lo tanto $S^2=\frac{1}{N}\sum_{i=1}^N y_i^2-\bar y ^2\pto \E(y^2)-\mu^2=\sigma^2$}
+	\end{frame}
+
+%	\begin{frame}
+%	\end{frame}
+
+	% --------------------------------------------------- Slide --
+	\subsection{Diferencias entre insesgadez y consistencia}
+	
+	\begin{frame}
+		\frametitle{Diferencias entre insesgadez y consistencia}
+		\begin{itemize}
+			\item <1->\alert{Insesgadez no implica consistencia.} 
+			\item [] <1-> Ejemplo: $\tilde y=y_1$
+			\item <2->\alert{Consistencia no implica insesgadez. }
+			\item [] <2-> Ejemplo: Varianza muestral $S^2$
+			\item <3->Teorema: Si $\lim_{N\to \infty} \E(\hat \theta_N)=\theta$ y $\lim_{N\to \infty}\Var(\hat \theta_N)=0$, entonces $\hat \theta_N \pto \theta \text{ cuando }N \to \infty$.
+			\item <4->\alert{Insesgadez asint\'otica no implica consistencia, y consistencia no implica insesgadez asint\'otica.}
+			\item [] <5->Ejemplo donde consistencia no implica insesgadez asint\'otica: $z_N = 0$ con probabilidad $1-1/N$, y $z_N = N$ con probabilidad $1/N$.
+		\end{itemize}
+	\end{frame}
+
+	%    \note[item]{Insesgadez no implica consistencia : Utilizar $y_1$ (primera observaci\'on de la muestra) como estimador de $\mu$.}
+	%    \note[item]{Consistencia no implica insesgadez: Varianza muestral es sesgada pero consistente.}
+	%    \note[item]{Convergencia en media (insesgadez asint\'otica) no implica consistencia, y consistencia no implica convergencia en media}
+	%    \note[item]{Ejemplo: $z_N = 0$ con prob $1-1/N$,y $z_N = a_N$ con prob $1/N$ . Es consistente, pero $\E z_N = a_N/N$ entonces para $a_N=N$ tenemos $\lim \E z_N = 1$.}
+
+%	\begin{frame}
+%    \end{frame}
+
+	\subsection{Convergencia en distribuci\'on}
+
+	% --------------------------------------------------- Slide --
+	\begin{frame}
+		\frametitle{Convergencia en distribuci\'on}
+		\begin{itemize}
+			\item Dada una variable aleatoria con funci\'on de distribuci\'on $F_N(u) = \Pr(z_N \leq u)$.\\
+			$z_N$ \alert{converge en distribuci\'on} a $z$ cuando $N \to \infty$ si para todo $u$ en donde $F(u) = \Pr(z \leq u)$ es continua,
+			\begin{align*}
+			F_N(u) \to F(u) \text{ cuando }N \to \infty.
+			\end{align*}
+		\end{itemize}
+	\end{frame}	
+	
+	% --------------------------------------------------- Slide --
+	\begin{frame}
+		\frametitle{Convergencia en distribuci\'on}
+		\begin{itemize}
+			\item Ejemplo: Demuestre que 
+			\begin{align*} 
+			F_N(u) = \frac{\exp(Nu)}{1+\exp(Nu)} \to F(u) = \left\{
+				\begin{array} {l l}
+					0 & \text{si } u < 0, \\
+					1 & \text{si } u \geq 0.										 
+				\end{array}
+			\right.
+			\end{align*}
+			
+			\begin{center}
+			\begin{figure}
+			\includegraphics[width=0.45\textwidth]{figures/convergencia_en_distribucion.pdf}
+			\caption{N=1 (azul), N=5 (naranja), N=10 (verde)}
+            \end{figure}			
+			\end{center}
+		\end{itemize}
+	\end{frame}	
+					
+%	\begin{frame}
+%	\end{frame}	
+%	
+%	
+%	\begin{frame}
+%	\end{frame}		
+	
+		% --------------------------------------------------- Slide --
+	\begin{frame}
+		\frametitle{Convergencia en distribuci\'on}
+		\begin{itemize}
+			\item Dada una variable aleatoria con funci\'on de distribuci\'on $F_N(u) = \Pr(z_N \leq u)$.\\
+			$z_N$ \alert{converge en distribuci\'on} a $z$ cuando $N \to \infty$ si para todo $u$ en donde $F(u) = \Pr(z \leq u)$ es continua,
+			\begin{align*}
+			F_N(u) \to F(u) \text{ cuando }N \to \infty.
+			\end{align*}
+			\item Notaci\'on: $z_N \dto z$.
+			\item <2->Convergencia en probabilidad implica convergencia en distribuci\'on: $z_N \pto z\implies z_N \dto z$.
+			\item <3-> Si $z_N$ converge en distribuci\'on a una constante entonces $z_N$ converge en probabilidad a dicha constante: $z_N \dto c \implies z_N \pto c$
+	
+			%            \note [item] {Convergencia punto a punto entre funciones.}
+			%            \note [item] {Graficar para normal}
+			%            \note [item] {$z_N \pto z\implies z_N \pto z$}
+			%            \note [item] {$z_N \dto c\implies z_N \pto c$ (convergence to a constant)}
+		\end{itemize}
+	\end{frame}
+	% --------------------------------------------------- Slide --
+
+	\begin{frame}
+		\frametitle{Distribuci\'on asint\'otica normal}
+		\begin{itemize}
+			\item Un estimador $\hat \theta_N$ de un par\'ametro $\theta$ se distribuye \alert{$\sqrt{N}$-asint\'oticamente normal} si,
+			\begin{align*}
+			\sqrt{N}(\hat \theta_N - \theta ) \dto \N(0,V),
+			\end{align*}
+			donde $V$ es la varianza asint\'otica de $\sqrt{N}(\hat \theta_N - \theta )$ y se denota $\Avar(\sqrt{N}(\hat \theta_N - \theta ))=V$.
+		\end{itemize}
+	\end{frame}
+	
+	\begin{frame}
+		\frametitle{Distribuci\'on asint\'otica normal}
+		\begin{itemize}
+			\item Decimos $\hat \theta_N \adistr \N(\theta, V/N)$ donde $\Avar(\hat \theta_N)=V/N$ es la \alert{varianza asint\'otica de $\hat \theta_N$} y $sd(\hat \theta_N)=V^{1/2}/\sqrt{N}$ es la \alert{desviaci\'on estandar asint\'otica de $\hat \theta_N$}.
+		\end{itemize}
+	\end{frame}
+
+		% --------------------------------------------------- Slide --
+	\begin{frame}
+		\frametitle{Distribuci\'on asint\'otica normal}
+		\begin{itemize}
+			\item <1-> Un estimador $\hat \theta_N$ de un par\'ametro $\theta$ se distribuye \alert{$\sqrt{N}$-asint\'oticamente normal} si,
+			\begin{align*}
+			\sqrt{N}(\hat \theta_N - \theta ) \dto \N(0,V),
+			\end{align*}
+			donde $V$ es la varianza asint\'otica de $\sqrt{N}(\hat \theta_N - \theta )$ y se denota $\Avar(\sqrt{N}(\hat \theta_N - \theta ))=V$.
+			\item <1-> Si no conocemos $V$?`c\'omo calculamos el $sd(\hat \theta_N)$?
+			\item <2-> Si tenemos un estimador consistente de $V$, $\hat V_N \pto V$, utilizamos 
+			 $se(\hat \theta_N)=\hat V_N^{1/2}/\sqrt{N}$ y lo llamamos \alert{error est\'andar asint\'otico de $\hat \theta_N$}
+		\end{itemize}
+	\end{frame}
+	
+		% --------------------------------------------------- Slide --
+	\subsection{Distribuci\'on asint\'otica normal.}
+	\begin{frame}
+		\frametitle{Lindeberg-L\'evy Teorema Central del l\'imite (TCL)}
+		\begin{itemize}
+			\item <1->Dada una muestra i.i.d. de tama\~no $N$, si $\Var(y)<\infty$, entonces cuando $N \to \infty$,
+			\begin{align*}
+			\sqrt{N} \frac{1}{N} \sum_{i=1}^N \left(y_i - \E(y)\right) \dto \N(0,\Var(y)).
+			\end{align*}
+			\item <2-> Tambi\'en se suele escribir:
+			\begin{align*}
+			\sqrt{N} \left(\frac{1}{N} \sum_{i=1}^N y_i - \E(y)\right) \dto \N(0,\Var(y)).
+			\end{align*}
+			%            \note[item] {Por i.i.d. tenemos $\E(\sqrt{N} \left(\bar y - \mu \right))=\mu $ y $\Var(\sqrt{N} \left(\bar y - \mu\right))=N\frac{\sigma^2}N=\sigma^2$. El TCL nos dice adem\'as que la distribuci\'on cuando $N$ es grande se asemeja a la normal.}
+		\end{itemize}
+	\end{frame}
+
+%	\begin{frame}
+%	\end{frame}
+	
+	% --------------------------------------------------- Slide --
+	\begin{frame}
+		\frametitle{Ejemplo: Bernoulli con p=0.78}
+		\vspace{-.25cm}
+		\begin{center}
+			\includegraphics[width=0.35\textwidth]{figures/sample_mean2.png}
+			\includegraphics[width=0.35\textwidth]{figures/sample_mean5.png}
+		\end{center}
+		
+		\begin{center}
+			\includegraphics[width=0.35\textwidth]{figures/sample_mean25.png}
+			\includegraphics[width=0.35\textwidth]{figures/sample_mean100.png}
+		\end{center}
+	\end{frame}
+	
+	% --------------------------------------------------- Slide --
+	\begin{frame}
+		\frametitle{Ejemplo: Distribuci\'on muestral de $\sqrt{N}(\hat p-p)$ para Bernoulli con p=0.78}
+		\vspace{-.25cm}
+		\begin{center}
+			\includegraphics[width=0.35\textwidth]{figures/std_sample_mean2.png}
+			\includegraphics[width=0.35\textwidth]{figures/std_sample_mean5.png}
+		\end{center}
+		\begin{center}
+			\includegraphics[width=0.35\textwidth]{figures/std_sample_mean25.png}
+			\includegraphics[width=0.35\textwidth]{figures/std_sample_mean100.png}
+		\end{center}
+	\end{frame}
+	
+%	\begin{frame}
+%	\end{frame}
+
+	\begin{frame}
+		\frametitle{Lindeberg-L\'evy Teorema Central del l\'imite (TCL)}
+		\begin{itemize}
+			\item Extensi\'on para vectores aleatorios. Definimos a $\mathbf{y}: \SR^m \times 1$ y $\Var(\mathbf{y})=\E[(\mathbf{y}-\mathbf{\mu})(\mathbf{y}-\mathbf{\mu})']$. Dada una muestra i.i.d. de tama\~no $N$, si $\E|\mathbf{y}|<\infty$, entonces cuando $N \to \infty$,
+			\begin{align*}
+			\sqrt{N}\frac{1}{N} \sum_{i=1}^N \left( \mathbf{y}_i-\E(\mathbf{y})\right)\dto \N(0,\Var(\mathbf{y})).
+			\end{align*}
+		\end{itemize}
+	\end{frame}
+		
+	% --------------------------------------------------- Slide --
+	\begin{frame}
+		\frametitle{Ejemplo}
+		\begin{itemize}
+			\item <1-> \alert{Media muestral}
+			\begin{align*}
+			\sqrt{N} (\bar y - \mu) \dto \N(0,\sigma^2).
+			\end{align*}
+		\end{itemize}
+	\end{frame}
+
+%	\begin{frame}
+%	\end{frame}
+
+	\begin{frame}
+		\frametitle{Ejemplo}
+		\begin{itemize}
+			\item  \alert{Media muestral}
+			\begin{align*}
+			\sqrt{N} (\bar y - \mu) \dto \N(0,\sigma^2).
+			\end{align*}
+			\item Decimos
+			\begin{align*}
+			\bar y \adistr \N(\mu, \sigma^2/N),
+			\end{align*}
+			\begin{align*}
+			sd(\bar y)=\sigma/\sqrt{N}.
+			\end{align*}
+			\item <2-> Para \alert{vectores} tenemos un resultado similar
+			\begin{align*}
+				\sqrt{N}   \left(\bar{\mathbf{y}} - \boldsymbol{\mu}\right)\dto \N(0,\boldsymbol{\Sigma}),
+			\end{align*}		
+		\end{itemize}
+	\end{frame}
+		% --------------------------------------------------- Slide --
+	\subsection{Teorema de Slutsky}
+
+	\begin{frame}
+		\frametitle{Teorema de Slutsky}
+		\begin{itemize}
+			\item Si $z_N \dto z$ y $c_N \pto c$  donde $c$ es una constante, cuando $N \to \infty$, entonces
+			\begin{enumerate}
+				\item $c_N+z_N \dto c+z$,
+				\bigskip
+				\item $c_N z_N \dto c \, z$,
+				\bigskip
+				\item $\frac{z_N}{c_N} \dto \frac{z}{c} \text{ si } c \neq 0$.
+			\end{enumerate}			
+		\end{itemize}
+	\end{frame}    
+
+	\begin{frame}
+		\frametitle{Teorema de Slutsky}
+		\begin{itemize}
+			\item \alert{Ejemplos}: Suponga que $z_N \dto z \sim \N(\mu,\sigma^2)$. Encuentre la distribución de asintótica de
+			\begin{enumerate}
+			  \item $c_N+z_N$,
+			  \item $c_N z_N$,
+			  \item $\frac{z_N}{c_N}$.			  
+			\end{enumerate}			
+		\end{itemize}
+	\end{frame}    
+
+%	\begin{frame}
+%	\end{frame}    
+%
+%	\begin{frame}
+%	\end{frame} 
+%	
+%	
+%	\begin{frame}
+%	\end{frame}    
+
+	\begin{frame}
+		\frametitle{Teorema de Slutsky}
+		\begin{itemize}
+			\item \alert{Ejemplos}: Suponga que $z_N \dto z \sim \N(\mu,\sigma^2)$ entonces
+			\begin{enumerate}
+			  \item $c_N+z_N\dto c+z \sim \N(c+\mu,\sigma^2)$,
+			  \item $c_N z_N\dto c z \sim \N(c\mu,c^2\sigma^2)$,
+			  \item $\frac{z_N}{c_N}\dto \frac{z}{c} \sim \N(\frac{\mu}{c},\frac{\sigma^2}{c^2})$.			  
+			\end{enumerate}			
+		\end{itemize}
+	\end{frame}    
+
+
+	\begin{frame}
+		\frametitle{Ejemplo: Media muestral con varianza muestral}
+		\begin{itemize}
+			\item Para $y$ escalar
+			\begin{align*}
+				\sqrt{N} \frac{(\bar y - \mu)}{\sqrt{S^2}} \dto \N(0,1).
+			\end{align*}
+			%\item []  Por lo tanto $\bar y \adistr \N(\mu, S^2/N)$ o $se(\bar y)=S/\sqrt{N}$.
+		\end{itemize}
+	\end{frame}    	
+
+%	\begin{frame} 
+%	\end{frame} 
+
+		% --------------------------------------------------- Slide --
+	\begin{frame}
+		\frametitle{Ejemplo}
+		\begin{itemize}
+			\item <1-> \alert{Varianza muestral}
+			\begin{align*}
+			\sqrt{N} (S^2 - \sigma^2) \dto \N(0,\mu_4-(\sigma^2)^2)
+			\end{align*}
+			donde $\mu_4=\E[(y-\E (y))^4]$.
+			%            \note[item] {
+			%                \begin{align*}
+			%                S^2&=\frac{1}{N}\sum_i (y_i-\bar y)^2=\frac{1}{N}\sum_i (y_i-\mu-\bar y+\mu)^2\\
+			%                &=\frac{1}{N}\sum_i [(y_i-\mu)^2+(\bar y-\mu)^2-2(y_i-\mu)(\bar y-\mu) ]\\
+			%                &=\frac{1}{N}\sum_i (y_i-\mu)^2-(\bar y-\mu)^2\\
+			%                \sqrt{N}(S^2-\sigma^2)&=\sqrt{N}\frac{1}{N}\sum_i (y_i-\mu)^2-\sigma^2-\sqrt{N}(\bar y-\mu)(\bar y-\mu)
+			%                \end{align*}
+			%            }
+			%            \note[item]{El primer t\'ermino converge a $\N(0,\mu^4-(\sigma^2)^2)$, el segundo t\'ermino converge a $\N(0, \sigma^2) \times 0$}
+		\end{itemize}
+	\end{frame}
+	
+%	\begin{frame}
+%	\end{frame}
+%	
+%	\begin{frame}
+%	\end{frame}
+
+	\begin{frame}
+        \frametitle{Repaso de estad\'istica:  Funciones de distribuci\'on}
+        \begin{itemize}
+            \item \alert{Normal univariante}: $x\sim \N(\mu, \sigma^2)$; normal estandarizada: $z\sim \N(0, 1)$
+            \item \alert{Normal multivariante}: $\mathbf{x}\sim \N(\mu, \Sigma)$ donde $\mathbf{x}:K \times 1$, $\mu:K \times 1$ y $\Sigma:K \times K$.
+        \end{itemize}
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.40\textwidth]{figures/normal.pdf}
+        \end{figure}
+    \end{frame}
+
+
+  \begin{frame}
+        \frametitle{Repaso de estad\'istica: Funciones de distribuci\'on}
+        \begin{itemize}
+            \item \alert{Normal univariante}: $x\sim \N(\mu, \sigma^2)$; normal estandarizada: $z\sim \N(0, 1)$
+            \item \alert{Normal multivariante}: $\mathbf{x}\sim \N(\mu, \Sigma)$ donde $\mathbf{x}:K \times 1$, $\mu:K \times 1$ y $\Sigma:K \times K$.
+            \item [] \alert{Propiedades}:
+            \begin{itemize}
+                \item  Dada $\mathbf{x}\sim \N(\mu, \Sigma)$ y $a:K \times 1$ entonces  $a'\mathbf{x} \sim \N(a'\mu,a'\Sigma a)$.
+                \item Dada $\mathbf{x}\sim \N(\mu, \Sigma)$ y $A:Q \times K$ entonces  $A\mathbf{x} \sim \N(A\mu,A\Sigma A')$.
+                \item Dada $\mathbf{x}\sim \N(\mu, \Sigma)$. Entonces $\{x_1,...,x_K\}$ son independientes si y s\'olo si $\Sigma$ es diagonal.
+            \end{itemize}
+        \end{itemize}
+    \end{frame}
+    
+  \begin{frame}
+        \frametitle{Repaso de estad\'istica: Funciones de distribuci\'on}
+        \begin{itemize}
+            \item Ejemplo: Normal bivariante. Obtener funci\'on de distribuci\'on de $x + y$. 
+        \end{itemize}
+    \end{frame}
+
+%  \begin{frame}
+%  \end{frame}
+%
+%  \begin{frame}
+%  \end{frame}
+
+  \begin{frame}
+        \frametitle{Repaso de \'algebra de matrices}
+        \begin{itemize}
+            \item Dado $A \geq 0$ (semidefinida positiva) podemos encontrar $B$ tal que $A = B B'$. Llamamos a $B = A ^{1/2}$ (por razones obvias).
+            \item Propiedad: $B^{-1}AB'^{-1} = B^{-1}BB'B'^{-1} = I$. Llamamos a $B ^{-1}= A^{-1/2}$.
+            \item Para resumir: dado  $A \geq 0$ siempre podemos definir una matriz $A^{-1/2}$ que verifica $A^{-1/2}AA'^{-1/2}=I$.
+        \end{itemize}
+    \end{frame}
+
+  \begin{frame}
+        \frametitle{Ejemplo}
+        \begin{itemize}
+            \item Ejemplo: Si $\mathbf{x}\sim \N(0, \Sigma)$ entonces   $\Sigma^{-\frac{1}{2}} \mathbf{x}\sim \N(0, I_K)$.
+        \end{itemize}
+    \end{frame}
+
+
+	\begin{frame}
+		\frametitle{Ejemplo: Media muestral con varianza muestral}
+		\begin{itemize}
+			\item Para $\mathbf{y}:K\times 1$ 
+				%tenemos $				\sqrt{N} \left(\bar{\mathbf{y}} - \boldsymbol{\mu}\right)\dto \N(0,\boldsymbol{\Sigma}),$ entonces
+			\begin{align*}
+				\sqrt{N} \widehat{\boldsymbol{\Sigma}}^{-1/2}  \left(\bar{\mathbf{y}} - \boldsymbol{\mu}\right)\dto \N(0,I_K).
+			\end{align*} 
+			donde $\Var(\mathbf{y})=\boldsymbol{\Sigma}$ y $\widehat{\boldsymbol{\Sigma}}\pto\boldsymbol{\Sigma}$.
+				%            \note[item] {Escribimos $\sqrt{N} (\bar y - \mu)\frac{1}{\sqrt{S^2}}$}
+				%            \note[item] {Usamos TCL en $\sqrt{N} (\bar y - \mu)\dto \N(0,\sigma^2)$ y $S \pto \sigma$}
+				%            \note[item] {Usamos Slutsky para ratio $\sqrt{N} \frac{(\bar y - \mu)}{\sqrt{S^2}}\dto \frac{\N(0,\sigma^2)}{\sigma}=\N(0,1)$}
+		\end{itemize}
+	\end{frame}    		
+
+%	\begin{frame}
+%	\end{frame}  
+%	
+%	\begin{frame}
+%	\end{frame}  
+		  		
+	% --------------------------------------------------- Slide --
+	\subsection{Teorema de la funci\'on continua (para $\dto$.)}
+	\begin{frame}
+		\frametitle{Teorema de la funci\'on continua (para $\dto$)}
+		\begin{itemize}
+			\item Si $z_N \dto z$ cuando $N \to \infty$ y $g: \SR^m\to \SR^k$ tiene un conjunto de puntos de discontinuidad $D_g$ tales que $\Pr(z \in D_g)=0$, entonces
+			\begin{align*}
+			g(z_N) \dto g(z) \text{ cuando }N \to \infty.
+			\end{align*}
+		\end{itemize}
+	\end{frame}
+
+    \begin{frame}
+        \frametitle{Repaso de estad\'istica:  Funciones de distribuci\'on}
+        \begin{itemize} 
+            \item \alert{Chi-cuadrado $\chi^2_Q$}
+            \item Dadas $\{z_1,...,z_Q\}$ independientes y $z_j\sim \N(0,1)$ entonces $y=\sum_{j=1}^Qz_j^2$ se distribuye como una $\chi^2_Q$.
+        \end{itemize}
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.50\textwidth]{figures/chi_2.pdf}
+        \end{figure}
+    \end{frame}
+
+	\begin{frame}
+		\frametitle{Ejemplo}
+		\begin{itemize}
+			\item Para $y$ escalar
+			\begin{align*}
+				N \frac{(\bar y - \mu)^2}{S^2} \dto \chi^2_1.
+			\end{align*}
+		\end{itemize}
+	\end{frame}
+
+%	\begin{frame}
+%	\end{frame}    		
+	
+	\begin{frame}
+		\frametitle{Ejemplo}
+		\begin{itemize}
+			\item Para $\mathbf{y}:K\times 1 $
+			\begin{align*}
+				N \left(\bar{\mathbf{y}} - \boldsymbol{\mu}\right)' \widehat{\boldsymbol{\Sigma}}^{-1}  \left(\bar{\mathbf{y}} - \boldsymbol{\mu}\right) \dto \chi^2_K.
+			\end{align*}
+		\end{itemize}
+	\end{frame}
+
+%	\begin{frame}
+%	\end{frame}
+%
+%
+%	\begin{frame}
+%	\end{frame}
+	
+% --------------------------------------------------- Slide --
+	\subsection{M\'etodo delta}
+	\begin{frame}
+		\frametitle{M\'etodo delta}
+		\begin{itemize}
+			\item Si $\sqrt{N}(\hat \theta_N - \theta ) \dto \N(0,V)$ donde $\theta$ es $m\times 1$, y $g(\theta):\SR^m\to \SR^k$ es continuamente diferenciable en la vecindad de $\theta$, entonces cuando $N \to \infty$
+			\begin{align*}
+			\sqrt{N}(g(\hat \theta_N) - g(\theta) ) \dto \N(0,G'VG),
+			\end{align*}
+			donde $G(z)=\frac{\partial}{\partial z}g(z)'$ y $G=G(\theta)$.
+		\end{itemize}
+	\end{frame}
+	
+	% --------------------------------------------------- Slide --
+	\begin{frame}
+		\frametitle{Ejemplos}
+		\begin{itemize}
+			\item \alert{Media muestral al cuadrado}: $\bar y^2$
+			\begin{align*}
+			\sqrt{N} (\bar y^2 - \mu^2) \dto \N(0, 4 \mu^2 \sigma^2).
+			\end{align*}
+			\item [] Nota: Diferencia con la distribuci\'on asint\'otica de $N (\bar y-\mu)^2$.
+		\end{itemize}
+	\end{frame}
+	
+%	\begin{frame}
+%	\end{frame}    		
+%
+%	\begin{frame}
+%	\end{frame} 
+	
+	% --------------------------------------------------- Slide --
+%	\begin{frame}
+%		\frametitle{Ejemplos}
+%		\begin{itemize}
+%			\item \alert{Efecto marginal para cambios grandes de log}
+%			\item [] Dado el modelo de regresi\'on $\log y = \beta_0 +\beta_{1} x+ u$ estamos interesados en el efecto marginal de $x$
+%			\begin{align*}
+%			\frac{\Delta \E(y|x)}{\E(y|x)} \times 100 \approx [(\exp(\beta_1)-1)  \times 100] \Delta x.
+%			\end{align*}
+%			Tenemos un estimador consistente $\hat \beta_1$ que satisface $\sqrt{N}(\hat \beta_1-\beta_1)\dto \N(0, V_{11})$. Proponga un estimador consistente de $(\exp(\beta_1)-1)  \times 100$ y encuentre su distribuci\'on asint\'otica.
+%		\end{itemize}
+%	\end{frame}
+	% --------------------------------------------------- Slide --
+	\begin{frame}
+		\frametitle{Ejemplos}
+		\begin{itemize}
+			\item Dado el vector aleatorio $(x_1,\, x_2)$
+			con
+			\begin{align*}
+				\E\left(
+				\begin{array} {c}
+					x_1 \\
+					x_2
+				\end{array}
+				\right)=
+				\left(
+				\begin{array} {c}
+					\mu_1 \\
+					\mu_2
+				\end{array}
+				\right)
+			\end{align*} y
+			\begin{align*}
+				\Var \left(
+				\begin{array} {c}
+					x_1 \\
+					x_2
+				\end{array}
+				\right)=
+				\left(
+				\begin{array} {c c}
+					\sigma^2_1 &  \sigma_{12}\\
+					\sigma_{12} &  \sigma^2_{2}
+				\end{array}
+				\right)
+			\end{align*}
+			?`Cu\'al es la distribuci\'on asint\'otica de $z_N=\log(\bar x_1)+\log(\bar x_2)$
+		\end{itemize}
+	\end{frame}
+
+%	\begin{frame}
+%	\end{frame}
+%
+%	\begin{frame}
+%	\end{frame}
+	
+	
+	\begin{frame}
+		\frametitle{Ejemplos}
+		\begin{itemize}
+			\item Dado el vector aleatorio $(x_1,\, x_2)$
+			con
+			\begin{align*}
+			\E\left(
+			\begin{array} {c}
+			x_1 \\
+			x_2
+			\end{array}
+			\right)=
+			\left(
+			\begin{array} {c}
+			\mu_1 \\
+			\mu_2
+			\end{array}
+			\right)
+			\end{align*} y
+			\begin{align*}
+			\Var \left(
+			\begin{array} {c}
+			x_1 \\
+			x_2
+			\end{array}
+			\right)=
+			\left(
+			\begin{array} {c c}
+			\sigma^2_1 &  \sigma_{12}\\
+			\sigma_{12} &  \sigma^2_{2}
+			\end{array}
+			\right)
+			\end{align*}
+			?`Cu\'al es la distribuci\'on asint\'otica de $z_N=\log(\bar x_1)+\log(\bar x_2)$
+			\item Respuesta 
+			\begin{align*}
+             \sqrt{N}((\log(\bar x_1)+\log(\bar x_2))-(\log \mu_1+\log \mu_2)) \\ 
+             \dto\N(0,\frac{\sigma_1^2}{\mu_1^2}+\frac{\sigma_2^2}{\mu_2^2}+2\frac{\sigma_{12}}{\mu_1\mu_2})
+            \end{align*}
+		\end{itemize}
+	\end{frame}
+	
+	% --------------------------------------------------- Slide --
+\end{document}

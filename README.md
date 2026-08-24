@@ -6,7 +6,7 @@ Material del curso Análisis Econométrico (Magíster en Economía, ILADES/UAH),
 
 - `Syllabus_Analisis_Econometrico_2026.docx` — programa del curso
 - `Cronograma_Analisis_Econometrico_2026.xlsx` — cronograma semanal
-- `slides/` — diapositivas de clases
+- `slides/` — diapositivas de clases (`.tex` y figuras, listas para compilar; sin código de generación de figuras ni notas de clase). `slides/extra/` contiene material adicional que no forma parte del programa vigente (p. ej. Bootstrap)
 - `problem-sets/` — guías de ejercicios (sin soluciones)
 - `TA/` — material de ayudantía
 
