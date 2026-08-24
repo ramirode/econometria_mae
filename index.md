@@ -16,6 +16,7 @@ Material del curso, a cargo de Ramiro de Elejalde.
 ## Materiales
 
 - [Slides](https://github.com/ramirode/econometria_mae/tree/main/slides)
+  - [Clase 1: Introducción](https://github.com/ramirode/econometria_mae/blob/main/slides/1.intro/econometria_I_1.intro.pdf)
 - [Tareas](https://github.com/ramirode/econometria_mae/tree/main/problem-sets)
 - [Material de ayudantía](https://github.com/ramirode/econometria_mae/tree/main/TA)
 
