@@ -22,3 +22,7 @@ entregas/
 *_sol.pdf
 *solucion*
 *pauta*
+
+# latexmk dependency databases
+*.fls
+*.fdb_latexmk
