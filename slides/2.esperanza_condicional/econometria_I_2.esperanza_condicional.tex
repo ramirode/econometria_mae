@@ -71,6 +71,7 @@
   \newcommand{\tgmm}{\hat \theta_{GMM}}
   \newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
   \def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+  \newcommand{\term}[1]{\structure{\textbf{#1}}} % label/definition markup, distinct from \alert (reserved for genuine callouts)
 
 
 \title [Esperanza Condicional y Regresi\'on] {Econometr\'ia I\\
@@ -92,7 +93,7 @@
         \frametitle{Outline}
         \small
         \tableofcontents
-        \alert{Referencias}: Cap. 3.1.1 y 3.1.2 de Angrist and Pischke, y cap. 2 de Wooldridge.
+        \term{Referencias}: Cap. 3.1.1 y 3.1.2 de Angrist and Pischke, y cap. 2 de Wooldridge.
     \end{frame}
     % --------------------------------------------------- Slide --
     \begin{frame}
@@ -110,7 +111,7 @@
             ?`Qu\'e momento poblacional \alert{mide} el efecto de un a\~no adicional de educaci\'on en salarios?
             % En la realidad hay muchos elementos aleatorios entre las variables que nos interesa analizar. Como investigadores sociales nos interesa encontrar diferencias sistem\'aticas originadas en distintos valores x. Una forma util, aunque no la \'unica, en fijarnos en diferencias en la media de y para diferentes valor de x.
             
-            \item <3-> [] $\Rightarrow$ \alert{Esperanza condicional}
+            \item <3-> [] $\Rightarrow$ \term{Esperanza condicional}
             % Ejemplo 1: y = Rendimiento educativo  x = tama\~no de clase.
             % Ejemplo 2: y = Horas trabajadas       x = numero de hijos.
             % Ejemplo 3: y = Cantidad demandada     x = precio del bien
@@ -140,7 +141,7 @@
             ?`Qu\'e momento poblacional \alert{mide} el efecto de un a\~no adicional de educaci\'on en salarios?
             % En la realidad hay muchos elementos aleatorios entre las variables que nos interesa analizar. Como investigadores sociales nos interesa encontrar diferencias sistem\'aticas originadas en distintos valores x. Una forma util, aunque no la \'unica, en fijarnos en diferencias en la media de y para diferentes valor de x.
             
-            \item  [] $\Rightarrow$ \alert{Esperanza condicional}
+            \item  [] $\Rightarrow$ \term{Esperanza condicional}
             % Ejemplo 1: y = Rendimiento educativo  x = tama\~no de clase.
             % Ejemplo 2: y = Horas trabajadas       x = numero de hijos.
             % Ejemplo 3: y = Cantidad demandada     x = precio del bien
@@ -153,7 +154,7 @@
             \hyperlink{figure2}{\beamergotobutton{educaci\'on-salarios}}
             \bigskip
             
-            \item <2-> [] $\Rightarrow$ \alert{Modelo de Regresi\'on Lineal}: Es la mejor aproximaci\'on lineal a la esperanza condicional.
+            \item <2-> [] $\Rightarrow$ \term{Modelo de Regresi\'on Lineal}: Es la mejor aproximaci\'on lineal a la esperanza condicional.
             
             \hyperlink{figure3}{\beamergotobutton{educaci\'on-salarios}}
             %Mencionar que matching puede ayudar para capturar efectos no lineales
@@ -165,28 +166,28 @@
     \begin{frame} [label=back3]
         \frametitle{Repaso de estad\'istica}      
         \begin{itemize}
-            \item \alert{Poblaci\'on}
+            \item \term{Poblaci\'on}
             \item [] El grupo o colecci\'on de todos los posibles elementos de inter\'es. Pensamos en la poblaci\'on como infinitamente grande.
             %\item [] Ejemplo: Distritos escolares
-            \item \alert{Variable aleatoria $y$}
+            \item \term{Variable aleatoria $y$}
             \item [] Resumen num\'erico de un resultado aleatorio.
             %\item [] Ejemplo: Nota media en el distrito o ratio de estudiantes/profesores en el distrito
-            \item \alert{Funci\'on de probabilidad de $y$}
+            \item \term{Funci\'on de probabilidad de $y$}
             \item [] Probabilidad que $y$ asuma distintos valores en la poblaci\'on: $\Pr(y=t)$. 
             %\item [] Ejemplo: $\Pr(y=650)$ cuando es discreta o $\Pr(630 < y < 660)$ cuando y es continua. 
      	\end{itemize}             
     \end{frame}    
     % --------------------------------------------------- Slide --
    
-    \begin{frame} [label=back3]
-        \frametitle{Repaso de estad\'istica}      
+    \begin{frame} [label=back3b]
+        \frametitle{Repaso de estad\'istica}
         \begin{itemize}
-            \item \alert{Esperanza o media poblacional}: $\mu=\E(y)=\sum_t t \, \Pr(y=t)$.
+            \item \term{Esperanza o media poblacional}: $\mu=\E(y)=\sum_t t \, \Pr(y=t)$.
             \begin{itemize}
                 \item Propiedades: La esperanza es un operador lineal.
                 \item [] $\E(a+bx)=a+b\E(x)$
             \end{itemize}
-    		\item \alert{Varianza}: $\sigma^2=\Var(y)=\E[(y-\E (y))^2]$
+    		\item \term{Varianza}: $\sigma^2=\Var(y)=\E[(y-\E (y))^2]$
     		\begin{itemize}
     			\item Propiedades
     			\item [] $\Var(y)=\E(y^2)-\E (y)^2$
@@ -199,17 +200,53 @@
     \begin{frame}
         \frametitle{Funci\'on de probabilidad conjunta y condicional}
         \begin{itemize}
-            \item \alert{Funci\'on de probabilidad conjunta} de $x,y$: Probabilidad que $x$ e $y$ asuman distintos valores en la poblaci\'on $\Pr(x=u,y=t)$.
+            \item \term{Funci\'on de probabilidad conjunta} de $x,y$: Probabilidad que $x$ e $y$ asuman distintos valores en la poblaci\'on $\Pr(x=u,y=t)$.
             \begin{itemize}
-                \item \alert{Funci\'on de probabilidad marginal} de $y$: $\Pr(y=t)= \sum_u\Pr(x=u,y=t)$
-            \end{itemize}            
-        	\item \alert{Funci\'on de probabilidad condicional}
+                \item \term{Funci\'on de probabilidad marginal} de $y$: $\Pr(y=t)= \sum_u\Pr(x=u,y=t)$
+            \end{itemize}
+        	\item \term{Funci\'on de probabilidad condicional}
             \item [] La probabilidad de $y$ dado un valor de otra variable aleatoria $x$: $\Pr(y|x)=\frac{\Pr(y,x)}{\Pr(x)}$.
             \note[item] {La distribuci\'on de las notas estandarizadas dado que $STR$<20}
         \end{itemize}
     \end{frame}
     % --------------------------------------------------- Slide --
-    
+    \begin{frame}
+    	\frametitle{Ejemplo}
+    	\begin{itemize}
+    		\item $x$ puede asumir dos valores 0, 1; $y$ puede asumir tres valores  -1,0,1.
+    		\begin{table}
+    			\small
+    			\caption{Funci\'on de probabilidad conjunta}
+    			\begin{tabular}{r r c c }
+    				\toprule
+    				& &   \multicolumn{2}{c}{$x$}  \\
+    				\cmidrule(r){3-4}
+    				&            & 0   & 1         \\
+    				\midrule
+    				& -1  & 1/8 & 1/6 \\
+    				$y$    &  0  & 1/4 & 1/6 \\
+    				&  1  & 1/8 & 1/6 \\
+    				\bottomrule
+    			\end{tabular}
+    		\end{table}
+    		\item Calcule probabilidades marginales y $\E(Y)$.
+    		\item Calcule probabilidades condicionales y $\E(Y|X)$.
+    	\end{itemize}
+    \end{frame}
+    % --------------------------------------------------- Slide --
+    \begin{frame}
+    	\frametitle{Ejemplo (soluci\'on)}
+    	\begin{itemize}
+    		\item \term{Marginales}: $\Pr(x=0)=\Pr(x=1)=1/2$. \\
+    		$\Pr(y=-1)=\Pr(y=1)=7/24$, $\Pr(y=0)=10/24=5/12$.
+    		\item \term{Esperanza}: $\E(Y)=(-1)\cdot\tfrac{7}{24}+0\cdot\tfrac{10}{24}+1\cdot\tfrac{7}{24}=0$.
+    		\bigskip
+    		\item \term{Condicionales dado $x=0$}: $\Pr(y=-1|x=0)=\Pr(y=1|x=0)=1/4$, $\Pr(y=0|x=0)=1/2$. \quad $\E(Y|X=0)=0$.
+    		\item \term{Condicionales dado $x=1$}: $\Pr(y=-1|x=1)=\Pr(y=0|x=1)=\Pr(y=1|x=1)=1/3$. \quad $\E(Y|X=1)=0$.
+    	\end{itemize}
+    \end{frame}
+    % --------------------------------------------------- Slide --
+
 %    \subsection*{Repaso de estad\'istica}
 %    
 %    \begin{frame} [label=back3]
@@ -298,7 +335,7 @@
         \frametitle{Esperanza condicional}
         La esperanza condicional de la variable dependiente $y$ dado un vector de $K$ variables explicativas $x=(x_{1},...,x_{K})$ es la media poblacional de $y$ manteniendo fijas las $x$'s.
         \begin{itemize}
-            \item Si $\E|y|<\infty$, la funci\'on de \alert{esperanza condicional} de $y$ dado $x=u$ es 
+            \item Si $\E|y|<\infty$, la funci\'on de \term{esperanza condicional} de $y$ dado $x=u$ es 
             \begin{align*}
             \E(y|x=u)=\int t \, f_{y|x}(t|u) dt
             \end{align*}
@@ -315,15 +352,9 @@
      		\begin{table}
      			\small
      			\caption{Funci\'on de esperanza condicional}
-     			\begin{tabular}{r c c }
-     				\toprule
-     				& $\E(ahe|bachelor)$& $\Pr(bachelor)$ \\
-     				\midrule
-     				$bachelor = 0$    & 15.33  & 0.52 \\
-     				$bachelor = 1$    & 22.91  & 0.48 \\
-     				\bottomrule	
-     			\end{tabular}
+     			\input{tables/tabla_cef_universitario.tex}
      		\end{table}
+     		\footnotesize Hombres entre 30 y 65 a\~nos que trabajan, Casen 2024. Salario: ingreso mensual del trabajo, en miles de \$. Universitario: complet\'o una carrera profesional (4+ a\~nos), mag\'ister o doctorado en una universidad.
     \end{frame}
    % --------------------------------------------------- Slide --
     \begin{frame}
@@ -354,10 +385,23 @@
             \end{align*}
             \bigskip
             \item []  Importante: $\E(y)=\E_x[\E_y(y|x)]$, tomamos primero la esperanza en $y$ manteniendo constante $x$ y luego tomamos la esperanza en $x$.
-            \bigskip
-            \item [] Demostraci\'on: Utilizar $f_y=\int_x f_{xy}dx$ y $f_{y|x}=f_{xy}/f_{x}$.
         \end{itemize}
-    \end{frame}    
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Ley de esperanzas iteradas (LEI): demostraci\'on}
+        \small
+        \begin{itemize}
+            \item [] Demostraci\'on (caso discreto):
+            \begin{align*}
+            \E(y) = & \sum_t t \, \Pr(y=t) \\
+                  = & \sum_t \sum_u t \, \Pr(x=u,y=t) \\
+                  = & \sum_u \left[\sum_t t \, \Pr(y=t|x=u)\right] \Pr(x=u) \\
+                  = & \sum_u \E(y|x=u) \, \Pr(x=u) = \E_x[\E(y|x)].
+            \end{align*}
+            \item [] Se usa: $\Pr(y=t)=\sum_u \Pr(x=u,y=t)$ (marginal a partir de la conjunta, con el orden de suma ya invertido en la tercera l\'inea); $\Pr(x=u,y=t)=\Pr(y=t|x=u)\Pr(x=u)$; y la definici\'on de $\E(y|x=u)$.
+        \end{itemize}
+    \end{frame}
           % --------------------------------------------------- Slide --       
         
     \begin{frame} [fragile]
@@ -365,14 +409,7 @@
      		\begin{table}
      			\small
      			\caption{Funci\'on de esperanza condicional}
-     			\begin{tabular}{r c c }
-     				\toprule
-     				& $\E(ahe|bachelor)$& $\Pr(bachelor)$ \\
-     				\midrule
-     				$bachelor = 0$    & 15.33  & 0.52 \\
-     				$bachelor = 1$    & 22.91  & 0.48 \\
-     				\bottomrule	
-     			\end{tabular}
+     			\input{tables/tabla_cef_universitario.tex}
      		\end{table}
 	\end{frame}
 
@@ -381,21 +418,14 @@
      		\begin{table}
      			\small
      			\caption{Funci\'on de esperanza condicional}
-     			\begin{tabular}{r c c }
-     				\toprule
-     				& $\E(ahe|bachelor)$& $\Pr(bachelor)$ \\
-     				\midrule
-     				$bachelor = 0$    & 15.33  & 0.52 \\
-     				$bachelor = 1$    & 22.91  & 0.48 \\
-     				\bottomrule	
-     			\end{tabular}
+     			\input{tables/tabla_cef_universitario.tex}
      		\end{table}
     \begin{align*}
-    \E(ahe)=&\E[\E(ahe|bachelor)]\\
-    =&\E(ahe|bachelor=0) \Pr(bachelor=0)\\
-    &+\E(ahe|bachelor=1) \Pr(bachelor=1)\\
-    =& 15.33 \times (1-0.48)  +  22.91 \times 0.48 
-    =18.97
+    \E(\text{salario})=&\E[\E(\text{salario}|universitario)]\\
+    =&\E(\text{salario}|universitario=0) \Pr(universitario=0)\\
+    &+\E(\text{salario}|universitario=1) \Pr(universitario=1)\\
+    =& 769 \times 0.83  +  1{,}961 \times 0.17
+    \approx 971.6
     \end{align*}
 	\end{frame}
 
@@ -403,7 +433,7 @@
     \begin{frame}
         \frametitle{Independencia, independencia en media y correlaci\'on.}
         \begin{itemize}
-              		\item \alert{Independencia} 
+              		\item \term{Independencia}
               		\item [] ${x}\independent{y}$ (independientes) si $\Pr(y|x)=\Pr(y)$.
               		\item [] Una definici\'on equivalente: ${x}\independent{y}$ (independientes) si $\Pr(x,y)=\Pr(y)\Pr(x)$. 
         \end{itemize}    
@@ -414,7 +444,7 @@
     \begin{frame}
         \frametitle{Independencia, independencia en media y correlaci\'on.}
         \begin{itemize}
-              		\item \alert{Independencia en media} 
+              		\item \term{Independencia en media}
               		\item [] $\E(y|x)=\E(y)$.
         \end{itemize}    
     \end{frame}
@@ -424,7 +454,7 @@
     \begin{frame}
         \frametitle{Independencia, independencia en media y correlaci\'on.}
         \begin{itemize}
-    			\item \alert{Covarianza} entre $x,y$: $\Cov(x,y)=\E[(x-\E (x))(y-\E (y))]$
+    			\item \term{Covarianza} entre $x,y$: $\Cov(x,y)=\E[(x-\E (x))(y-\E (y))]$
     			\begin{itemize}
     				\item Mide la relaci\'on lineal entre $x$ e $y$.
     				\item Propiedades:
@@ -440,7 +470,7 @@
     \begin{frame}
         \frametitle{Independencia, independencia en media y correlaci\'on.}
         \begin{itemize}
-            \item \alert{Independencia en media implica ausencia de correlaci\'on}
+            \item \term{Independencia en media implica ausencia de correlaci\'on}
             \begin{align*}
             \E(y|x) = \E(y) \implies \Cov(x,y) = 0.
             \end{align*}
@@ -450,7 +480,7 @@
     \begin{frame}
         \frametitle{Independencia, independencia en media y correlaci\'on.}
         \begin{itemize}
-            \item \alert{Independencia en media implica ausencia de correlaci\'on}
+            \item \term{Independencia en media implica ausencia de correlaci\'on}
             \begin{align*}
             \E(y|x) = \E(y) \implies \Cov(x,y) = 0.
             \end{align*}
@@ -469,7 +499,7 @@
     \begin{frame}
         \frametitle{Independencia, independencia en media y correlaci\'on.}
         \begin{itemize}
-            \item <1-> \alert{Independencia implica independencia en media}.
+            \item <1-> \term{Independencia implica independencia en media}.
             \begin{align*}
             y \independent x \iff f_{y|x}=f_{y} \implies \E(y|x) = \E(y).
             \end{align*}
@@ -480,7 +510,7 @@
     \begin{frame}
         \frametitle{Independencia, independencia en media y correlaci\'on.}
         \begin{itemize}
-            \item <1-> \alert{Independencia implica independencia en media}.
+            \item <1-> \term{Independencia implica independencia en media}.
             \begin{align*}
             y \independent x \iff f_{y|x}=f_{y} \implies \E(y|x) = \E(y).
             \end{align*}
@@ -502,13 +532,39 @@
             \item <1-> Resumen:\\
             $y \independent x \implies \E(y|x) = \E(y) \implies \Cov(x, y) = 0$
             \uncover <2->{$\Cov(y, x) = 0   \centernot \implies  \E(y|x) = \E(y) \centernot \implies  y \independent x $}
-            \item <3-> En la ayudant\'ia se ven casos en donde: 
+            \item <3-> En la ayudant\'ia se ven casos en donde:
             \begin{enumerate}
-              \item $\E(y|x) = \E(y) \centernot \implies  y \independent x $, 
+              \item $\E(y|x) = \E(y) \centernot \implies  y \independent x $,
               \item $\Cov(y, x) = 0   \centernot \implies  \E(y|x) = \E(y) $
-            \end{enumerate} 
-        
+            \end{enumerate}
+
         \end{itemize}
+    \end{frame}
+    % --------------------------------------------------- Slide --
+    \begin{frame}
+    	\frametitle{Caso (1): el ejemplo del Repaso}
+    	\small
+    	\begin{itemize}
+    		\item Recordar la tabla de probabilidad conjunta del Repaso ($x\in\{0,1\}$, $y\in\{-1,0,1\}$):
+    		\begin{table}
+    			\footnotesize
+    			\caption{Funci\'on de probabilidad conjunta}
+    			\begin{tabular}{r r c c }
+    				\toprule
+    				& &   \multicolumn{2}{c}{$x$}  \\
+    				\cmidrule(r){3-4}
+    				&            & 0   & 1         \\
+    				\midrule
+    				& -1  & 1/8 & 1/6 \\
+    				$y$    &  0  & 1/4 & 1/6 \\
+    				&  1  & 1/8 & 1/6 \\
+    				\bottomrule
+    			\end{tabular}
+    		\end{table}
+    		\item $\E(Y|X=0)=\E(Y|X=1)=\E(Y)=0$ $\Rightarrow$ \term{independencia en media se cumple}.
+    		\item $\Cov(X,Y)=\E(XY)-\E(X)\E(Y)=0-0=0$ $\Rightarrow$ \term{covarianza cero}.
+    		\item \alert{Pero $X$ e $Y$ no son independientes}: la distribuci\'on condicional de $Y$ cambia con $X$ --- por ejemplo $\Pr(y=0|x=0)=1/2 \neq 1/3=\Pr(y=0|x=1)$ (equivalentemente, $\Var(Y|X=0)=1/2 \neq 2/3=\Var(Y|X=1)$).
+    	\end{itemize}
     \end{frame}
     % --------------------------------------------------- Slide --
     \subsection{Descomposici\'on}
@@ -548,7 +604,7 @@
     \begin{frame}
         \frametitle{La esperanza condicional es el mejor predictor de $y$}
         \begin{itemize}
-            \item <1-> La esperanza condicional es la funci\'on de $x$ que \alert{minimiza el error cuadr\'atico medio de predicci\'on}, es decir
+            \item <1-> La esperanza condicional es la funci\'on de $x$ que \term{minimiza el error cuadr\'atico medio de predicci\'on}, es decir
             \begin{align*}
             \E(y|x) = \arg \min_{m(x)} \E[(y-m(x))^2].
             \end{align*}
@@ -561,7 +617,7 @@
         \frametitle{La esperanza condicional es el mejor predictor de $y$}
         \small
         \begin{itemize}
-            \item <1-> La esperanza condicional es la funci\'on de $x$ que \alert{minimiza el error cuadr\'atico medio de predicci\'on}, es decir
+            \item <1-> La esperanza condicional es la funci\'on de $x$ que \term{minimiza el error cuadr\'atico medio de predicci\'on}, es decir
             \begin{align*}
             \E(y|x) = \arg \min_{m(x)} \E[(y-m(x))^2].
             \end{align*}
@@ -636,7 +692,7 @@
     \begin{frame}
         \frametitle{Modelo de Regresi\'on Lineal : $\LP(y|x)=x'\beta$}
         \begin{itemize}
-            \item <1-> \alert{Mejor predictor lineal}: Es la funci\'on lineal $\LP(y|x)=x'\beta$ que minimiza el error cuadr\'atico medio de predicci\'on \alert{entre las funciones lineales en $x$}, es decir
+            \item <1-> \term{Mejor predictor lineal}: Es la funci\'on lineal $\LP(y|x)=x'\beta$ que minimiza el error cuadr\'atico medio de predicci\'on \alert{entre las funciones lineales en $x$}, es decir
             \begin{align*}
             \beta = \arg \min_b \E[(y-x'b)^2],
             \end{align*}
@@ -647,7 +703,8 @@
     \begin{frame}
         \frametitle{Ejemplo: Tamaño de clase y notas}
         \begin{figure}
-            \includegraphics[width=0.75\textwidth]{figures/test_score_class_size.png}
+            \includegraphics[width=0.6\textwidth]{figures/test_score_class_size.png}
+            \caption{\footnotesize Relaci\'on entre el ratio alumnos/profesor (\emph{str}) y el puntaje promedio de examen (\emph{testscr}) de un distrito. California Test Score Data (Stock \& Watson), 420 distritos escolares, a\~no 1998-99.}
         \end{figure}
     \end{frame}
     
@@ -662,7 +719,7 @@
                 \end{align*}
         		\item <2->
                 Si $\E(x x')$ es no singular, entonces $\beta$ existe y es \'unica.
-            \item <2->  \alert{M\'etodo de momentos}: $\beta$ tal que  
+            \item <2->  \term{M\'etodo de momentos}: $\beta$ tal que
             $\E[x(y-x'\beta)]=0$.
             \end{itemize}
     \end{frame}
@@ -681,6 +738,25 @@
             \beta_0 &= \E(y)-\beta_1\E(x_{1}).
             \end{align*}
             \bigskip
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}
+        \frametitle{Ejemplo: Modelo de regresi\'on simple (demostraci\'on)}
+        \begin{itemize}
+            \item [] Demostraci\'on por \term{m\'etodo de momentos}: con $x=(1,x_{1})$, la condici\'on $\E[x(y-x'\beta)]=0$ son dos ecuaciones escalares,
+            \begin{align*}
+            \E[y-\beta_0-\beta_1 x_{1}] &= 0, \\
+            \E[x_{1}(y-\beta_0-\beta_1 x_{1})] &= 0.
+            \end{align*}
+            \bigskip
+            \item [] De la primera, $\beta_0=\E(y)-\beta_1\E(x_{1})$. Reemplazando en la segunda,
+            \begin{align*}
+            \E(x_{1}y)-[\E(y)-\beta_1\E(x_{1})]\E(x_{1})-\beta_1\E(x_{1}^2) &= 0\\
+            [\E(x_{1}y)-\E(x_{1})\E(y)] - \beta_1[\E(x_{1}^2)-\E(x_{1})^2] &= 0\\
+            \Cov(x_{1},y)-\beta_1\Var(x_{1}) &= 0
+            \implies \beta_1=\frac{\Cov(x_{1},y)}{\Var(x_{1})}.
+            \end{align*}
         \end{itemize}
     \end{frame}
 
@@ -721,9 +797,10 @@
             \begin{align*}
             y = x'\beta + u,
             \end{align*}
-            donde $u$ cumple que $\E(xu)=0$.           
+            donde $u$ cumple que $\E(xu)=0$.
             \item <1-> Interpretaci\'on: Una variable aleatoria $y$ se puede descomponer en una parte ``explicada por $x$'' y otra parte no correlada con $x$.
             \item <2-> Propiedad: Si denotamos el valor predicho de $y$ dado $x$ como $\hat y=\LP(y|x)=x'\beta$ entonces $\E(\hat y u)=0$ y si $x$ incluye la constante $\Cov(\hat y, u)=0$.
+            \item <2-> [] Demostraci\'on: $\E(\hat y u)=\E(x'\beta \, u)=\beta'\E(xu)=0$, usando $\E(xu)=0$. Como $x$ incluye la constante, $\E(u)=0$ (ver diapositiva anterior), entonces $\Cov(\hat y,u)=\E(\hat y u)-\E(\hat y)\E(u)=0-\E(\hat y)\cdot 0=0$.
         \end{itemize}
     \end{frame}
     
@@ -744,20 +821,10 @@
             \begin{align*}
             x_{k} = \sum_{j\neq k} \gamma_j \, x_{j}+\tilde x_{k} =\hat x_{k}+\tilde x_{k}.
             \end{align*}
-            Ejemplo: Dado $y=\beta_0+\beta_1 x_1+\beta_2 x_2+u$, tenemos $x_1=\gamma_0+\gamma_1x_2+\tilde x_1$ y $y+\delta_0+\delta_1 \tilde x_1+e$. Entonces $\delta_1=\beta_1$.
+            Ejemplo: Dado $y=\beta_0+\beta_1 x_1+\beta_2 x_2+u$, tenemos $x_1=\gamma_0+\gamma_1x_2+\tilde x_1$ y $y=\delta_0+\delta_1 \tilde x_1+e$. Entonces $\delta_1=\beta_1$.
         \end{itemize}
     \end{frame}
-    % --------------------------------------------------- Slide --
-    \begin{frame}
-        \frametitle{Regresi\'on particionada}
-        \begin{align*}
-        \beta_{k} = \frac{\Cov(\tilde x_{k},y)}{\Var(\tilde x_{k})}
-        \end{align*}
-        \begin{itemize}
-            \item <1-> Interpretaci\'on: $\beta_k$ mide el efecto de $x_k$ sobre $y$, una vez que filtramos (controlamos por) el efecto de las dem\'as variables explicativas.
-        \end{itemize}
-    \end{frame}
-    % Esta interpretaci\'on esta relacionada a la posibilidad de que el modelo de regresi\'on mida un efecto causal. En el caso del tama\~no de clase, dado que no tenemos datos experimentales, queremos ver el efecto del tama\~no de clase en rendimiento acad\'emico controlando por diferencias socio-econom\'omicas de los estudiantes.
+
     % --------------------------------------------------- Slide --
     \begin{frame}
         \frametitle{Regresi\'on particionada}
@@ -779,15 +846,35 @@
             \end{align*}
         \end{itemize}
     \end{frame}
+    
+    % --------------------------------------------------- Slide --
+	\begin{frame}
+		\frametitle{Regresi\'on particionada}
+		\begin{align*}
+			\beta_{k} = \frac{\Cov(\tilde x_{k},y)}{\Var(\tilde x_{k})}
+		\end{align*}
+		\begin{itemize}
+			\item <1-> Interpretaci\'on: $\beta_k$ mide el efecto de $x_k$ sobre $y$, una vez que filtramos (controlamos por) el efecto de las dem\'as variables explicativas.
+		\end{itemize}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Regresi\'on particionada y efecto causal}
+		\begin{itemize}
+			\item Esta interpretaci\'on est\'a relacionada con la posibilidad de que el modelo de regresi\'on mida un \term{efecto causal}.
+			\item Ejemplo (ver \texttt{1.intro}): el efecto del tama\~no de clase en el rendimiento acad\'emico, sin datos experimentales, controlando por diferencias socio-econ\'omicas de los estudiantes.
+			\item \term{Agregar un control observable y volver a leer $\beta_k$} es exactamente la operaci\'on de regresi\'on particionada que acabamos de ver --- pero no alcanza para identificar un efecto causal: hay que descartar otros canales de endogeneidad (omisi\'on de variable relevante, simultaneidad, error de medici\'on, selecci\'on muestral).
+			\item Ver \texttt{1.intro}: \emph{?`Es un efecto causal?}, \emph{Soluciones}, \emph{Interpretaci\'on}.
+		\end{itemize}
+	\end{frame}
     % --------------------------------------------------- Slide --
     \subsection{Justificaci\'on de utilizar el modelo de regresi\'on}
     \begin{frame}
     	\frametitle{Justificaci\'on de utilizar el modelo de regresi\'on como aproximaci\'on a la esperanza condicional.}
     	\begin{itemize}
        		\bigskip
-    		\item Si \alert{esperanza condicional es lineal} entonces el modelo de regresi\'on coincide con la esperanza condicional.
-    		\item  El modelo de regresi\'on es el \alert{mejor predictor lineal de $y$}.
-    		\item El modelo de regresi\'on es la \alert{mejor aproximaci\'on lineal a la esperanza condicional}.
+    		\item Si \term{esperanza condicional es lineal} entonces el modelo de regresi\'on coincide con la esperanza condicional.
+    		\item  El modelo de regresi\'on es el \term{mejor predictor lineal de $y$}.
+    		\item El modelo de regresi\'on es la \term{mejor aproximaci\'on lineal a la esperanza condicional}.
     	\end{itemize}
     \end{frame}
     % --------------------------------------------------- Slide --
@@ -805,13 +892,43 @@
             \begin{align*}
             \beta^*= \E(xx')^{-1}\E(xy)=\beta.
             \end{align*}
-            \item <3-> \alert{Ejemplos}: 
+            \item <3-> \term{Ejemplos}:
             \begin{enumerate}
                 \item [(1)] $(y, x)$ se distribuyen conjuntamente normal,
                 \item [(2)] Modelos saturados. Ejemplo: Cuando $x$ es binaria, $\E(y|x)=\E(y|x=0)+[\E(y|x=1)-\E(y|x=0)]x$ es lineal.
             \end{enumerate}
         \end{itemize}
     \end{frame}
+    % --------------------------------------------------- Slide --
+    \begin{frame}
+        \frametitle{Modelos saturados: ejemplo con $x$ binaria}
+        \begin{itemize}
+            \item <1-> Sea $y=salario$ y $x=universitario \in \{0,1\}$. La esperanza condicional toma \alert{s\'olo dos valores}: $\E(y|x=0)$ y $\E(y|x=1)$.
+            \item <2-> [] Por dos puntos pasa una recta, as\'i que podemos escribirla como
+            \begin{align*}
+            \E(y|x) = \underbrace{\E(y|x=0)}_{\beta_0} + \underbrace{[\E(y|x=1)-\E(y|x=0)]}_{\beta_1} \, x .
+            \end{align*}
+            \item <3-> [] Se verifica evaluando en cada valor de $x$: si $x=0$ queda $\beta_0=\E(y|x=0)$, y si $x=1$ queda $\beta_0+\beta_1=\E(y|x=1)$.
+            \item <4-> El modelo est\'a \term{saturado}: tiene tantos par\'ametros como valores toma $x$. Por eso la regresi\'on no \emph{aproxima} a la esperanza condicional, \alert{coincide} con ella.
+        \end{itemize}
+    \end{frame}
+    % --------------------------------------------------- Slide --
+    \begin{frame}
+        \frametitle{Modelos saturados: ejemplo con $x$ binaria}
+     		\begin{table}
+     			\small
+     			\caption{Funci\'on de esperanza condicional}
+     			\input{tables/tabla_cef_universitario.tex}
+     		\end{table}
+        \begin{itemize}
+            \item [] Con estos n\'umeros $\beta_0=769$ y $\beta_1=1{,}961-769=1{,}192$, de modo que
+            \begin{align*}
+            \E(salario|universitario) = 769 + 1{,}192 \, universitario .
+            \end{align*}
+            \item [] \footnotesize $\beta_1$ es la \term{brecha de salario promedio} entre universitarios y no universitarios: 1,192 mil \$ al mes. Es un momento poblacional descriptivo; leerlo como efecto causal requiere el supuesto de asignaci\'on aleatoria.
+        \end{itemize}
+    \end{frame}
+ 
     % --------------------------------------------------- Slide --
     \begin{frame}
         \frametitle{Mejor predicci\'on lineal}
@@ -858,7 +975,7 @@
         \frametitle{Ejemplo: Educaci\'on y salarios}
         \begin{figure}
             \includegraphics[width=0.65\textwidth]{figures/AP_figure_educacion_salarios_regresion.pdf}
-            \caption{Regresi\'on y esperanza condicional del log salarios semanales en el nivel educativo. La muestra incluye hombres blancos entre 40 y 49 a\~nos de la muestra del 5\% del Censo 1980 (IPUMS).}
+            \caption{\footnotesize Regresi\'on y esperanza condicional del log salarios semanales en el nivel educativo. La muestra incluye hombres blancos entre 40 y 49 a\~nos de la muestra del 5\% del Censo 1980 (IPUMS).}
         \end{figure}
     \end{frame}
     % --------------------------------------------------- Slide --
@@ -871,7 +988,7 @@
             \Var(y) = & \Var(x'\beta) + \E(u^2).
             \end{align*}
             Demostraci\'on: Utilice la descomposici\'on de $y=x'\beta+u$ y  $\E(u x)=\Cov(u,x)=0$.
-            \item <2-> \alert{Coeficiente de determinaci\'on}: $R^2$,
+            \item <2-> \term{Coeficiente de determinaci\'on}: $R^2$,
             \begin{align*}
             R^2 & = 1-\frac{\E(u^2)}{\Var(y)}.
             \end{align*}
@@ -879,12 +996,19 @@
         \end{itemize}
     \end{frame}
 
+    % --------------------------------------------------- Apendice --
+    \appendix
+    % appendixnumberbeamer deja el total de frames en 0 en el apendice, y las barras
+    % de progreso de metropolis dividen por ese total: hay que apagarlas aca.
+    \metroset{progressbar=none, sectionpage=simple}
+    \section*{Ap\'endice}
+
     % --------------------------------------------------- Slide --
     \begin{frame}[label=figure2]
         \frametitle{Ejemplo: Educaci\'on y salarios en US}
         \begin{figure}
             \includegraphics[width=0.65\textwidth]{figures/AP_figure_educacion_salarios.pdf}
-            \caption{Esperanza condicional del log salarios semanales dado el nivel educativo. La muestra incluye hombres blancos entre 40 y 49 a\~nos de la muestra del 5\% del Censo 1980 (IPUMS).}
+            \caption{\footnotesize Esperanza condicional del log salarios semanales dado el nivel educativo. La muestra incluye hombres blancos entre 40 y 49 a\~nos de la muestra del 5\% del Censo 1980 (IPUMS). \hyperlink{back2}{\beamergotobutton{back}}}
         \end{figure}
     \end{frame}
     % --------------------------------------------------- Slide --
@@ -892,7 +1016,7 @@
         \frametitle{Ejemplo: Educaci\'on y salarios en Chile}
         \begin{figure}
             \includegraphics[width=0.6\textwidth]{figures/cond_expec_wage_educ1.png}
-            \caption{Esperanza condicional del log de salarios dado el nivel educativo. La muestra incluye hombres trabajadores en Casen 2009. \hyperlink{back2}{\beamergotobutton{back}}}
+            \caption{\footnotesize Esperanza condicional del log de salarios dado el nivel educativo. La muestra incluye hombres entre 30 y 65 a\~nos que trabajan, Casen 2024. \hyperlink{back2}{\beamergotobutton{back}}}
         \end{figure}
     \end{frame}
     % --------------------------------------------------- Slide --
@@ -900,23 +1024,23 @@
         \frametitle{Ejemplo: Educaci\'on y salarios en US}
         \begin{figure}
             \includegraphics[width=0.65\textwidth]{figures/AP_figure_educacion_salarios_regresion.pdf}
-            \caption{Regresi\'on y esperanza condicional del log salarios semanales en el nivel educativo. La muestra incluye hombres blancos entre 40 y 49 a\~nos de la muestra del 5\% del Censo 1980 (IPUMS).}
+            \caption{\footnotesize Regresi\'on y esperanza condicional del log salarios semanales en el nivel educativo. La muestra incluye hombres blancos entre 40 y 49 a\~nos de la muestra del 5\% del Censo 1980 (IPUMS). \hyperlink{back2}{\beamergotobutton{back}}}
         \end{figure}
     \end{frame}
     % --------------------------------------------------- Slide --
     \begin{frame}
         \frametitle{Ejemplo: Educaci\'on y salarios en Chile}
         \begin{figure}
-            \includegraphics[width=0.70\textwidth]{figures/cond_expec_wage_educ2.png}
-            \caption{Regresi\'on y esperanza condicional del log salarios semanales en el nivel educativo. La muestra incluye hombres trabajadores en Casen 2009.}
+            \includegraphics[width=0.68\textwidth]{figures/cond_expec_wage_educ2.png}
+            \caption{\footnotesize Regresi\'on y esperanza condicional del log de salarios en el nivel educativo. La muestra incluye hombres entre 30 y 65 a\~nos que trabajan, Casen 2024. \hyperlink{back2}{\beamergotobutton{back}}}
         \end{figure}
     \end{frame}
     % --------------------------------------------------- Slide --
     \begin{frame}
         \frametitle{Ejemplo: Educaci\'on y salarios en Chile}
         \begin{figure}
-            \includegraphics[width=0.6\textwidth]{figures/cond_expec_wage_educ3.png}
-            \caption{Regresi\'on y esperanza condicional del log salarios semanales en el nivel educativo. La muestra incluye hombres trabajadores en Casen 2009. \hyperlink{back3}{\beamergotobutton{back}}}
+            \includegraphics[width=0.68\textwidth]{figures/cond_expec_wage_educ3.png}
+            \caption{\footnotesize Regresi\'on y esperanza condicional del log de salarios en el nivel educativo. La muestra incluye hombres entre 30 y 65 a\~nos que trabajan, Casen 2024. \hyperlink{back2}{\beamergotobutton{back}}}
         \end{figure}
     \end{frame}
 \end{document}
