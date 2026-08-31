@@ -11,12 +11,28 @@
 # corregido), edad (para experiencia potencial), sexo, area (urbano/rural),
 # region.
 
+# --- Estructura de carpetas esperada ---
+# Este script asume que existe una carpeta de proyecto con esta estructura:
+#
+#   1.intro_retornos-educacion/
+#     code/
+#       01_analysis.R        <- este archivo
+#     input/
+#       casen_2024_subset.rds  <- datos de entrada
+#     output/                 <- se crea sola al correr el script (tablas y graficos van aca)
+#
+# Si no la tenes armada: crea la carpeta "1.intro_retornos-educacion" en tu compu,
+# adentro crea "code/" e "input/", pone este script en code/ y el archivo .rds en input/.
+# output/ no hace falta crearla, el script la crea sola.
+
+# Reemplazar por la ruta a la carpeta "1.intro_retornos-educacion" en TU computadora.
+dir_proyecto <- "/Users/ramirodeelejalde/Dropbox/Teaching/Econometria I_MAE/econometria_mae/examples/1.intro_retornos-educacion"
+setwd(dir_proyecto) # fija la carpeta de trabajo: de aca en mas, "input/..." y "output/..." apuntan siempre ahi
+
 rm(list = ls()) # borra todos los objetos que pudieran quedar de una sesion anterior, para partir de cero
 
 # library(x) carga un paquete (una libreria de funciones adicionales) para poder usarlo.
 # Hay que haberlo instalado antes una vez con install.packages("x").
-library(here)
-here::i_am("code/01_analysis.R") # le dice al paquete here donde esta este script dentro del proyecto, para que here("input", ...) siempre apunte a la carpeta correcta sin importar desde donde se ejecute
 library(tidyverse)  # incluye dplyr (filter, mutate, %>%), ggplot2 (graficos), tibble, etc.
 library(sandwich)   # errores estandar robustos (HC1)
 library(haven)      # para leer/etiquetar datos importados de Stata (as_factor)
@@ -26,11 +42,10 @@ options("modelsummary_factory_latex" = "kableExtra")   # booktabs simple, sin ta
 options("modelsummary_format_numeric_latex" = "plain") # sin \num{}, no requiere siunitx
 
 # crea la carpeta output/ si todavia no existe (por ejemplo, en una copia recien clonada)
-dir.create(here("output"), showWarnings = FALSE)
+dir.create("output", showWarnings = FALSE)
 
 # readRDS() lee un archivo de datos en formato .rds (el formato nativo de R).
-# here("input", "casen_2024_subset.rds") arma la ruta a ese archivo dentro de input/.
-d <- readRDS(here("input", "casen_2024_subset.rds"))
+d <- readRDS("input/casen_2024_subset.rds")
 
 # --- Muestra: personas 30-65 anios que trabajan ---
 # %>% es el operador "pipe": toma lo que esta a la izquierda y lo pasa como
@@ -55,17 +70,29 @@ sample <- d %>%
 
 cat("N muestra:", nrow(sample), "\n") # cat() imprime texto en la consola; nrow() cuenta filas (observaciones)
 
+# formatC(..., big.mark = ",") agrega separador de miles (1234567 -> "1,234,567"),
+# para que las tablas en LaTeX (que van directo al slide) sean mas faciles de leer.
+fmt_comma <- function(x) formatC(x, format = "f", digits = 0, big.mark = ",")
+# N es el mismo en los 5 modelos (todos usan `sample`), asi que un solo valor formateado alcanza.
+n_fmt <- fmt_comma(nrow(sample))
+
 # --- Estadisticas descriptivas -> output/desc_stats.tex ---
 # datasummary(filas ~ columnas, ...): a la izquierda de ~ van las variables a resumir
 # (con un nombre "lindo" entre comillas para la tabla), a la derecha los estadisticos
 # que se calculan para cada una (N, Media, Desviacion Estandar, percentiles).
-desc_tex <- datasummary(
-  (`Escolaridad (esc)` = esc) + (`Ingreso del trabajo (ytrabajocor)` = ytrabajocor) ~
-    (`N` = N) + (`Media` = Mean) + (`DE` = SD) + (`P25` = P25) + (`Mediana` = Median) + (`P75` = P75),
-  data = sample, output = "latex", fmt = 0
-)
+desc_formula <- (`Escolaridad (esc)` = esc) + (`Ingreso del trabajo (ytrabajocor)` = ytrabajocor) ~
+    (`N` = N) + (`Media` = Mean) + (`DE` = SD) + (`P25` = P25) + (`Mediana` = Median) + (`P75` = P75)
+
+# fmt = fmt_comma: aplica separador de miles a Media/DE/percentiles, pero N queda sin formato
+# (datasummary no le aplica fmt a esa columna), asi que se corrige con el mismo gsub de arriba.
+desc_tex <- datasummary(desc_formula, data = sample, output = "latex", fmt = fmt_comma)
+desc_tex <- gsub(paste0("\\b", nrow(sample), "\\b"), n_fmt, as.character(desc_tex))
 # writeLines() escribe texto (aca, el codigo LaTeX de la tabla) en un archivo de disco
-writeLines(as.character(desc_tex), here("output", "desc_stats.tex"))
+writeLines(desc_tex, "output/desc_stats.tex")
+
+# Misma tabla, pero como data.frame -> CSV, para poder abrirla en Excel/Sheets sin compilar LaTeX
+desc_csv <- datasummary(desc_formula, data = sample, output = "data.frame", fmt = 0)
+write.csv(desc_csv, "output/desc_stats.csv", row.names = FALSE)
 
 # --- Regresion simple (naive): log(ytrabajocor) ~ esc, errores robustos (HC1) -> output/regression_table.tex ---
 # lm(y ~ x, data = ...) estima una regresion lineal (OLS) de y sobre x.
@@ -79,7 +106,18 @@ reg_tex <- modelsummary(
   coef_rename = c("(Intercept)" = "Constante", "esc" = "Escolaridad"), # nombres de fila mas lindos para la tabla
   gof_map = c("nobs", "r.squared") # que estadisticos de ajuste mostrar (N y R cuadrado)
 )
-writeLines(as.character(reg_tex), here("output", "regression_table.tex"))
+# gsub() reemplaza el N sin formato (ej. "74517") por la version con separador de miles ("74,517");
+# el \\b es limite de palabra, para no tocar por accidente otros numeros de la tabla.
+reg_tex <- gsub(paste0("\\b", nrow(sample), "\\b"), n_fmt, as.character(reg_tex))
+writeLines(reg_tex, "output/regression_table.tex")
+
+# Misma tabla, pero como data.frame -> CSV, para poder abrirla en Excel/Sheets sin compilar LaTeX
+reg_csv <- modelsummary(
+  ols, vcov = "HC1", output = "data.frame", stars = FALSE,
+  coef_rename = c("(Intercept)" = "Constante", "esc" = "Escolaridad"),
+  gof_map = c("nobs", "r.squared")
+)
+write.csv(reg_csv, "output/regression_table.csv", row.names = FALSE)
 
 # --- Progresion de modelos: naive -> +experiencia -> +mujer -> +rural -> +region ---
 # Se estima la misma regresion agregando controles de a uno, para ver como
@@ -107,7 +145,16 @@ progression_tex <- modelsummary(
   coef_map = c("esc" = "Escolaridad"), # muestra solo la fila de 'esc' (no los demas controles)
   gof_map = c("nobs")
 )
-writeLines(as.character(progression_tex), here("output", "esc_coef_progression.tex"))
+progression_tex <- gsub(paste0("\\b", nrow(sample), "\\b"), n_fmt, as.character(progression_tex))
+writeLines(progression_tex, "output/esc_coef_progression.tex")
+
+# Misma tabla, pero como data.frame -> CSV, para poder abrirla en Excel/Sheets sin compilar LaTeX
+progression_csv <- modelsummary(
+  models, vcov = "HC1", output = "data.frame", stars = FALSE,
+  coef_map = c("esc" = "Escolaridad"),
+  gof_map = c("nobs")
+)
+write.csv(progression_csv, "output/esc_coef_progression.csv", row.names = FALSE)
 
 # Datos para el grafico de estabilidad del coeficiente (coeficiente e IC 95%, HC1)
 # map_dfr(x, funcion) aplica la funcion a cada elemento de x (aca, a cada nombre de
@@ -124,6 +171,7 @@ esc_by_model <- map_dfr(names(models), function(nm) {
          ci_low = est - 1.96 * se, ci_high = est + 1.96 * se)
 })
 print(esc_by_model)
+write.csv(esc_by_model, "output/esc_by_model.csv", row.names = FALSE)
 
 # Grafico: como se mueve el coeficiente de escolaridad (aspecto ancho, para caber en un slide 16:9)
 # ggplot() arma graficos por capas: primero se definen los datos y los ejes (aes),
@@ -134,7 +182,7 @@ coef_plot <- ggplot(esc_by_model, aes(x = especificacion, y = coef_esc)) +
   theme_minimal(base_size = 13) # estilo visual del grafico
 
 # ggsave() guarda el ultimo grafico armado (o el que se le pase en plot=) como imagen en disco
-ggsave(here("output", "esc_coef_progression_plot.png"), plot = coef_plot, width = 9, height = 3.3, dpi = 200)
+ggsave("output/esc_coef_progression_plot.png", plot = coef_plot, width = 9, height = 3.3, dpi = 200)
 
 # --- Grafico: dispersion + recta ajustada (sin titulo, para insertar en slide) ---
 scatter_plot <- ggplot(sample, aes(x = esc, y = lwage)) +
@@ -143,6 +191,6 @@ scatter_plot <- ggplot(sample, aes(x = esc, y = lwage)) +
   labs(x = "Años de escolaridad", y = "log(Ingreso del trabajo)") +
   theme_minimal(base_size = 13)
 
-ggsave(here("output", "scatter_esc_lwage.png"), scatter_plot, width = 7, height = 4.5, dpi = 200)
+ggsave("output/scatter_esc_lwage.png", scatter_plot, width = 7, height = 4.5, dpi = 200)
 
 cat("Listo. Tablas y gráficos en output/.\n")

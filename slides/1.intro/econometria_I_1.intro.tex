@@ -442,23 +442,47 @@
 \begin{frame}
     \frametitle{Trabajo grupal: Retornos a la educaci\'on}
     \begin{itemize}
-        \item Interpretación
         \item \alert{?`Usted cree que estamos midiendo un efecto causal? }
         	\begin{itemize}
         		\item Causas
         		\item Sesgo
-        		\item Soluciones
         	\end{itemize}
-        \item Forma funcional
+        \item Soluciones
+        \item Interpretación
         \item Heterogeneidad
+        \item Robustez
     \end{itemize}
 \end{frame}
 
 % --------------------------------------------------- Slide --
 \begin{frame}
-	\frametitle{Trabajo grupal: Retornos a la educaci\'on}
+	\frametitle{?`Es un efecto causal?}
 	\begin{itemize}
-		\item \term{?`Es robusto el resultado?} Agregamos controles de a uno:
+		\item \term{Problemas}:
+		\begin{itemize}
+			\item \term{Omisión de variable relevante}: habilidad no observada --- correlaciona tanto con la escolaridad (más años de estudio) como con el salario (mayor productividad).
+			\item \term{Simultaneidad o causalidad reversa}: poco plausible acá --- la escolaridad ya estaba determinada antes de observar el salario actual, y no hay un canal directo de determinación simultánea a nivel individual.
+			\item \term{Error de medición}: $esc$ autorreportada (atenúa el coeficiente); $ytrabajocor$ en trabajadores informales/independientes (dirección ambigua).
+			\item \term{Selección muestral}: condicionamos en estar empleado con ingreso positivo. Si la escolaridad afecta \emph{quién} entra a la muestra (ej. participación laboral femenina), OLS ya no estima el efecto poblacional.
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}
+	\frametitle{Soluciones}
+	\begin{itemize}
+		\item \term{Agregar controles observables} --- experiencia, mujer, rural, región.
+		\item Esta \emph{no} es la solución habitual para estos canales de endogeneidad; es un primer paso que vamos a estudiar (y poner a prueba) en este curso.
+		\item \alert{Ninguno de estos controles captura habilidad no observada ni el mecanismo de selección muestral.}
+	\end{itemize}
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}
+	\frametitle{Soluciones: ?`es robusto el resultado?}
+	\begin{itemize}
+		\item Agregamos controles de a uno:
 		\begin{itemize}
 			\item Experiencia potencial ($edad - esc - 6$) y su cuadrado
 			\item Dummy mujer
@@ -470,7 +494,7 @@
 \end{frame}
 
     \begin{frame}
-    	\frametitle{?`Es robusto el resultado?}
+    	\frametitle{Soluciones: ?`es robusto el resultado?}
     	\footnotesize
     	\begin{center}
     		\input{tables/esc_coef_progression.tex}
@@ -478,12 +502,54 @@
     \end{frame}
 
     \begin{frame}
-    	\frametitle{?`Es robusto el resultado?}
+    	\frametitle{Soluciones: ?`es robusto el resultado?}
     	\begin{center}
     		\includegraphics[width=0.85\textwidth]{figures/esc_coef_progression_plot.png}
     	\end{center}
     	\term{El coeficiente es sorprendentemente estable} entre especificaciones (0.116--0.120), con intervalos de confianza que se solapan.
     \end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}
+	\frametitle{Interpretación}
+	\begin{itemize}
+		\item El coeficiente estimado ($\approx$ 0.116--0.120) es una \term{correlación condicional}, no un efecto causal.
+		\item La literatura empírica encuentra una tensión en direcciones opuestas:
+		\begin{itemize}
+			\item Sesgo por habilidad $\to$ sesga el OLS \emph{hacia arriba}.
+			\item Error de medición en $esc$ $\to$ atenúa el OLS \emph{hacia abajo}.
+		\end{itemize}
+		\item Por eso estimaciones con variables instrumentales suelen dar valores similares o incluso mayores al OLS.
+	\end{itemize}
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}
+	\frametitle{Heterogeneidad}
+	\begin{itemize}
+		\item ?`Es el mismo retorno para todos?
+		\begin{itemize}
+			\item $esc \times mujer$: ?`brecha de género en el retorno a la educación?
+			\item Urbano/rural: ?`el retorno es distinto en cada área?
+		\end{itemize}
+		\item Se podría estimar agregando una interacción ($esc \times mujer$, por ejemplo) al modelo --- una herramienta que vamos a ver más adelante en el curso.
+		\item Extensión posible (fuera del alcance de este curso): regresión por cuantiles --- el retorno promedio (OLS) puede esconder retornos muy distintos a lo largo de la distribución del ingreso.
+	\end{itemize}
+\end{frame}
+
+% --------------------------------------------------- Slide --
+\begin{frame}
+	\frametitle{Robustez: forma funcional}
+	\begin{itemize}
+		\item La ecuación de Mincer asume un retorno \term{lineal} en años de escolaridad --- mismo retorno para el primer año que para el último, sin importar el nivel.
+		\item Posibles extensiones (para pensar, no estimadas acá):
+		\begin{itemize}
+			\item $esc$ por tramos, o $esc^2$: ?`hay efectos ``sheepskin'' (saltos en el retorno al completar un ciclo/título)?
+			\item Errores estándar clusterizados por región, en vez de robustos (HC1).
+			\item Sensibilidad a excluir trabajadores independientes, dado el problema de medición de $ytrabajocor$ mencionado antes.
+		\end{itemize}
+	\end{itemize}
+\end{frame}
 
 % --------------------------------------------------- Slide --
 \begin{frame}

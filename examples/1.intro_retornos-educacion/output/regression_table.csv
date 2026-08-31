@@ -1,0 +1,7 @@
+"part","term","statistic","(1)"
+"estimates","Constante","estimate","11.831"
+"estimates","Constante","std.error","(0.013)"
+"estimates","Escolaridad","estimate","0.116"
+"estimates","Escolaridad","std.error","(0.001)"
+"gof","Num.Obs.","","74517"
+"gof","R2","","0.214"

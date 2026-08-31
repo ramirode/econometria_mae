@@ -1,0 +1,4 @@
+"part","term","statistic","(1) Naive","(2) + Exp.","(3) + Mujer","(4) + Rural","(5) + Región"
+"estimates","Escolaridad","estimate","0.116","0.116","0.120","0.117","0.116"
+"estimates","Escolaridad","std.error","(0.001)","(0.001)","(0.001)","(0.001)","(0.001)"
+"gof","Num.Obs.","","74517","74517","74517","74517","74517"
