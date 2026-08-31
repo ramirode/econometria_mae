@@ -69,6 +69,7 @@
   \newcommand{\tgmm}{\hat \theta_{GMM}}
   \newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
   \def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+  \newcommand{\term}[1]{\structure{\textbf{#1}}} % label/definition markup, distinct from \alert (reserved for genuine callouts)
 
 
 \title [Teor\'ia asint\'otica] {Econometr\'ia I\\
@@ -99,11 +100,11 @@
 		\begin{itemize}
 			\item Dada una muestra aleatoria podemos calcular un estimador para ``aproximar'' los  par\'ametros poblacionales de inter\'es.
 			\item Nos interesa que el estimador tenga ``buenas'' propiedades.
-			\item En este curso nos enfocamos en las propiedades del estimador cuando $N\to \infty$, las \alert{propiedades asint\'oticas}.
+			\item En este curso nos enfocamos en las propiedades del estimador cuando $N\to \infty$, las \term{propiedades asint\'oticas}.
 			% MCO es insesgado, pero no tiene varianza minima excepto en casos especiales de poco inter\'es (homoscedasticidad). Adem\'as, no conocemos su distribuci\'on pra cualquier N excepto en casos particulares como con inobservado normal. IV no es siquiera insesgado.
 			\begin{enumerate}
-				\item Cuando $N$ crece, la distribuci\'on del estimador se concentra alrededor del par\'ametro (\alert{consistencia})
-				\item Cuando $N$ crece la distribuci\'on del estimador (estandarizada) se acerca a una distribuci\'on normal (\alert{distribuci\'on asint\'otica normal})
+				\item Cuando $N$ crece, la distribuci\'on del estimador se concentra alrededor del par\'ametro (\term{consistencia})
+				\item Cuando $N$ crece la distribuci\'on del estimador (estandarizada) se acerca a una distribuci\'on normal (\term{distribuci\'on asint\'otica normal})
 			\end{enumerate}
 			\item En esta unidad vamos a estudiar teoremas que nos permitan obtener las propiedades asint\'oticas de los estimadores que vamos a estudiar durante el curso.
 		\end{itemize}
@@ -114,10 +115,10 @@
     \begin{frame} 
         \frametitle{Repaso de estad\'istica}      
         \begin{itemize}
-    		\item <1->\alert{Par\'ametro}: Caracter\'istica de la poblaci\'on de inter\'es. Ejemplo: $\mu=\E(y)$
-    		\item <2-> \alert{Muestra aleatoria}: Muestra de tama\~no $N$ de la poblaci\'on obtenida en forma aleatoria y con reeemplazo $\{y_1,y_2,...,y_N\}$. \\
+    		\item <1->\term{Par\'ametro}: Caracter\'istica de la poblaci\'on de inter\'es. Ejemplo: $\mu=\E(y)$
+    		\item <2-> \term{Muestra aleatoria}: Muestra de tama\~no $N$ de la poblaci\'on obtenida en forma aleatoria y con reeemplazo $\{y_1,y_2,...,y_N\}$. \\
 		El muestreo aleatorio nos asegura que $y_1, y_2, ...,y_N$ se distribuyen i.i.d.
-    		\item <3-> \alert{Estimador}:  Un estad\'istico (funci\'on de las variables muestrales) que se utiliza para estimar un par\'ametro de inter\'es. Ejemplo: Media muestral $\bar y = \frac{1}{N}\sum_{i=1}^{N} y_i$.
+    		\item <3-> \term{Estimador}:  Un estad\'istico (funci\'on de las variables muestrales) que se utiliza para estimar un par\'ametro de inter\'es. Ejemplo: Media muestral $\bar y = \frac{1}{N}\sum_{i=1}^{N} y_i$.
     		\item <4-> Recordar las propiedades de la varianza $\Var(y)$
     		\begin{itemize}
     			\item $\Var(a+bx)=b^2\Var(x)$
@@ -129,7 +130,7 @@
 	\begin{frame}
 		\frametitle{Propiedades en muestras peque\~nas de los estimadores}
 		\begin{itemize}
-			\item <1->\alert{Insesgadez}: Un estimador $\hat \theta_N$ de un par\'ametro $\theta$ es \alert{insesgado} si,
+			\item <1->\term{Insesgadez}: Un estimador $\hat \theta_N$ de un par\'ametro $\theta$ es \term{insesgado} si,
 			\begin{align*}
 			\E(\hat \theta_N) = \theta \text{ para todo }N.
 			\end{align*}
@@ -139,7 +140,7 @@
 	\begin{frame}
 		\frametitle{Propiedades en muestras peque\~nas de los estimadores}
 		\begin{itemize}
-			\item <1->\alert{Eficiencia}: Un estimador $\hat \theta_N$ de un par\'ametro $\theta$ es \alert{eficiente} si,
+			\item <1->\term{Eficiencia}: Un estimador $\hat \theta_N$ de un par\'ametro $\theta$ es \term{eficiente} si,
 			\begin{align*}
 			\Var(\hat \theta_N) \leq \Var(\tilde \theta_N),
 			\end{align*}
@@ -152,7 +153,7 @@
 		\begin{itemize}
 			\item Dada una muestra i.i.d. $\{y_1,...,y_N\}$ con $\E(y_i)=\mu$ y $\Var(y_i)=\sigma^2$
 			\item Par\'ametro: $\mu$.
-			\item Estimador: \alert{media muestral}
+			\item Estimador: \term{media muestral}
 			\begin{align*}
 			\bar y = \frac{1}{N} \sum_i y_i.
 			\end{align*}
@@ -166,8 +167,6 @@
 		\end{itemize}
 	\end{frame}
 
-%	\begin{frame}
-%	\end{frame}
 
 	\begin{frame}
 		\frametitle{Ejemplo: Media muestral}
@@ -177,15 +176,13 @@
 		\end{itemize}
 	\end{frame}
 
-%	\begin{frame}
-%	\end{frame}
 
 	% --------------------------------------------------- Slide --
 	\section{Propiedades asint\'oticas de los estimadores}
 	\begin{frame}
 		\frametitle{Convergencia de variables aleatorias}
 		\begin{itemize}			
-			\item El an\'alisis asint\'otico se ocupa de estudiar la \alert{convergencia de una secuencia de variables aleatorias}. 
+			\item El an\'alisis asint\'otico se ocupa de estudiar la \term{convergencia de una secuencia de variables aleatorias}. 
 			\item Cuando aplicamos estos conceptos a econometr\'ia, las variables aleatorias son estimadores cuya distribuci\'on depende del tama\~no de la muestra $N$ y buscamos la distribuci\'on del estimador cuando $N \to \infty$.
 		\end{itemize}
 	\end{frame}
@@ -212,8 +209,6 @@
 		\end{itemize}
 	\end{frame}
 
-%	\begin{frame}
-%	\end{frame}
 
 	\begin{frame}
 		\frametitle{Ejemplos}
@@ -222,18 +217,13 @@
 		\end{itemize}
 	\end{frame}
 	
-%	\begin{frame}
-%	\end{frame}
-%
-%	\begin{frame}
-%	\end{frame}
 
 	% --------------------------------------------------- Slide --
 	\subsection{Convergencia en probabilidad}
 	\begin{frame}
 		\frametitle{Convergencia para secuencias determin\'isticas}
 		\begin{itemize}
-			\item Una secuencia determin\'istica $a_N$  \alert{converge} a $a$ cuando $N \to \infty$ si para todo $\delta>0$ existe $N_\delta < \infty$ tal que,
+			\item Una secuencia determin\'istica $a_N$  \term{converge} a $a$ cuando $N \to \infty$ si para todo $\delta>0$ existe $N_\delta < \infty$ tal que,
 			\begin{align*}
 			|a_N-a|\leq \delta \quad  \text{ para todo } N\geq N_\delta.
 			\end{align*}
@@ -244,14 +234,14 @@
 	\begin{frame}
 		\frametitle{Convergencia para secuencias determin\'isticas}
 		\begin{itemize}
-			\item \alert{Ejemplo}: La secuencia determin\'istica $\{a_N\}_{N=1}^{\infty}$ donde $a_N=\{2+\frac{1}{N}\}$ converge a $\lim_{N\to \infty } a_N=2$.
+			\item \term{Ejemplo}: La secuencia determin\'istica $\{a_N\}_{N=1}^{\infty}$ donde $a_N=\{2+\frac{1}{N}\}$ converge a $\lim_{N\to \infty } a_N=2$.
 		\end{itemize}
 	\end{frame}
 
 	\begin{frame}
 		\frametitle{Convergencia en probabilidad}
 		\begin{itemize}
-			\item Una variable aleatoria $z_N$ \alert{converge en probabilidad} a una constante $c$ cuando $N \to \infty$ si para todo $\delta>0$,
+			\item Una variable aleatoria $z_N$ \term{converge en probabilidad} a una constante $c$ cuando $N \to \infty$ si para todo $\delta>0$,
 			\begin{align*}
 			\lim_{N\to \infty }\Pr(|z_N-c|\leq \delta)=1
 			\end{align*}
@@ -259,13 +249,11 @@
 		\end{itemize}
 	\end{frame}
 	
-%	\begin{frame}
-%	\end{frame}
 	
 	\begin{frame}
 		\frametitle{Convergencia en probabilidad}
 		\begin{itemize}
-			\item\alert{Ejemplo}: Calcule la convergencia en probabilidad de $z_N$
+			\item\term{Ejemplo}: Calcule la convergencia en probabilidad de $z_N$
 			\begin{align*}
 			z_N=\left\{ 
 			\begin{array} {l l}
@@ -279,13 +267,11 @@
 		\end{itemize}
 	\end{frame}
 	
-%	\begin{frame}
-%	\end{frame}
 	
 	\begin{frame}
 		\frametitle{Convergencia en probabilidad}
 		\begin{itemize}
-			\item\alert{Ejemplo}: Calcule la convergencia en probabilidad de $z_N$
+			\item\term{Ejemplo}: Calcule la convergencia en probabilidad de $z_N$
 			\begin{align*}
 			z_N=\left\{ 
 			\begin{array} {l l}
@@ -306,7 +292,7 @@
 	\begin{frame}
 		\frametitle{Consistencia}
 		\begin{itemize}
-			\item  \alert{Consistencia}: Un estimador $\hat \theta_N$ de un par\'ametro $\theta$ es \alert{consistente} si,
+			\item  \term{Consistencia}: Un estimador $\hat \theta_N$ de un par\'ametro $\theta$ es \term{consistente} si,
 			\begin{align*}
 			\hat \theta_N \pto \theta \text{ cuando }N \to \infty.
 			\end{align*}
@@ -352,7 +338,7 @@
 	\begin{frame}
 		\frametitle{Ejemplos}
 		\begin{itemize}
-			\item \alert{Media muestral}
+			\item \term{Media muestral}
 			\begin{align*}
 			\bar y = \frac{1}{N}\sum_{i=1}^N y_i \pto \mu
 			\end{align*}
@@ -360,22 +346,17 @@
 		\end{itemize}
 	\end{frame}
 	
-%	\begin{frame}
-%	\end{frame}
 	
 	% --------------------------------------------------- Slide --
 	\begin{frame}
 		\frametitle{Ejemplos}
 		\begin{itemize}
-			\item \alert{Media muestral de $y_i^2$}
+			\item \term{Media muestral de $y_i^2$}
 			\begin{align*}
 			\frac{1}{N}\sum_{i=1}^N y_i^2 \pto \E(y^2)
 			\end{align*}
 		\end{itemize}
 	\end{frame}
-%
-%	\begin{frame}
-%	\end{frame}
 	
 	% --------------------------------------------------- Slide --
 	\begin{frame}
@@ -409,7 +390,7 @@
 	\begin{frame}
 		\frametitle{Ejemplos}
 		\begin{itemize}
-			\item \alert{Varianza muestral}
+			\item \term{Varianza muestral}
 			\begin{align*}
 			S^2 &=\frac{1}{N}\sum_{i=1}^N (y_i-\bar y)^2 \\
 			& = \frac{1}{N}\sum_{i=1}^N y_i^2-\bar y^2\pto \sigma^2,
@@ -421,21 +402,17 @@
 		%        \note[item]{Para finalizar $g(x,y)=x-y$ es continua por lo tanto $S^2=\frac{1}{N}\sum_{i=1}^N y_i^2-\bar y ^2\pto \E(y^2)-\mu^2=\sigma^2$}
 	\end{frame}
 	
-%	\begin{frame}
-%	\end{frame}
 	% --------------------------------------------------- Slide --
 	\begin{frame}
 		\frametitle{Ejemplos}
 		\begin{itemize}
-			\item \alert{Desviaci\'on est\'andar muestral:} $S \pto \sigma$
+			\item \term{Desviaci\'on est\'andar muestral:} $S \pto \sigma$
 		\end{itemize}
 		%        \note[item]{Ya vimos que $\bar y \pto \mu$ y $\frac{1}{N}\sum_{i=1}^N y_i^2 \pto \E(y^2)$}
 		%        \note[item]{Luego $g(x)=x^2$ es continua por lo tanto $\bar y ^2\pto \mu^2$}
 		%        \note[item]{Para finalizar $g(x,y)=x-y$ es continua por lo tanto $S^2=\frac{1}{N}\sum_{i=1}^N y_i^2-\bar y ^2\pto \E(y^2)-\mu^2=\sigma^2$}
 	\end{frame}
 
-%	\begin{frame}
-%	\end{frame}
 
 	% --------------------------------------------------- Slide --
 	\subsection{Diferencias entre insesgadez y consistencia}
@@ -443,12 +420,12 @@
 	\begin{frame}
 		\frametitle{Diferencias entre insesgadez y consistencia}
 		\begin{itemize}
-			\item <1->\alert{Insesgadez no implica consistencia.} 
+			\item <1->\term{Insesgadez no implica consistencia.} 
 			\item [] <1-> Ejemplo: $\tilde y=y_1$
-			\item <2->\alert{Consistencia no implica insesgadez. }
+			\item <2->\term{Consistencia no implica insesgadez. }
 			\item [] <2-> Ejemplo: Varianza muestral $S^2$
 			\item <3->Teorema: Si $\lim_{N\to \infty} \E(\hat \theta_N)=\theta$ y $\lim_{N\to \infty}\Var(\hat \theta_N)=0$, entonces $\hat \theta_N \pto \theta \text{ cuando }N \to \infty$.
-			\item <4->\alert{Insesgadez asint\'otica no implica consistencia, y consistencia no implica insesgadez asint\'otica.}
+			\item <4->\term{Insesgadez asint\'otica no implica consistencia, y consistencia no implica insesgadez asint\'otica.}
 			\item [] <5->Ejemplo donde consistencia no implica insesgadez asint\'otica: $z_N = 0$ con probabilidad $1-1/N$, y $z_N = N$ con probabilidad $1/N$.
 		\end{itemize}
 	\end{frame}
@@ -458,8 +435,6 @@
 	%    \note[item]{Convergencia en media (insesgadez asint\'otica) no implica consistencia, y consistencia no implica convergencia en media}
 	%    \note[item]{Ejemplo: $z_N = 0$ con prob $1-1/N$,y $z_N = a_N$ con prob $1/N$ . Es consistente, pero $\E z_N = a_N/N$ entonces para $a_N=N$ tenemos $\lim \E z_N = 1$.}
 
-%	\begin{frame}
-%    \end{frame}
 
 	\subsection{Convergencia en distribuci\'on}
 
@@ -468,7 +443,7 @@
 		\frametitle{Convergencia en distribuci\'on}
 		\begin{itemize}
 			\item Dada una variable aleatoria con funci\'on de distribuci\'on $F_N(u) = \Pr(z_N \leq u)$.\\
-			$z_N$ \alert{converge en distribuci\'on} a $z$ cuando $N \to \infty$ si para todo $u$ en donde $F(u) = \Pr(z \leq u)$ es continua,
+			$z_N$ \term{converge en distribuci\'on} a $z$ cuando $N \to \infty$ si para todo $u$ en donde $F(u) = \Pr(z \leq u)$ es continua,
 			\begin{align*}
 			F_N(u) \to F(u) \text{ cuando }N \to \infty.
 			\end{align*}
@@ -498,19 +473,13 @@
 		\end{itemize}
 	\end{frame}	
 					
-%	\begin{frame}
-%	\end{frame}	
-%	
-%	
-%	\begin{frame}
-%	\end{frame}		
 	
 		% --------------------------------------------------- Slide --
 	\begin{frame}
 		\frametitle{Convergencia en distribuci\'on}
 		\begin{itemize}
 			\item Dada una variable aleatoria con funci\'on de distribuci\'on $F_N(u) = \Pr(z_N \leq u)$.\\
-			$z_N$ \alert{converge en distribuci\'on} a $z$ cuando $N \to \infty$ si para todo $u$ en donde $F(u) = \Pr(z \leq u)$ es continua,
+			$z_N$ \term{converge en distribuci\'on} a $z$ cuando $N \to \infty$ si para todo $u$ en donde $F(u) = \Pr(z \leq u)$ es continua,
 			\begin{align*}
 			F_N(u) \to F(u) \text{ cuando }N \to \infty.
 			\end{align*}
@@ -529,7 +498,7 @@
 	\begin{frame}
 		\frametitle{Distribuci\'on asint\'otica normal}
 		\begin{itemize}
-			\item Un estimador $\hat \theta_N$ de un par\'ametro $\theta$ se distribuye \alert{$\sqrt{N}$-asint\'oticamente normal} si,
+			\item Un estimador $\hat \theta_N$ de un par\'ametro $\theta$ se distribuye \term{$\sqrt{N}$-asint\'oticamente normal} si,
 			\begin{align*}
 			\sqrt{N}(\hat \theta_N - \theta ) \dto \N(0,V),
 			\end{align*}
@@ -540,7 +509,7 @@
 	\begin{frame}
 		\frametitle{Distribuci\'on asint\'otica normal}
 		\begin{itemize}
-			\item Decimos $\hat \theta_N \adistr \N(\theta, V/N)$ donde $\Avar(\hat \theta_N)=V/N$ es la \alert{varianza asint\'otica de $\hat \theta_N$} y $sd(\hat \theta_N)=V^{1/2}/\sqrt{N}$ es la \alert{desviaci\'on estandar asint\'otica de $\hat \theta_N$}.
+			\item Decimos $\hat \theta_N \adistr \N(\theta, V/N)$ donde $\Avar(\hat \theta_N)=V/N$ es la \term{varianza asint\'otica de $\hat \theta_N$} y $sd(\hat \theta_N)=V^{1/2}/\sqrt{N}$ es la \term{desviaci\'on estandar asint\'otica de $\hat \theta_N$}.
 		\end{itemize}
 	\end{frame}
 
@@ -548,14 +517,14 @@
 	\begin{frame}
 		\frametitle{Distribuci\'on asint\'otica normal}
 		\begin{itemize}
-			\item <1-> Un estimador $\hat \theta_N$ de un par\'ametro $\theta$ se distribuye \alert{$\sqrt{N}$-asint\'oticamente normal} si,
+			\item <1-> Un estimador $\hat \theta_N$ de un par\'ametro $\theta$ se distribuye \term{$\sqrt{N}$-asint\'oticamente normal} si,
 			\begin{align*}
 			\sqrt{N}(\hat \theta_N - \theta ) \dto \N(0,V),
 			\end{align*}
 			donde $V$ es la varianza asint\'otica de $\sqrt{N}(\hat \theta_N - \theta )$ y se denota $\Avar(\sqrt{N}(\hat \theta_N - \theta ))=V$.
 			\item <1-> Si no conocemos $V$?`c\'omo calculamos el $sd(\hat \theta_N)$?
 			\item <2-> Si tenemos un estimador consistente de $V$, $\hat V_N \pto V$, utilizamos 
-			 $se(\hat \theta_N)=\hat V_N^{1/2}/\sqrt{N}$ y lo llamamos \alert{error est\'andar asint\'otico de $\hat \theta_N$}
+			 $se(\hat \theta_N)=\hat V_N^{1/2}/\sqrt{N}$ y lo llamamos \term{error est\'andar asint\'otico de $\hat \theta_N$}
 		\end{itemize}
 	\end{frame}
 	
@@ -576,8 +545,6 @@
 		\end{itemize}
 	\end{frame}
 
-%	\begin{frame}
-%	\end{frame}
 	
 	% --------------------------------------------------- Slide --
 	\begin{frame}
@@ -608,8 +575,6 @@
 		\end{center}
 	\end{frame}
 	
-%	\begin{frame}
-%	\end{frame}
 
 	\begin{frame}
 		\frametitle{Lindeberg-L\'evy Teorema Central del l\'imite (TCL)}
@@ -625,20 +590,18 @@
 	\begin{frame}
 		\frametitle{Ejemplo}
 		\begin{itemize}
-			\item <1-> \alert{Media muestral}
+			\item <1-> \term{Media muestral}
 			\begin{align*}
 			\sqrt{N} (\bar y - \mu) \dto \N(0,\sigma^2).
 			\end{align*}
 		\end{itemize}
 	\end{frame}
 
-%	\begin{frame}
-%	\end{frame}
 
 	\begin{frame}
 		\frametitle{Ejemplo}
 		\begin{itemize}
-			\item  \alert{Media muestral}
+			\item  \term{Media muestral}
 			\begin{align*}
 			\sqrt{N} (\bar y - \mu) \dto \N(0,\sigma^2).
 			\end{align*}
@@ -675,7 +638,7 @@
 	\begin{frame}
 		\frametitle{Teorema de Slutsky}
 		\begin{itemize}
-			\item \alert{Ejemplos}: Suponga que $z_N \dto z \sim \N(\mu,\sigma^2)$. Encuentre la distribución de asintótica de
+			\item \term{Ejemplos}: Suponga que $z_N \dto z \sim \N(\mu,\sigma^2)$. Encuentre la distribución de asintótica de
 			\begin{enumerate}
 			  \item $c_N+z_N$,
 			  \item $c_N z_N$,
@@ -684,20 +647,11 @@
 		\end{itemize}
 	\end{frame}    
 
-%	\begin{frame}
-%	\end{frame}    
-%
-%	\begin{frame}
-%	\end{frame} 
-%	
-%	
-%	\begin{frame}
-%	\end{frame}    
 
 	\begin{frame}
 		\frametitle{Teorema de Slutsky}
 		\begin{itemize}
-			\item \alert{Ejemplos}: Suponga que $z_N \dto z \sim \N(\mu,\sigma^2)$ entonces
+			\item \term{Ejemplos}: Suponga que $z_N \dto z \sim \N(\mu,\sigma^2)$ entonces
 			\begin{enumerate}
 			  \item $c_N+z_N\dto c+z \sim \N(c+\mu,\sigma^2)$,
 			  \item $c_N z_N\dto c z \sim \N(c\mu,c^2\sigma^2)$,
@@ -718,41 +672,41 @@
 		\end{itemize}
 	\end{frame}    	
 
-%	\begin{frame} 
-%	\end{frame} 
 
 		% --------------------------------------------------- Slide --
 	\begin{frame}
 		\frametitle{Ejemplo}
 		\begin{itemize}
-			\item <1-> \alert{Varianza muestral}
+			\item <1-> \term{Varianza muestral}
 			\begin{align*}
 			\sqrt{N} (S^2 - \sigma^2) \dto \N(0,\mu_4-(\sigma^2)^2)
 			\end{align*}
 			donde $\mu_4=\E[(y-\E (y))^4]$.
-			%            \note[item] {
-			%                \begin{align*}
-			%                S^2&=\frac{1}{N}\sum_i (y_i-\bar y)^2=\frac{1}{N}\sum_i (y_i-\mu-\bar y+\mu)^2\\
-			%                &=\frac{1}{N}\sum_i [(y_i-\mu)^2+(\bar y-\mu)^2-2(y_i-\mu)(\bar y-\mu) ]\\
-			%                &=\frac{1}{N}\sum_i (y_i-\mu)^2-(\bar y-\mu)^2\\
-			%                \sqrt{N}(S^2-\sigma^2)&=\sqrt{N}\frac{1}{N}\sum_i (y_i-\mu)^2-\sigma^2-\sqrt{N}(\bar y-\mu)(\bar y-\mu)
-			%                \end{align*}
-			%            }
-			%            \note[item]{El primer t\'ermino converge a $\N(0,\mu^4-(\sigma^2)^2)$, el segundo t\'ermino converge a $\N(0, \sigma^2) \times 0$}
 		\end{itemize}
 	\end{frame}
-	
-%	\begin{frame}
-%	\end{frame}
-%	
-%	\begin{frame}
-%	\end{frame}
+
+	\begin{frame}
+		\frametitle{Ejemplo: demostraci\'on}
+		\small
+		\begin{itemize}
+			\item [] Demostraci\'on: Descomponemos
+			\begin{align*}
+			S^2&=\frac{1}{N}\sum_i (y_i-\bar y)^2=\frac{1}{N}\sum_i (y_i-\mu-(\bar y-\mu))^2\\
+			&=\frac{1}{N}\sum_i (y_i-\mu)^2-(\bar y-\mu)^2.
+			\end{align*}
+			Por lo tanto
+			\begin{align*}
+			\sqrt{N}(S^2-\sigma^2)=\sqrt{N}\left[\frac{1}{N}\sum_i (y_i-\mu)^2-\sigma^2\right]-\sqrt{N}(\bar y-\mu)(\bar y-\mu).
+			\end{align*}
+			\item [] El primer t\'ermino converge en distribuci\'on a $\N(0,\mu_4-(\sigma^2)^2)$ aplicando el TCL a la muestra i.i.d. $\{(y_i-\mu)^2\}$ (media $\sigma^2$, varianza $\mu_4-(\sigma^2)^2$). El segundo t\'ermino es el producto de $\sqrt{N}(\bar y-\mu)\dto \N(0,\sigma^2)$ por $(\bar y-\mu)\pto 0$, que converge en probabilidad a 0 por Slutsky. Sumando ambos t\'erminos (Slutsky), $\sqrt{N}(S^2-\sigma^2)\dto \N(0,\mu_4-(\sigma^2)^2)$.
+		\end{itemize}
+	\end{frame}
 
 	\begin{frame}
         \frametitle{Repaso de estad\'istica:  Funciones de distribuci\'on}
         \begin{itemize}
-            \item \alert{Normal univariante}: $x\sim \N(\mu, \sigma^2)$; normal estandarizada: $z\sim \N(0, 1)$
-            \item \alert{Normal multivariante}: $\mathbf{x}\sim \N(\mu, \Sigma)$ donde $\mathbf{x}:K \times 1$, $\mu:K \times 1$ y $\Sigma:K \times K$.
+            \item \term{Normal univariante}: $x\sim \N(\mu, \sigma^2)$; normal estandarizada: $z\sim \N(0, 1)$
+            \item \term{Normal multivariante}: $\mathbf{x}\sim \N(\mu, \Sigma)$ donde $\mathbf{x}:K \times 1$, $\mu:K \times 1$ y $\Sigma:K \times K$.
         \end{itemize}
         \begin{figure}
             \centering
@@ -764,9 +718,9 @@
   \begin{frame}
         \frametitle{Repaso de estad\'istica: Funciones de distribuci\'on}
         \begin{itemize}
-            \item \alert{Normal univariante}: $x\sim \N(\mu, \sigma^2)$; normal estandarizada: $z\sim \N(0, 1)$
-            \item \alert{Normal multivariante}: $\mathbf{x}\sim \N(\mu, \Sigma)$ donde $\mathbf{x}:K \times 1$, $\mu:K \times 1$ y $\Sigma:K \times K$.
-            \item [] \alert{Propiedades}:
+            \item \term{Normal univariante}: $x\sim \N(\mu, \sigma^2)$; normal estandarizada: $z\sim \N(0, 1)$
+            \item \term{Normal multivariante}: $\mathbf{x}\sim \N(\mu, \Sigma)$ donde $\mathbf{x}:K \times 1$, $\mu:K \times 1$ y $\Sigma:K \times K$.
+            \item [] Propiedades:
             \begin{itemize}
                 \item  Dada $\mathbf{x}\sim \N(\mu, \Sigma)$ y $a:K \times 1$ entonces  $a'\mathbf{x} \sim \N(a'\mu,a'\Sigma a)$.
                 \item Dada $\mathbf{x}\sim \N(\mu, \Sigma)$ y $A:Q \times K$ entonces  $A\mathbf{x} \sim \N(A\mu,A\Sigma A')$.
@@ -782,11 +736,6 @@
         \end{itemize}
     \end{frame}
 
-%  \begin{frame}
-%  \end{frame}
-%
-%  \begin{frame}
-%  \end{frame}
 
   \begin{frame}
         \frametitle{Repaso de \'algebra de matrices}
@@ -820,11 +769,6 @@
 		\end{itemize}
 	\end{frame}    		
 
-%	\begin{frame}
-%	\end{frame}  
-%	
-%	\begin{frame}
-%	\end{frame}  
 		  		
 	% --------------------------------------------------- Slide --
 	\subsection{Teorema de la funci\'on continua (para $\dto$.)}
@@ -841,7 +785,7 @@
     \begin{frame}
         \frametitle{Repaso de estad\'istica:  Funciones de distribuci\'on}
         \begin{itemize} 
-            \item \alert{Chi-cuadrado $\chi^2_Q$}
+            \item \term{Chi-cuadrado $\chi^2_Q$}
             \item Dadas $\{z_1,...,z_Q\}$ independientes y $z_j\sim \N(0,1)$ entonces $y=\sum_{j=1}^Qz_j^2$ se distribuye como una $\chi^2_Q$.
         \end{itemize}
         \begin{figure}
@@ -860,8 +804,6 @@
 		\end{itemize}
 	\end{frame}
 
-%	\begin{frame}
-%	\end{frame}    		
 	
 	\begin{frame}
 		\frametitle{Ejemplo}
@@ -873,12 +815,6 @@
 		\end{itemize}
 	\end{frame}
 
-%	\begin{frame}
-%	\end{frame}
-%
-%
-%	\begin{frame}
-%	\end{frame}
 	
 % --------------------------------------------------- Slide --
 	\subsection{M\'etodo delta}
@@ -897,7 +833,7 @@
 	\begin{frame}
 		\frametitle{Ejemplos}
 		\begin{itemize}
-			\item \alert{Media muestral al cuadrado}: $\bar y^2$
+			\item \term{Media muestral al cuadrado}: $\bar y^2$
 			\begin{align*}
 			\sqrt{N} (\bar y^2 - \mu^2) \dto \N(0, 4 \mu^2 \sigma^2).
 			\end{align*}
@@ -905,24 +841,25 @@
 		\end{itemize}
 	\end{frame}
 	
-%	\begin{frame}
-%	\end{frame}    		
-%
-%	\begin{frame}
-%	\end{frame} 
 	
 	% --------------------------------------------------- Slide --
-%	\begin{frame}
-%		\frametitle{Ejemplos}
-%		\begin{itemize}
-%			\item \alert{Efecto marginal para cambios grandes de log}
-%			\item [] Dado el modelo de regresi\'on $\log y = \beta_0 +\beta_{1} x+ u$ estamos interesados en el efecto marginal de $x$
-%			\begin{align*}
-%			\frac{\Delta \E(y|x)}{\E(y|x)} \times 100 \approx [(\exp(\beta_1)-1)  \times 100] \Delta x.
-%			\end{align*}
-%			Tenemos un estimador consistente $\hat \beta_1$ que satisface $\sqrt{N}(\hat \beta_1-\beta_1)\dto \N(0, V_{11})$. Proponga un estimador consistente de $(\exp(\beta_1)-1)  \times 100$ y encuentre su distribuci\'on asint\'otica.
-%		\end{itemize}
-%	\end{frame}
+	\begin{frame}
+		\frametitle{Ejemplos}
+		\small
+		\begin{itemize}
+			\item <1-> \term{Efecto marginal para cambios grandes de log}
+			\item [] <1-> Dado el modelo de regresi\'on $\log y = \beta_0 +\beta_{1} x+ u$ estamos interesados en el efecto marginal de $x$
+			\begin{align*}
+			\frac{\Delta \E(y|x)}{\E(y|x)} \times 100 \approx [(\exp(\beta_1)-1)  \times 100] \Delta x.
+			\end{align*}
+			Tenemos un estimador consistente $\hat \beta_1$ que satisface $\sqrt{N}(\hat \beta_1-\beta_1)\dto \N(0, V_{11})$. Proponga un estimador consistente de $(\exp(\beta_1)-1)  \times 100$ y encuentre su distribuci\'on asint\'otica.
+			\item <2-> Respuesta: por el m\'etodo delta con $g(\beta_1)=(\exp(\beta_1)-1)\times 100$ y $G=g'(\beta_1)=100\exp(\beta_1)$,
+			\begin{align*}
+			\sqrt{N}\left[(\exp(\hat \beta_1)-1)\times 100 - (\exp(\beta_1)-1)\times 100\right] \dto \N(0, 10000\exp(2\beta_1) V_{11}).
+			\end{align*}
+			Estimador consistente: $(\exp(\hat \beta_1)-1)\times 100$ (teorema de la funci\'on continua, $\exp(\cdot)$ es continua).
+		\end{itemize}
+	\end{frame}
 	% --------------------------------------------------- Slide --
 	\begin{frame}
 		\frametitle{Ejemplos}
@@ -961,11 +898,6 @@
 		\end{itemize}
 	\end{frame}
 
-%	\begin{frame}
-%	\end{frame}
-%
-%	\begin{frame}
-%	\end{frame}
 	
 	
 	\begin{frame}
