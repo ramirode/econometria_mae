@@ -143,9 +143,9 @@ p1 <- ggplot(cond_exp, aes(x = esc, y = lwage_mean)) +
   geom_line(color = "#1F77B4", linewidth = 0.8) +
   geom_point(color = "#1F77B4", size = 1.6) +
   labs(
-    title = "Conditional expectation",
-    subtitle = "log(wage) by educational level",
-    x = "years of education", y = "log(wage)"
+    title = "Esperanza condicional",
+    subtitle = "log(wage) según nivel educativo",
+    x = "Años de educación (esc)", y = "log(wage)"
   ) +
   theme_minimal(base_size = 13)
 ggsave("output/cond_expec_wage_educ1.png", p1, width = 7, height = 4.5, dpi = 200)
@@ -158,16 +158,16 @@ ggsave("output/cond_expec_wage_educ1.png", p1, width = 7, height = 4.5, dpi = 20
 d2 <- cond_exp %>%
   select(esc, lwage_mean, fit_lineal) %>%
   pivot_longer(cols = c(lwage_mean, fit_lineal), names_to = "serie", values_to = "value") %>%
-  mutate(serie = recode(serie, lwage_mean = "Conditional expectation", fit_lineal = "Regression (linear)"))
+  mutate(serie = recode(serie, lwage_mean = "Esperanza condicional", fit_lineal = "Regresión lineal"))
 
 p2 <- ggplot(d2, aes(x = esc, y = value, color = serie)) +
   geom_line(linewidth = 0.8) +
   geom_point(data = filter(d2, serie == "Conditional expectation"), size = 1.6) +
-  scale_color_manual(values = c("Conditional expectation" = "#1F77B4", "Regression (linear)" = "#D62728")) +
+  scale_color_manual(values = c("Esperanza condicional" = "#1F77B4", "Regresión lineal" = "#D62728")) +
   labs(
-    title = "Conditional expectation and linear regression model",
-    subtitle = "log(wage) by educational level",
-    x = "years of education", y = "log(wage)", color = NULL
+    title = "Esperanza condicional y modelo de regresión lineal",
+    subtitle = "log(wage) según nivel educativo",
+    x = "Años de educación (esc)", y = "log(wage)", color = NULL
   ) +
   theme_minimal(base_size = 13) +
   theme(legend.position = "bottom")
@@ -177,16 +177,16 @@ ggsave("output/cond_expec_wage_educ2.png", p2, width = 7, height = 4.5, dpi = 20
 d3 <- cond_exp %>%
   select(esc, lwage_mean, fit_cuadratica) %>%
   pivot_longer(cols = c(lwage_mean, fit_cuadratica), names_to = "serie", values_to = "value") %>%
-  mutate(serie = recode(serie, lwage_mean = "Conditional expectation", fit_cuadratica = "Regression (quadratic)"))
+  mutate(serie = recode(serie, lwage_mean = "Esperanza condicional", fit_cuadratica = "Regresión cuadrática"))
 
 p3 <- ggplot(d3, aes(x = esc, y = value, color = serie)) +
   geom_line(linewidth = 0.8) +
   geom_point(data = filter(d3, serie == "Conditional expectation"), size = 1.6) +
-  scale_color_manual(values = c("Conditional expectation" = "#1F77B4", "Regression (quadratic)" = "#D62728")) +
+  scale_color_manual(values = c("Esperanza condicional" = "#1F77B4", "Regresión cuadrática" = "#D62728")) +
   labs(
-    title = "Conditional expectation and linear regression model",
-    subtitle = "log(wage) by educational level",
-    x = "years of education", y = "log(wage)", color = NULL
+    title = "Esperanza condicional y modelo de regresión cuadrática",
+    subtitle = "log(wage) según nivel educativo",
+    x = "Años de educación (esc)", y = "log(wage)", color = NULL
   ) +
   theme_minimal(base_size = 13) +
   theme(legend.position = "bottom")

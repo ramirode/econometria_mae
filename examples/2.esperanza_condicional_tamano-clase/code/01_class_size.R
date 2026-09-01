@@ -51,7 +51,7 @@ reg <- lm(testscr ~ str, data = d)
 p <- ggplot(d, aes(x = str, y = testscr)) +
   geom_point(color = "#1F77B4", size = 1.8, alpha = 0.7) +
   geom_smooth(method = "lm", se = FALSE, color = "#D62728", linewidth = 0.8) +
-  labs(x = "Student-teacher ratio (str)", y = "Test score (testscr)") +
+  labs(x = "Ratio alumnos/profesor (str)", y = "Puntaje promedio de examen (testscr)") +
   theme_minimal(base_size = 13)
 ggsave("output/test_score_class_size.png", p, width = 7, height = 4.5, dpi = 200)
 
