@@ -60,6 +60,7 @@
   \DeclareMathOperator{\Var}{Var}
   \DeclareMathOperator{\Avar}{AVar}
   \DeclareMathOperator{\Cov}{Cov}
+  \DeclareMathOperator{\Corr}{Corr}
   \DeclareMathOperator{\N}{Normal}
   \DeclareMathOperator{\E}{\mathbb{E}}
   \DeclareMathOperator{\LP}{\mathbb{L}}
@@ -223,6 +224,19 @@
     		\end{itemize}
     		\item [] Con la covarianza completamos las propiedades de la varianza:
     		\item [] $\Var(bx+cy)=b^2\Var(x)+c^2\Var(y)+2 bc\Cov(x,y)$
+    	\end{itemize}
+    \end{frame}
+    % --------------------------------------------------- Slide --
+    \begin{frame}
+    	\frametitle{Correlaci\'on}
+    	\begin{itemize}
+    		\item \term{Correlaci\'on} entre $x,y$: $\Corr(x,y)=\dfrac{\Cov(x,y)}{sd(x)\,sd(y)}$
+    		\begin{itemize}
+    			\item Es la covarianza estandarizada, de modo que $-1 \leq \Corr(x,y) \leq 1$.
+    			\item A diferencia de la covarianza, no depende de las unidades de medida:
+    			\item [] $\Corr(a+bx,c+dy)=\text{signo}(bd)\,\Corr(x,y)$.
+    		\end{itemize}
+    		\item [] Ejemplo: si medimos $x$ en grados Fahrenheit en lugar de Celsius, $\Cov(x,y)$ cambia pero $\Corr(x,y)$ no.
     	\end{itemize}
     \end{frame}
     % --------------------------------------------------- Slide --
