@@ -1,0 +1,158 @@
+% !TeX spellcheck = es_ES
+\documentclass[letterpaper,11pt]{article}
+\input{../preambulo.tex}
+
+\title{Econometría I \\ Ayudantía 1}
+\author{Magíster en Economía, Universidad Alberto Hurtado}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent Temas: probabilidad conjunta y marginal, esperanza y varianza, covarianza y correlación,
+esperanza y varianza condicional, independencia e independencia en media, proyector lineal
+(modelo de regresión lineal) y multicolinealidad perfecta.
+
+\medskip
+\noindent Los ejercicios marcados con \textbf{(*)} son los que alcanzamos a resolver en la
+ayudantía (80 minutos); los demás quedan como práctica adicional, con solución en la pauta.
+
+\begin{enumerate}[itemsep=1.2em]
+
+%% ---------------------------------------------------------------- 1
+\item \textbf{(*)} Dada la distribución de probabilidad de la siguiente tabla:
+    \begin{table}[!htbp]
+        \centering
+        \caption{Distribución conjunta de condiciones meteorológicas y tiempo de viaje}
+        \begin{tabular}{lcc}
+            \toprule
+            & Lluvia ($x=0$) & Sin lluvia ($x=1$) \\
+            \midrule
+            Viaje largo ($y=0$) & 0.15 & 0.07 \\
+            Viaje corto ($y=1$) & 0.15 & 0.63 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+
+    Calcule:
+    \begin{enumerate}
+        \item $\E(y)$ y $\E(x)$.
+        \item $\Var(y)$ y $\Var(x)$.
+        \item $\Cov(x,y)$ y la correlación entre $x$ e $y$.
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 2
+\item \textbf{(*)} Usando las variables aleatorias $x$ e $y$ de la tabla anterior, considere dos nuevas
+    variables aleatorias $w = 3 + 6\,x$ y $v = 20 - 7\,y$. Calcule:
+    \begin{enumerate}
+        \item $\E(w)$ y $\E(v)$.
+        \item $\Var(w)$ y $\Var(v)$.
+        \item $\Cov(w,v)$ y la correlación entre $w$ y $v$. Compare con el resultado del
+              ejercicio 1(c) y explique qué cambió y qué no.
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 3
+\item En septiembre, la temperatura máxima diaria en Seattle tiene una media de 70$^\circ$F y
+    una desviación estándar de 7$^\circ$F. ¿Cuál es la media, la desviación estándar y la
+    varianza en $^\circ$C? \\
+    Recuerde que $^\circ\text{C} = (^\circ\text{F} - 32)\times 5/9$.
+
+%% ---------------------------------------------------------------- 4
+\item \emph{Esperanza y varianza condicional.} $x$ puede tomar dos valores $0,1$ e $y$ puede
+    tomar tres valores $-1,0,1$, con la siguiente distribución conjunta:
+    \begin{table}[!htbp]
+        \centering
+        \caption{Función de probabilidad conjunta}
+        \begin{tabular}{rrcc}
+            \toprule
+            & & \multicolumn{2}{c}{$x$} \\
+            \cmidrule(lr){3-4}
+            & & 0 & 1 \\
+            \midrule
+                & $-1$ & 0.10 & 0.20 \\
+            $y$ & $0$  & 0.30 & 0.10 \\
+                & $1$  & 0.10 & 0.20 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    \begin{enumerate}
+        \item Calcule las probabilidades marginales de $x$ e $y$, y $\E(y)$.
+        \item Calcule las probabilidades condicionales de $y$ dado $x$ y $\E(y|x)$.
+        \item Calcule $\Var(y|x=0)$ y $\Var(y|x=1)$.
+        \item Verifique la descomposición de varianza
+              $\Var(y) = \Var(\E(y|x)) + \E(\Var(y|x))$.
+        \item ¿Son $x$ e $y$ independientes en media? ¿Son independientes? Concluya.
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 5
+\item \textbf{(*)} \emph{Covarianza e independencia en media.} Suponga que las variables aleatorias $x$ y
+    $z$ se distribuyen $\N(0,1)$ y son independientes, y suponga que $y = x^2 + z$. Encuentre
+    la esperanza condicional de $y$ dado $x$ ($\E(y|x)$) y la covarianza entre $x$ e $y$
+    ($\Cov(x,y)$). ¿Qué concluye? \\
+    Pista: $\E[(x-\E x)^3] = 0$ para distribuciones simétricas como la normal.
+
+%% ---------------------------------------------------------------- 6
+\item \textbf{(*)} \emph{Independencia, independencia en media y correlación.} Suponga una variable
+    aleatoria $u$ con media cero, $\E(u)=0$. Indique si la afirmación es verdadera o falsa y
+    justifique (con una demostración o con un contraejemplo).
+    \begin{enumerate}
+        \item Si $\E(u|x)=0$ entonces $\E(x^2u)=0$.
+        \item Si $\E(x\,u)=0$ entonces $\E(x^2u)=0$.
+        \item Si $\E(u|x)=0$ entonces $u$ es independiente de $x$.
+        \item Si $\E(x\,u)=0$ entonces $\E(u|x)=0$.
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 7
+\item \emph{Aplicación.} Dada la siguiente distribución conjunta de situación laboral y
+    estudios universitarios, para personas mayores de 25 años que trabajan o buscan trabajo,
+    EEUU 2008.
+    \begin{table}[!htbp]
+        \centering
+        \caption{Situación laboral y estudios universitarios}
+        \begin{tabular}{rrccc}
+            \toprule
+            & & Desempleado & Empleado & \\
+            & & ($y=0$) & ($y=1$) & Marginal de $x$ \\
+            \midrule
+            No titulado universitario & ($x=0$) & 0.037 & 0.622 & 0.659 \\
+            Titulado universitario    & ($x=1$) & 0.009 & 0.332 & 0.341 \\
+            \midrule
+            Marginal de $y$ & & 0.046 & 0.954 & 1.000 \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+    \begin{enumerate}
+        \item Calcule $\E(y)$.
+        \item La tasa de desempleo es la proporción de la fuerza laboral que se encuentra
+              desempleada. Demuestre que la tasa de desempleo está dada por $1-\E(y)$.
+        \item Calcule $\E(y|x=1)$ y $\E(y|x=0)$.
+        \item Calcule $\Var(y|x=1)$ y $\Var(y|x=0)$.
+        \item Calcule la tasa de desempleo para (i) titulados y (ii) no titulados universitarios.
+        \item Una persona de esta población seleccionada al azar dice estar desempleada.
+              ¿Cuál es la probabilidad de que sea titulada universitaria? ¿Y no titulada?
+        \item ¿Son independientes el nivel educativo y la situación laboral?
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 8
+\item \textbf{(*)} \emph{Multicolinealidad perfecta.} Suponga que el vector de regresores,
+    usado para predecir un escalar $y$, es
+    \begin{align*}
+    x = \begin{pmatrix} 1 \\ x_1 \\ x_2 \end{pmatrix},
+    \end{align*}
+    y que $x_2 = \alpha_1 + \alpha_2\, x_1$, es decir, $x_2$ es una función lineal exacta de $x_1$.
+    \begin{enumerate}
+        \item Demuestre que $\E(xx')$ no es invertible. ¿Cuál es la causa de la no invertibilidad?
+        \item Sea $\beta$ un vector que minimiza $\E[(y-x'b)^2]$ y sea $c$ el vector no
+              nulo de la parte (a). Demuestre que $\beta+t\,c$ predice exactamente el mismo $y$
+              que $\beta$, para cualquier $t\in\mathbb{R}$, y que por lo tanto también minimiza
+              $\E[(y-x'b)^2]$. ¿Qué consecuencias tiene esto para la identificación de $\beta$ en
+              el modelo de regresión lineal $\LP(y|x)=x'\beta$?
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 9
+\item \textbf{(*)} \emph{Proyección lineal con solo un intercepto.} Considere el modelo
+    $y=\beta_0+\varepsilon$, donde $\beta_0$ es el proyector lineal, es decir
+    $\beta_0=\arg\min_b \E[(y-b)^2]$. Demuestre que $\beta_0=\E(y)$.
+
+\end{enumerate}
+\end{document}

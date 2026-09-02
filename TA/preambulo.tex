@@ -1,0 +1,37 @@
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\decimalpoint % separador decimal con punto, como en las tablas de la fuente original
+\usepackage{lmodern,microtype}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{geometry}
+\geometry{margin=2.54cm}
+\usepackage{setspace}
+\setstretch{1.15}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{color}
+\usepackage{hyperref}
+\definecolor{ntr}{rgb}{0.8,0,0}
+\hypersetup{colorlinks=true,linkcolor=ntr,citecolor=ntr,urlcolor=black}
+
+% Portada (Luis Cabral): titulo \LARGE sans-serif alineado a la izquierda, sin numero de pagina
+\makeatletter
+    \renewcommand{\@maketitle}{%
+    \newpage\parindent0in\null\vskip2em%
+    {\LARGE\textbf{\textsf{\@title}}\par\vskip2em}%
+    \@author\par\vskip2em%
+    \@date%
+    \par
+    \thispagestyle{empty}\setcounter{page}{1}%
+    }%
+\makeatother
+
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\Corr}{Corr}
+\DeclareMathOperator{\E}{\mathbb{E}}
+\DeclareMathOperator{\N}{Normal}
+\DeclareMathOperator{\LP}{\mathbb{L}}
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
