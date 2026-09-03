@@ -1,0 +1,186 @@
+% !TeX spellcheck = es_ES
+%\documentclass[letterpaper,12pt]{article}
+\documentclass[letterpaper,11pt]{article}
+
+% Language & Input
+  \usepackage[english]{babel} % Language: English
+  \usepackage[ansinew]{inputenc} % Input
+% Font
+  \usepackage[T1]{fontenc} % Font encoding
+  \usepackage{lmodern,microtype} % Typeface
+% Math
+  \usepackage{amsmath,amsthm,amssymb,amsfonts} % AMS math
+  \usepackage{dsfont,mathrsfs,ushort} % Math style
+% Style
+  \usepackage[bf,sf,tiny,center]{titlesec} % Section titles 
+  \usepackage{geometry} % Page & margins
+  \usepackage{setspace} % Spacing
+  \usepackage{enumitem} % Lists
+  \usepackage{abstract} % Abstract
+  \usepackage{color}
+% References
+  \usepackage[longnamesfirst]{natbib} % Manages bibiography
+% Figures
+  \usepackage{graphicx} % Additional options for includefigure
+  \usepackage[font={small}]{caption}
+% Tables
+  \usepackage{booktabs} % Table format
+  \usepackage{dcolumn} % Align on the decimal point of numbers in tabular columns.
+  \usepackage{multirow} % Multirows in a table
+  \usepackage{lscape} % Tables in landscape form
+  \usepackage{ctable} % Tables with captions and notes all the same width 
+% Hyperlinks
+  \usepackage{hyperref}
+% Addons
+  \usepackage[l2tabu, orthodox]{nag} % Warn the user about the use of such obso­lete things
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Style & Structure
+%% Titles (Carlos Perez)
+%  \titlelabel{\thetitle.}
+%  \titleformat*{\subsection}{\centering\sffamily\itshape}
+%  \titleformat{\subsubsection}[runin]{\sffamily}{}{0em}{}[.]
+%  \titlespacing{\subsubsection}{0pt}{*2}{\wordsep}
+  
+% Title page (Luis Cabral)
+\makeatletter
+    \renewcommand{\@maketitle}{%
+    \newpage\parindent0in\null\vskip2em%
+    {\LARGE\textbf{\textsf{\@title}}\par\vskip2em}%
+    \@author\par\vskip2em%
+    \@date%
+    \par
+    \thispagestyle{empty}\setcounter{page}{1}%\newpage
+    }%
+\makeatother
+\renewenvironment{abstract}% Change the way abstract is presented
+{\vskip2em\noindent{\textbf{\textsf{Abstract.}}}\hspace*{1ex}}{}
+
+% Sections
+  \renewcommand\thesection{\arabic{section}}
+  \renewcommand\thesubsection{\Alph{subsection}}
+% Bibliography
+  \bibliographystyle{apa} %Alternative: {plain} {aea} {econometrica}
+% Spacing & lists and margins
+  \geometry{margin=2.54cm}
+  \setstretch{1.15} % Set spacing
+% Color
+  \definecolor{ntr}{rgb}{0.8,0,0} % not too red
+% Abstract
+  \renewcommand{\abstractnamefont}{\sffamily\small\bfseries}
+  \setlength{\abstitleskip}{-1em}
+% Hyperlinks
+  \hypersetup{colorlinks=true,linkcolor=ntr,citecolor=ntr,urlcolor=black,bookmarksnumbered=true}
+% Notes to tables and figures
+% Significant stars in tables
+  %\newcommand{\sym}[1]{\rlap{#1}}
+  \def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+% Games
+% Miscellaneous
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Theorems
+  \theoremstyle{plain}
+  \newtheorem{prop}{Proposition}
+  \newtheorem{assumption} {Assumption}
+  \newtheorem{theorem}{Theorem}
+  \newtheorem{lem}{Lemma}
+  \newtheorem{corollary}{Corollary}
+  \theoremstyle{definition}
+  \newtheorem{defi}{Definition}
+  \newtheorem{ex}{Example}
+  \theoremstyle{remark}
+  \newtheorem{remark}{Remark}
+  \def\propautorefname{Proposition}
+  \def\propositionautorefname{Proposition}
+  \def\defiautorefname{Definition}
+  \def\lemautorefname{Lemma}
+  \def\exampleautorefname{Example}
+  \def\corollaryautorefname{Corollary}
+  \def\exautorefname{Example}
+
+\newcommand{\SR}{\mathbb{R}}
+
+\DeclareMathOperator*{\Max}{m{a}x}
+\DeclareMathOperator*{\Min}{m{i}n}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\plim}{plim}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Avar}{AVar}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\E}{\mathbb{E}}
+\newcommand{\pto}{\stackrel{p}{\longrightarrow}}
+\newcommand{\dto}{\stackrel{d}{\longrightarrow}}
+\newcommand{\adistr}{\stackrel{a}{\sim}}
+\newcommand{\epsi}{\varepsilon}
+\newcommand{\tmle}{\hat \theta_{ML}}
+\newcommand{\tgmm}{\hat \theta_{GMM}}
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+\DeclareMathOperator{\N}{Normal}
+
+\begin{document}
+	
+	\title {Econometr�a I  \\ Tarea 1}	
+	\author{Mag�ster en Econom�a, Universidad Alberto Hurtado}
+	\date{Fecha de entrega: 10 de septiembre de 2026 (al principio de la ayudant�a)}
+\maketitle
+
+Total: 90 puntos
+
+\begin{enumerate}
+    \item (10 puntos) Suponga un modelo de regresi\'on simple
+        \begin{align*}
+            y = \beta_0 + \beta_1 x_{1} + u.
+        \end{align*}
+    Reemplace en la expresi\'on general $\beta=\E(xx')^{-1}\E(xy)$ para demostrar que $\beta_1=\Cov(x_{1},y)/\Var(x_{1})$ y $\beta_0=\E(y)-\beta_1 \E(x_{1})$.
+    \item (10 puntos) Estamos interesados en el efecto de una variable $x$ en $y$. Suponga que $x$ es una variable que toma los valores 0, 1 y 2. Defina las siguientes variables aleatorias
+    \begin{align*}
+    d_1 = 
+    \begin{cases}
+    1 & \mbox{si } x = 1, \\
+    0 & \mbox{en caso contrario, }
+    \end{cases}
+    d_2 = 
+    \begin{cases}
+    1 & \mbox{si } x = 2, \\
+    0 & \mbox{en caso contrario. }
+    \end{cases}
+    \end{align*}
+    Demuestre que la esperanza condicional $\E(y|d_1,d_2)$ es lineal. \\
+    Dado lo visto en clase usted puede deducir que la proyecci\'on lineal es igual a la esperanza condicional. \\ 
+    El modelo anterior pertenece a una familia de modelos con la caracter\'istica que la esperanza condicional es lineal ?`Cu\'al es \'esta familia de modelos?
+    \item (10 puntos) Utilizando el modelo lineal de regresi\'on $y_i = x_{i}'\beta +u_i$, demuestre que la varianza de $y_i$ se puede descomponer como $\Var(y_i)= \Var(x_i'\beta)+\E(u_i^2)$.\\
+    Utilice el resultado anterior para demostrar que $0 \leq R^2 \leq 1$ donde  $R^2=\Var(x_i'\beta)/\Var(y_i)$.
+    \item (10 puntos) Suponga dos modelos de regresi\'on 
+    \begin{align}
+    y &= x'\gamma+u,\\
+    y &= x'\beta_1+z'\beta_2+v,
+    \end{align}
+    donde el modelo (2) incluye $x$ (las variables explicativas del modelo 1) e incluye $z$ (variables adicionales no incluidas en el modelo 1). Adem\'as suponga que $x$ incluye una constante. Demuestre que $\Var(u)\geq \Var(v)$.\\
+    Utilice el resultado anterior para argumentar que siempre que agreguemos variables el $R^2$ del modelo no disminuye.
+    \item (20 puntos) Dados los modelos de regresi\'on 
+    \begin{align}
+        y &= \gamma_0+\gamma_1 x_{1}+u,\\
+        y &= \beta_0 + \beta_1 x_{1}+\beta_2 x_{2}+v.
+    \end{align}
+    \begin{enumerate}
+        \item Encuentre la relaci\'on entre $\beta_1$ y $\gamma_1$. ?`Cuando se cumple que $\beta_1=\gamma_1$?
+        \item Suponga que $y = \log(\text{salarios})$, $x_{1}=$ a\~nos de educaci\'on, y $x_{2}=$ habilidad innata. Si el modelo (4) mide el efecto causal de educaci\'on en salarios, comente sobre las consecuencias de utilizar el modelo (3) en lugar del modelo (4).
+    \end{enumerate}
+    Pista: Escriba $\gamma_1$ utilizando la f\'ormula para el modelo de regresi\'on simple, y luego reemplace $y$ seg\'un el modelo (4).
+    \item (20 puntos) Estamos interesados en el modelo de regresi\'on 
+    \begin{align*}
+        q^* &= \beta_0 + \beta_1 x_{1}+r^*
+    \end{align*}
+    donde $\E(r^*)=0$ y $\E(x_1\,r^*)=0$.
+    Suponga que no se puede observar $q^*$ pero observamos $q$ tal que $q=q^*+e$ donde $\E(e)=0$ y $\E(x_1\,e)=0$. Se puede interpretar que $q$ es una medici\'on con errores de medida de $q^*$.
+    \begin{enumerate}
+        \item Dado el modelo lineal de regresi\'on de $q$ (la variable observada con errores de medida) en $x_1$: 
+    \begin{align*}
+        q &= \delta_0 + \delta_1 x_{1}+error.
+    \end{align*}
+        Demuestre que $\delta_1=\beta_1$ y $\delta_0=\beta_0$.
+        \item Suponga que $\E(r^* e)=0$ y demuestre que la varianza del error es mayor en el modelo con error de medida.\\
+    \end{enumerate}
+    \item (10 puntos) Dado el proyector lineal de $y$ en $x$, $y=x'\beta+u$ donde $\E(xu)=0$, y el proyector lineal de $\E(y|x)$ en $x$ , $\E(y|x)=x'\beta^*+u^*$ donde $\E(xu^*)=0$. Demuestre que ambos proyectores lineales son id\'enticos, es decir $\beta = \beta^*$.
+\end{enumerate}
+\end{document} 

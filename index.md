@@ -23,6 +23,7 @@ Material del curso, a cargo de Ramiro de Elejalde.
   - [Educación y salarios en Chile (CASEN 2024)](https://github.com/ramirode/econometria_mae/tree/main/examples/2.esperanza_condicional_educacion-salarios)
   - [Tamaño de clase y notas (California Test Score Data)](https://github.com/ramirode/econometria_mae/tree/main/examples/2.esperanza_condicional_tamano-clase)
 - [Tareas](https://github.com/ramirode/econometria_mae/tree/main/problem-sets)
+  - [Tarea 1](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps1.pdf)
 - [Material de ayudantía](https://github.com/ramirode/econometria_mae/tree/main/TA)
   - [Ayudantía 1](https://github.com/ramirode/econometria_mae/blob/main/TA/TA1/TA1.pdf)
 
