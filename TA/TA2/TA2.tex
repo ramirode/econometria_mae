@@ -1,0 +1,97 @@
+% !TeX spellcheck = es_ES
+\documentclass[letterpaper,11pt]{article}
+\input{../preambulo.tex}
+
+\title{Análisis Econométrico \\ Ayudantía 2}
+\author{Magíster en Economía, Universidad Alberto Hurtado}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent Esta ayudantía comienza con un control breve (\textbf{Control 1}, 15 minutos, sin
+apuntes) sobre el contenido de la Tarea 1. Luego revisamos en conjunto los ejercicios 2, 4, 5 y
+6 de la Tarea 1 --- se reproducen aquí para tenerlos a mano durante la revisión.
+
+\vspace{1em}
+
+\noindent\textbf{Ejercicio 2 de la Tarea 1 (10 puntos). Modelos saturados.}
+
+Estamos interesados en el efecto de una variable $x$ en $y$. Suponga que $x$ es una variable
+que toma los valores 0, 1 y 2. Defina las siguientes variables aleatorias
+\begin{align*}
+d_1 =
+\begin{cases}
+1 & \mbox{si } x = 1, \\
+0 & \mbox{en caso contrario, }
+\end{cases}
+d_2 =
+\begin{cases}
+1 & \mbox{si } x = 2, \\
+0 & \mbox{en caso contrario. }
+\end{cases}
+\end{align*}
+Demuestre que la esperanza condicional $\E(y|d_1,d_2)$ es lineal. \\
+Dado lo visto en clase usted puede deducir que la proyección lineal es igual a la esperanza
+condicional. \\
+El modelo anterior pertenece a una familia de modelos con la característica que la esperanza
+condicional es lineal ¿Cuál es esta familia de modelos?
+
+\vspace{1em}
+
+\noindent\textbf{Ejercicio 4 de la Tarea 1 (10 puntos). Agregar variables y el $R^2$.}
+
+Suponga dos modelos de regresión
+\begin{align}
+y &= x'\gamma+u,\\
+y &= x'\beta_1+z'\beta_2+v,
+\end{align}
+donde el modelo (2) incluye $x$ (las variables explicativas del modelo 1) e incluye $z$
+(variables adicionales no incluidas en el modelo 1). Además suponga que $x$ incluye una
+constante. Demuestre que $\Var(u)\geq \Var(v)$.\\
+Utilice el resultado anterior para argumentar que siempre que agreguemos variables el $R^2$ del
+modelo no disminuye.
+
+\vspace{1em}
+
+\noindent\textbf{Ejercicio 5 de la Tarea 1 (20 puntos). Variable omitida.}
+
+Dados los modelos de regresión
+\begin{align}
+    y &= \gamma_0+\gamma_1 x_{1}+u,\\
+    y &= \beta_0 + \beta_1 x_{1}+\beta_2 x_{2}+v.
+\end{align}
+\begin{enumerate}
+    \item Encuentre la relación entre $\beta_1$ y $\gamma_1$. ¿Cuándo se cumple que
+    $\beta_1=\gamma_1$?
+    \item Suponga que $y = \log(\text{salarios})$, $x_{1}=$ años de educación, y $x_{2}=$
+    habilidad innata. Si el modelo (4) mide el efecto causal de educación en salarios, comente
+    sobre las consecuencias de utilizar el modelo (3) en lugar del modelo (4).
+\end{enumerate}
+Pista: Escriba $\gamma_1$ utilizando la fórmula para el modelo de regresión simple, y luego
+reemplace $y$ según el modelo (4).
+
+\vspace{1em}
+
+\noindent\textbf{Ejercicio 6 de la Tarea 1 (20 puntos). Error de medida en la variable
+dependiente.}
+
+Estamos interesados en el modelo de regresión
+\begin{align*}
+    q^* &= \beta_0 + \beta_1 x_{1}+r^*
+\end{align*}
+donde $\E(r^*)=0$ y $\E(x_1\,r^*)=0$. Suponga que no se puede observar $q^*$ pero observamos $q$
+tal que $q=q^*+e$ donde $\E(e)=0$ y $\E(x_1\,e)=0$. Se puede interpretar que $q$ es una medición
+con errores de medida de $q^*$.
+\begin{enumerate}
+    \item Dado el modelo lineal de regresión de $q$ (la variable observada con errores de
+    medida) en $x_1$:
+\begin{align*}
+    q &= \delta_0 + \delta_1 x_{1}+error.
+\end{align*}
+    Demuestre que $\delta_1=\beta_1$ y $\delta_0=\beta_0$.
+    \item Suponga que $\E(r^* e)=0$ y demuestre que la varianza del error es mayor en el modelo
+    con error de medida.\\
+\end{enumerate}
+
+\end{document}
