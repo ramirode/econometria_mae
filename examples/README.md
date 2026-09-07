@@ -9,14 +9,15 @@ descargar sola y correr.
 | [`1.intro_retornos-educacion`](1.intro_retornos-educacion) | Clase 1 | Regresión de Mincer con una progresión de controles (sesgo de variable omitida) |
 | [`2.esperanza_condicional_educacion-salarios`](2.esperanza_condicional_educacion-salarios) | Clase 2 | Esperanza condicional del log salario dada la escolaridad, con regresión lineal y cuadrática |
 | [`2.esperanza_condicional_tamano-clase`](2.esperanza_condicional_tamano-clase) | Clase 2 | Dispersión entre tamaño de clase y puntaje, con la recta de regresión |
+| [`3.teoria_asintotica_simulacion-bernoulli`](3.teoria_asintotica_simulacion-bernoulli) | Clase 3 | Simulación de Monte Carlo: distribución muestral de la media y su versión estandarizada, para una Bernoulli |
 
 ## Estructura de cada carpeta
 
 ```
 <ejemplo>/
   code/     el script de R
-  input/    los datos de entrada
-  output/   tablas (.tex y .csv) y figuras (.png) -- se crea sola al correr el script
+  input/    los datos de entrada (no todos los ejemplos lo tienen -- el de simulación no usa datos reales)
+  output/   tablas (.tex y .csv) y/o figuras (.png) -- se crea sola al correr el script
 ```
 
 Cada tabla se guarda dos veces: en `.tex` (para `\input{}` en las diapositivas)
@@ -24,7 +25,7 @@ y en `.csv` (para abrirla en Excel o Google Sheets sin compilar LaTeX).
 
 ## Cómo correr cualquiera de ellos
 
-1. Instalar los paquetes una sola vez. Estos cinco cubren los tres ejemplos:
+1. Instalar los paquetes una sola vez. Estos cinco cubren los cuatro ejemplos:
 
    ```r
    install.packages(c("tidyverse", "haven", "sandwich", "modelsummary", "kableExtra"))
