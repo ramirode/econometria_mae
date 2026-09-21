@@ -1,0 +1,5 @@
+"part","term","statistic","(1) Sin controles","(2) + Ciudad, sexo","(3) + Currículo","(4) + Industria"
+"estimates","Nombre afroamericano","estimate","-0.0320","-0.0322","-0.0313","-0.0312"
+"estimates","Nombre afroamericano","std.error","(0.0078)","(0.0078)","(0.0077)","(0.0077)"
+"gof","Num.Obs.","","4870","4870","4870","4870"
+"gof","R2","","0.003","0.007","0.030","0.033"
