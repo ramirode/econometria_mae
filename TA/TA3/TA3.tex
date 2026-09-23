@@ -1,0 +1,222 @@
+% !TeX spellcheck = es_ES
+\documentclass[letterpaper,11pt]{article}
+\input{../preambulo.tex}
+
+\title{Análisis Econométrico \\ Ayudantía 3}
+\author{Magíster en Economía, Universidad Alberto Hurtado}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent Temas: insesgadez y consistencia, convergencia en probabilidad, ley de los grandes
+números, teorema de la función continua, convergencia en distribución, teorema central del
+límite, teorema de Slutsky y método delta.
+
+\medskip
+\noindent Los ejercicios marcados con \textbf{(*)} son los que alcanzamos a resolver en la
+ayudantía (80 minutos); los demás quedan como práctica adicional, con solución en la pauta.
+
+\medskip
+\noindent En todos los ejercicios suponga que la muestra $\{y_i\}_{i=1}^N$ (o
+$\{(y_i,x_i)\}_{i=1}^N$) es i.i.d.\ y que existen los momentos que se necesiten. En cada
+respuesta \textbf{enuncie el teorema que está usando}.
+
+\begin{enumerate}[itemsep=1.2em]
+
+%% ---------------------------------------------------------------- 1
+\item \textbf{(*)} \emph{Media muestral ponderada.} La media muestral ponderada se define como
+    \begin{align*}
+    \bar y^{\,*} = \frac{1}{N}\sum_{i=1}^{N} w_i\, y_i,
+    \end{align*}
+    donde los $w_i$ son constantes no negativas que satisfacen $\frac{1}{N}\sum_{i=1}^N w_i=1$.
+    Sea $\mu=\E(y)$ y $\sigma^2=\Var(y)$.
+    \begin{enumerate}
+        \item Demuestre que $\bar y^{\,*}$ es un estimador insesgado de $\mu$.
+        \item Calcule $\Var(\bar y^{\,*})$.
+        \item Encuentre condiciones sobre los $w_i$ para que $\lim_{N\to\infty}\Var(\bar y^{\,*})=0$,
+              y dé un ejemplo de pesos que satisfagan $\frac{1}{N}\sum_i w_i=1$ pero para los
+              cuales la varianza \emph{no} converge a cero.
+    \end{enumerate}
+    Nota: si $\lim_{N\to\infty}\E(\hat\theta_N)=\theta$ y $\lim_{N\to\infty}\Var(\hat\theta_N)=0$,
+    entonces $\hat\theta_N\pto\theta$.
+
+%% ---------------------------------------------------------------- 2
+\item \emph{Insesgadez y consistencia.} Indique si cada afirmación es verdadera o falsa y
+    justifique (con una demostración o con un contraejemplo).
+    \begin{enumerate}
+        \item Un estimador insesgado es siempre consistente.
+        \item Un estimador consistente es siempre insesgado.
+        \item Si $\hat\theta_N\pto\theta$, entonces $\lim_{N\to\infty}\E(\hat\theta_N)=\theta$.
+    \end{enumerate}
+    Pistas: para (a) considere $\tilde y = y_1$; para (b) considere la varianza muestral
+    $S^2=\frac{1}{N}\sum_i (y_i-\bar y)^2$; para (c) considere la secuencia $z_N$ que toma el
+    valor $0$ con probabilidad $1-1/N$ y el valor $N$ con probabilidad $1/N$.
+
+%% ---------------------------------------------------------------- 3
+\item \textbf{(*)} \emph{LGN y teorema de la función continua.} Dada una muestra i.i.d.\
+    $\{(y_i,x_i)\}$, encuentre el límite en probabilidad de los siguientes estadísticos e
+    indique qué supuestos necesita.
+    \begin{enumerate}
+        \item $\displaystyle \frac{1}{N}\sum_{i=1}^N x_i\,y_i$.
+        \item Considere el modelo de regresión \emph{sin constante}, con $x$ escalar:
+              $\LP(y|x)=\beta\,x$, es decir $\beta=\arg\min_b \E[(y-x\,b)^2]$.
+              \begin{enumerate}[label=(\roman*)]
+                  \item Obtenga la condición de primer orden y demuestre que
+                        $\beta=\E(xy)/\E(x^2)$. \\
+                        Nota: en clase vimos la fórmula general
+                        $\beta=\E(xx')^{-1}\E(xy)$ para $x=(1,x_1,\dots,x_K)'$ \emph{con}
+                        constante; aquí solo hay que particularizarla al caso escalar.
+                  \item Demuestre que $\displaystyle
+                        \hat\beta=\frac{\frac{1}{N}\sum_{i=1}^N x_i y_i}{\frac{1}{N}\sum_{i=1}^N x_i^2}$
+                        es un estimador consistente de ese $\beta$.
+              \end{enumerate}
+        \item Recuerde que el coeficiente de correlación poblacional entre $x$ e $y$ es
+              \begin{align*}
+              \Corr(x,y)=\frac{\Cov(x,y)}{\sqrt{\Var(x)\,\Var(y)}},
+              \qquad \Cov(x,y)=\E(xy)-\E(x)\E(y),
+              \end{align*}
+              y su análogo muestral es
+              \begin{align*}
+              \hat\rho = \frac{S_{xy}}{\sqrt{S_x^2\,S_y^2}},
+              \qquad
+              S_{xy}=\frac{1}{N}\sum_i x_i y_i-\bar x\,\bar y,
+              \qquad
+              S_x^2=\frac{1}{N}\sum_i x_i^2-\bar x^2,
+              \end{align*}
+              y análogamente $S_y^2$. Demuestre que $\hat\rho\pto\Corr(x,y)$. \\
+              Pista: no necesita volver a los cinco promedios muestrales. En clase ya se
+              demostró que la varianza muestral es un estimador consistente de la varianza
+              poblacional, $S_x^2\pto\Var(x)$ y $S_y^2\pto\Var(y)$; demuestre primero que
+              $S_{xy}\pto\Cov(x,y)$ con el mismo argumento y después aplique el teorema de la
+              función continua una sola vez.
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 4
+\item \textbf{(*)} \emph{Convergencia en distribución, función continua y Slutsky.} Suponga que
+    $z_N \dto z \sim \N(0,1)$, que $c_N \pto 3$ y que $a_N \pto 0$. Encuentre la distribución
+    asintótica de
+    \begin{enumerate}
+        \item $x_N = 2\,z_N+5$;
+        \item $x_N = z_N^2$;
+        \item $x_N = z_N/c_N$;
+        \item $x_N = z_N + a_N$.
+    \end{enumerate}
+    En cada caso indique si usa el teorema de la función continua (para $\dto$) o el teorema de
+    Slutsky.
+
+%% ---------------------------------------------------------------- 5
+\item \textbf{(*)} \emph{Teorema central del límite.} Sea $\hat\mu_3=\frac{1}{N}\sum_{i=1}^N y_i^3$
+    un estimador de $\mu_3=\E(y^3)$.
+    \begin{enumerate}
+        \item Demuestre que $\sqrt{N}(\hat\mu_3-\mu_3)\dto \N(0,v^2)$ para algún $v^2$.
+        \item Escriba $v^2$ como función de los momentos de $y$.
+        \item Proponga un estimador consistente $\hat v^2$ de $v^2$ y demuestre que lo es.
+        \item Encuentre la distribución asintótica de $\sqrt{N}(\hat\mu_3-\mu_3)/\hat v$.
+              ¿Por qué es útil este resultado?
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 6
+\item \textbf{(*)} \emph{Vectores aleatorios y formas cuadráticas.} Suponga que
+    $\mathbf{z}_N \dto \mathbf{z}\sim \N(\boldsymbol{\mu},\boldsymbol{\Sigma})$, donde
+    $\mathbf{z}_N=(z_{1N},z_{2N})'$ es un vector de $2\times 1$,
+    $\boldsymbol{\mu}=(5,-1)'$ y
+    \begin{align*}
+    \boldsymbol{\Sigma}=\begin{pmatrix} 4 & 0 \\ 0 & 9 \end{pmatrix}.
+    \end{align*}
+    \begin{enumerate}
+        \item Encuentre la distribución asintótica de $\mathbf{A}\,\mathbf{z}_N$, donde
+              \begin{align*}
+              \mathbf{A}=\begin{pmatrix} 1 & 1 \\ 1 & -1 \end{pmatrix}.
+              \end{align*}
+        \item Encuentre la distribución asintótica de
+              $\boldsymbol{\Sigma}^{-1/2}(\mathbf{z}_N-\boldsymbol{\mu})$, donde
+              \begin{align*}
+              \boldsymbol{\Sigma}^{-1/2}=\begin{pmatrix} 1/2 & 0 \\ 0 & 1/3 \end{pmatrix}.
+              \end{align*}
+        \item Encuentre la distribución asintótica de
+              $(\mathbf{z}_N-\boldsymbol{\mu})'\boldsymbol{\Sigma}^{-1}(\mathbf{z}_N-\boldsymbol{\mu})$.
+        \item Suponga que reemplazamos $\boldsymbol{\Sigma}$ por un estimador consistente
+              $\hat{\boldsymbol{\Sigma}}\pto\boldsymbol{\Sigma}$. ¿Cambian los resultados
+              anteriores? ¿Por qué importa esto en la práctica?
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 7
+\item \textbf{(*)} \emph{Un estimador no estándar.} Dado el modelo
+    \begin{align*}
+    y_i = \beta\,x_i + u_i,
+    \end{align*}
+    donde $\E(u_i|x_i)=0$, $\beta$ es un escalar (no es un vector) y $x_i$ es una variable
+    aleatoria (no es un vector aleatorio). Considere el estimador
+    \begin{align*}
+    \hat\beta = \frac{\frac{1}{N}\sum_{i=1}^N x_i^3 y_i}{\frac{1}{N}\sum_{i=1}^N x_i^4}.
+    \end{align*}
+    \begin{enumerate}
+        \item Muestre que $\hat\beta$ es un estimador consistente de $\beta$.
+        \item Encuentre la distribución asintótica de $\sqrt{N}(\hat\beta-\beta)$.
+        \item Simplifique la varianza asintótica bajo el supuesto de que la varianza
+              condicional de $u$ dado $x$ es constante, $\E(u^2|x)=\sigma^2$.
+        \item Sea $\gamma=1/\beta$ con $\beta\neq 0$. Proponga un estimador consistente
+              $\hat\gamma$ y obtenga la distribución asintótica de $\sqrt{N}(\hat\gamma-\gamma)$.
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 8
+\item \emph{Método delta cuando la derivada se anula.} Sea $\bar y$ la media muestral de una
+    muestra i.i.d.\ con $\E(y)=\mu$ y $\Var(y)=\sigma^2$, y considere $\bar y^2$ como estimador
+    de $\mu^2$.
+    \begin{enumerate}
+        \item Aplique el método delta para mostrar que
+              \begin{align*}
+              \sqrt{N}\left(\bar y^2-\mu^2\right)\dto \N\left(0,\ 4\mu^2\sigma^2\right).
+              \end{align*}
+        \item Suponga ahora que $\mu=0$. ¿Qué varianza asintótica entrega la fórmula de la parte
+              (a)? ¿Por qué el método delta deja de ser informativo en este caso?
+        \item Manteniendo $\mu=0$, encuentre la distribución asintótica de
+              $N\,\bar y^2/\sigma^2$. \\
+              Pista: escriba $N\bar y^2=\left(\sqrt{N}\,\bar y\right)^2$, aplique el TCL a
+              $\sqrt{N}\,\bar y$ y después el teorema de la función continua.
+        \item Compare (a) y (c). ¿A qué velocidad converge $\bar y^2$ a $\mu^2$ en cada caso, y
+              a qué familia de distribuciones pertenece el límite?
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 9
+\item \emph{Proyección lineal ponderada.} Estamos interesados en estimar un parámetro $\theta$
+    definido como
+    \begin{align*}
+    \theta = \arg\min_t\ \E\left[(y-x\,t)^2 f(x)\right],
+    \end{align*}
+    donde $y$ es una variable aleatoria con $\E(y)=0$, $x$ es una variable aleatoria (no es un
+    vector) con $\E(x)=0$, y $f(x)$ es una función de $x$ que toma valores entre cero y uno
+    según el valor de $x$. Responda enunciando los teoremas que utilice.
+    \begin{enumerate}
+        \item Encuentre una expresión explícita para $\theta$.
+        \item Demuestre que si $\E(y|x)=\beta\,x$, entonces $\theta$ coincide con el coeficiente
+              del modelo de regresión $\beta=\E(xy)/\E(x^2)$.
+        \item Suponga que tiene una muestra aleatoria de tamaño $N$ de $(y,x)$. En base a su
+              respuesta en (a), proponga un estimador $\tilde\theta$ y demuestre que es consistente.
+        \item Encuentre la distribución asintótica de $\sqrt{N}(\tilde\theta-\theta)$. Puede
+              utilizar el siguiente resultado: $\E[x\,u\,f(x)]=0$, donde $u=y-\theta\,x$.
+    \end{enumerate}
+
+\end{enumerate}
+
+\vspace{1em}
+\noindent\rule{\textwidth}{0.4pt}
+
+\section*{Práctica computacional (opcional)}
+
+\noindent En el repositorio del curso está el ejemplo
+\href{https://github.com/ramirode/econometria_mae/tree/main/examples/3.teoria_asintotica_simulacion-bernoulli}%
+{\texttt{3.teoria\_asintotica\_simulacion-bernoulli}}, que simula 50.000 muestras de una
+Bernoulli($p=0.78$) para $N=2,5,25,100$ y grafica la distribución muestral de $\bar y_N$ y de
+$\sqrt{N}(\hat p - p)/\sqrt{p(1-p)}$.
+
+\begin{enumerate}[itemsep=0.6em]
+    \item Corra el script y verifique visualmente la consistencia de $\bar y_N$ y el teorema
+          central del límite.
+    \item Modifique $p$ a un valor cercano a cero (por ejemplo $p=0.02$). ¿Qué tan grande tiene
+          que ser $N$ para que la aproximación normal sea razonable? Relacione su respuesta con
+          el hecho de que el TCL es un resultado asintótico.
+\end{enumerate}
+
+\end{document}
