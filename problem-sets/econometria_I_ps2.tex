@@ -1,0 +1,215 @@
+% !TeX spellcheck = es_ES
+%\documentclass[letterpaper,12pt]{article}
+\documentclass[letterpaper,11pt]{article}
+
+% Language & Input
+  \usepackage[english]{babel} % Language: English
+  \usepackage[ansinew]{inputenc} % Input
+% Font
+  \usepackage[T1]{fontenc} % Font encoding
+  \usepackage{lmodern,microtype} % Typeface
+% Math
+  \usepackage{amsmath,amsthm,amssymb,amsfonts} % AMS math
+  \usepackage{dsfont,mathrsfs,ushort} % Math style
+% Style
+  \usepackage[bf,sf,tiny,center]{titlesec} % Section titles 
+  \usepackage{geometry} % Page & margins
+  \usepackage{setspace} % Spacing
+  \usepackage{enumitem} % Lists
+  \usepackage{abstract} % Abstract
+  \usepackage{color}
+% References
+  \usepackage[longnamesfirst]{natbib} % Manages bibiography
+% Figures
+  \usepackage{graphicx} % Additional options for includefigure
+  \usepackage[font={small}]{caption}
+% Tables
+  \usepackage{booktabs} % Table format
+  \usepackage{dcolumn} % Align on the decimal point of numbers in tabular columns.
+  \usepackage{multirow} % Multirows in a table
+  \usepackage{lscape} % Tables in landscape form
+  \usepackage{ctable} % Tables with captions and notes all the same width 
+% Hyperlinks
+  \usepackage{hyperref}
+% Addons
+  \usepackage[l2tabu, orthodox]{nag} % Warn the user about the use of such obso­lete things
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Style & Structure
+%% Titles (Carlos Perez)
+%  \titlelabel{\thetitle.}
+%  \titleformat*{\subsection}{\centering\sffamily\itshape}
+%  \titleformat{\subsubsection}[runin]{\sffamily}{}{0em}{}[.]
+%  \titlespacing{\subsubsection}{0pt}{*2}{\wordsep}
+  
+% Title page (Luis Cabral)
+\makeatletter
+    \renewcommand{\@maketitle}{%
+    \newpage\parindent0in\null\vskip2em%
+    {\LARGE\textbf{\textsf{\@title}}\par\vskip2em}%
+    \@author\par\vskip2em%
+    \@date%
+    \par
+    \thispagestyle{empty}\setcounter{page}{1}%\newpage
+    }%
+\makeatother
+\renewenvironment{abstract}% Change the way abstract is presented
+{\vskip2em\noindent{\textbf{\textsf{Abstract.}}}\hspace*{1ex}}{}
+
+% Sections
+  \renewcommand\thesection{\arabic{section}}
+  \renewcommand\thesubsection{\Alph{subsection}}
+% Bibliography
+  \bibliographystyle{apa} %Alternative: {plain} {aea} {econometrica}
+% Spacing & lists and margins
+  \geometry{margin=2.54cm}
+  \setstretch{1.15} % Set spacing
+% Color
+  \definecolor{ntr}{rgb}{0.8,0,0} % not too red
+% Abstract
+  \renewcommand{\abstractnamefont}{\sffamily\small\bfseries}
+  \setlength{\abstitleskip}{-1em}
+% Hyperlinks
+  \hypersetup{colorlinks=true,linkcolor=ntr,citecolor=ntr,urlcolor=black,bookmarksnumbered=true}
+% Notes to tables and figures
+% Significant stars in tables
+  %\newcommand{\sym}[1]{\rlap{#1}}
+  \def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+% Games
+% Miscellaneous
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Theorems
+  \theoremstyle{plain}
+  \newtheorem{prop}{Proposition}
+  \newtheorem{assumption} {Assumption}
+  \newtheorem{theorem}{Theorem}
+  \newtheorem{lem}{Lemma}
+  \newtheorem{corollary}{Corollary}
+  \theoremstyle{definition}
+  \newtheorem{defi}{Definition}
+  \newtheorem{ex}{Example}
+  \theoremstyle{remark}
+  \newtheorem{remark}{Remark}
+  \def\propautorefname{Proposition}
+  \def\propositionautorefname{Proposition}
+  \def\defiautorefname{Definition}
+  \def\lemautorefname{Lemma}
+  \def\exampleautorefname{Example}
+  \def\corollaryautorefname{Corollary}
+  \def\exautorefname{Example}
+
+\newcommand{\SR}{\mathbb{R}}
+
+\DeclareMathOperator*{\Max}{m{a}x}
+\DeclareMathOperator*{\Min}{m{i}n}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\plim}{plim}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Avar}{AVar}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\E}{\mathbb{E}}
+\newcommand{\pto}{\stackrel{p}{\longrightarrow}}
+\newcommand{\dto}{\stackrel{d}{\longrightarrow}}
+\newcommand{\adistr}{\stackrel{a}{\sim}}
+\newcommand{\epsi}{\varepsilon}
+\newcommand{\tmle}{\hat \theta_{ML}}
+\newcommand{\tgmm}{\hat \theta_{GMM}}
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+\DeclareMathOperator{\N}{Normal}
+
+\begin{document}
+	
+	\title {An\'alisis Econom\'etrico  \\ Tarea 2}
+	\author{Mag\'ister en Econom\'ia, Universidad Alberto Hurtado}
+	\date{Fecha de entrega: 1 de octubre de 2026 (al principio de la ayudant\'ia)}
+\maketitle
+
+Total: 80 puntos
+
+Cuando el ejercicio involucre una muestra, suponga que es i.i.d.\ y que existen los momentos
+necesarios. Enuncie los teoremas que utilice en cada demostraci\'on.
+
+\begin{enumerate}
+    \item (20 puntos) Dada una muestra i.i.d.\ de tama\~no $N$ de una variable aleatoria $y$ con
+        distribuci\'on Bernoulli con probabilidad de \'exito $p$. Es decir,
+        \begin{align*}
+        y = \left\{
+        \begin{array} {l l}
+        1 & \text{con probabilidad }p,\\
+        0 & \text{con probabilidad }1-p.\\
+        \end{array}
+        \right.
+        \end{align*}
+        En lo que sigue puede utilizar que $\E(y) = p$ y $\Var(y)=p(1-p)$.
+        \begin{enumerate}
+            \item (5 puntos) Demuestre que la media muestral $\bar y=\frac{1}{N}\sum_i y_i$ es un
+                estimador consistente de $p$.
+            \item (5 puntos) Demuestre que $\bar y (1-\bar y)$ es un estimador consistente de
+                $\Var(y)=p(1-p)$.
+            \item (5 puntos) Obtenga la distribuci\'on asint\'otica de $\sqrt{N}(\bar y-p)$.
+                Obtenga una distribuci\'on aproximada de $\bar y$ para muestras grandes.
+            \item (5 puntos) Obtenga la distribuci\'on asint\'otica de
+                $\sqrt{N}\frac{(\bar y-p)}{\sqrt{\bar y (1-\bar y)}}$. Explique por qu\'e este
+                resultado es m\'as \'util en la pr\'actica que el de la parte (c).
+        \end{enumerate}
+
+    \item (20 puntos) La covarianza muestral se define como
+        $S_{x y}=\frac{1}{N} \sum_{i=1}^N (x_i-\bar x) (y_i-\bar y)$ y la covarianza poblacional
+        como $\sigma_{xy}=\E(xy)-\E(x)\E(y)$. Sean $\mu_x=\E(x)$ y $\mu_y=\E(y)$.
+        \begin{enumerate}
+            \item (5 puntos) Demuestre que la covarianza muestral se puede escribir como
+                \begin{align*}
+                S_{x y}=\frac{1}{N} \sum_{i=1}^N (x_i-\mu_x)(y_i-\mu_y)-(\bar x-\mu_x) (\bar y-\mu_y).
+                \end{align*}
+            \item (5 puntos) Demuestre que la covarianza muestral es un estimador consistente de
+                la covarianza poblacional, $S_{x y}\pto \sigma_{xy}$.
+            \item (10 puntos) Demuestre que
+                \begin{align*}
+                \sqrt{N}(S_{x y}-\sigma_{x y})\dto \N\left(0,\ \E[(x-\mu_x)^2 (y-\mu_y)^2]-\sigma_{xy}^2\right).
+                \end{align*}
+                Pista: parta de la descomposici\'on de la parte (a), aplique el teorema central
+                del l\'imite al primer t\'ermino y el teorema de Slutsky para mostrar que el
+                segundo t\'ermino es asint\'oticamente despreciable.
+        \end{enumerate}
+
+    \item (20 puntos) $\hat \theta_N$ es un estimador consistente y
+        $\sqrt{N}$-asint\'oticamente normal del par\'ametro $\theta>0$. Defina
+        $\hat \gamma_N=\log(\hat \theta_N)$ como un estimador de $\gamma=\log(\theta)$.
+        \begin{enumerate}
+            \item (5 puntos) Demuestre que $\hat \gamma_N$ es un estimador consistente de $\gamma$.
+            \item (10 puntos) Suponga que la varianza asint\'otica de
+                $\sqrt{N}(\hat \theta_N-\theta)$ es $V$. Encuentre la distribuci\'on asint\'otica
+                de $\sqrt{N}(\hat \gamma_N-\gamma)$.
+            \item (5 puntos) Encuentre la distribuci\'on asint\'otica de $\hat \gamma_N$. Suponga
+                que se obtiene de una muestra aleatoria que $\hat \theta_N=4$ y
+                $se(\hat \theta_N)=2$. Calcule $\hat \gamma_N$ y su error est\'andar
+                asint\'otico $se(\hat \gamma_N)$.
+        \end{enumerate}
+
+    \item (20 puntos) $\hat \theta_N=(\hat \theta_{1N}, \hat \theta_{2N})'$ es un estimador
+        consistente y $\sqrt{N}$-asint\'oticamente normal del vector
+        $\theta=(\theta_{1},\theta_{2})'$ donde $\theta_{2} \neq 0$. Defina
+        $\hat \gamma_N=\hat \theta_{1N}/\hat \theta_{2N}$ como un estimador de
+        $\gamma=\theta_{1}/\theta_{2}$.
+        \begin{enumerate}
+            \item (5 puntos) Demuestre que $\hat \gamma_N$ es un estimador consistente de $\gamma$.
+            \item (10 puntos) Encuentre la varianza asint\'otica de $\hat \gamma_N$
+                ($\Avar(\hat \gamma_N)$) en funci\'on de $\theta$ y la varianza asint\'otica de
+                $\hat \theta_N$ ($\Avar(\hat \theta_N)$). \\
+                Pista: primero encuentre la distribuci\'on asint\'otica de
+                $\sqrt{N}(\hat \gamma_N-\gamma)$.
+            \item (5 puntos) Suponga que se obtiene de una muestra aleatoria que
+                $\hat \theta_N=(-4, 2)'$ y una estimaci\'on de $\Avar(\hat \theta_N)$ es
+                \begin{align*}
+                \left(
+                \begin{array} {c c}
+                1   & -.1 \\
+                -.1 & .25
+                \end{array}
+                \right).
+                \end{align*}
+                Calcule $\hat \gamma_N$ y su error est\'andar asint\'otico $se(\hat \gamma_N)$.
+        \end{enumerate}
+
+\end{enumerate}
+\end{document}
