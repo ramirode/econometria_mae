@@ -19,6 +19,7 @@ Material del curso, a cargo de Ramiro de Elejalde.
   - [Clase 1: Introducción](https://github.com/ramirode/econometria_mae/blob/main/slides/1.intro/econometria_I_1.intro.pdf)
   - [Clase 2: Esperanza condicional y modelo de regresión lineal](https://github.com/ramirode/econometria_mae/blob/main/slides/2.esperanza_condicional/econometria_I_2.esperanza_condicional.pdf)
   - [Clase 3: Teoría asintótica](https://github.com/ramirode/econometria_mae/blob/main/slides/3.teoria_asintotica/econometria_I_3.teoria_asintotica.pdf)
+  - [Clase 4: Estimación por MCO](https://github.com/ramirode/econometria_mae/blob/main/slides/4.MCO_estimacion/econometria_I_4.MCO_estimacion.pdf)
   - [Complementaria: Discriminación en el mercado laboral](https://github.com/ramirode/econometria_mae/blob/main/slides/extra/Discriminacion/econometria_I_Discriminacion.pdf)
 - [Ejemplos en R](https://github.com/ramirode/econometria_mae/tree/main/examples)
   - [Retornos a la educación (CASEN 2024)](https://github.com/ramirode/econometria_mae/tree/main/examples/1.intro_retornos-educacion)
