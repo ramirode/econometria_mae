@@ -1,0 +1,7 @@
+"part","term","statistic","Todos","Blancos","No blancos"
+"estimates","Constante","estimate","11,924.8","13,037.6","10,765.3"
+"estimates","Constante","std.error","(55.0)","(73.2)","(74.5)"
+"estimates","Veterano","estimate","1,101.5","786.9","1,415.8"
+"estimates","Veterano","std.error","(72.1)","(96.3)","(97.7)"
+"gof","N","","7904","4048","3856"
+"gof","$R^2$","","0.028","0.016","0.050"

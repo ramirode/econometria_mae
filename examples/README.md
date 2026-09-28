@@ -12,6 +12,7 @@ descargar sola y correr.
 | [`3.teoria_asintotica_simulacion-bernoulli`](3.teoria_asintotica_simulacion-bernoulli) | Clase 3 | Simulación de Monte Carlo: distribución muestral de la media y su versión estandarizada, para una Bernoulli |
 | [`4.MCO_estimacion_tamano-clase`](4.MCO_estimacion_tamano-clase) | Clase 4 | Regresión de notas sobre tamaño de clase con errores robustos, cinco modelos con controles (sesgo de variable omitida), descriptivas y figuras |
 | [`4.MCO_estimacion_formas-funcionales`](4.MCO_estimacion_formas-funcionales) | Clase 4 | Medias y coeficientes de los ejercicios de efectos marginales (niveles, logaritmos, dummies, interacciones) con datos de Wooldridge y Stock & Watson |
+| [`4.MCO_estimacion_veteranos-angrist`](4.MCO_estimacion_veteranos-angrist) | Clase 4 (complementaria) | Efecto del servicio militar sobre ingresos (Angrist 1998): regresión simple, múltiple, sesgo de variable omitida y su descomposición |
 | [`extra_discriminacion-mercado-laboral`](extra_discriminacion-mercado-laboral) | Complementaria | Discriminación por nombre: el mismo modelo estimado sobre un experimento y sobre datos observacionales, para ver cuándo los controles importan |
 
 ## Estructura de cada carpeta
@@ -58,8 +59,8 @@ cada ejemplo y no incluyen comuna ni otras variables identificatorias. La CASEN
 completa se descarga del
 [Observatorio Social](https://observatorio.ministeriodesarrollosocial.gob.cl/encuesta-casen).
 
-Los ejemplos de la clase 4 usan datos de libros de texto de uso público: el
-California Test Score Data Set (Stock y Watson),
+Los ejemplos de la clase 4 usan datos de uso público: los datos de Angrist (1998) sobre
+solicitantes a las fuerzas armadas, el California Test Score Data Set (Stock y Watson),
 `WAGE2` y `HPRICE2` (Wooldridge), y las bases CPS de Stock y Watson
 (`cps92_08`, y `CPSSWEducation` del paquete
 [AER](https://cran.r-project.org/package=AER)).
