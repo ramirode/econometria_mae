@@ -1,0 +1,34 @@
+"ejercicio","cantidad","valor"
+"wage2 nivel","E(wage)",957.945454545455
+"wage2 nivel","E(educ)",13.468449197861
+"wage2 nivel","E(exper)",11.5636363636364
+"wage2 nivel","E(IQ)",101.282352941176
+"wage2 nivel","sd(IQ)",15.0526363702651
+"wage2 nivel","beta_educ",22.7924304046095
+"wage2 nivel","beta_exper",18.3488760208264
+"wage2 nivel","beta_I(exper^2)",-0.0498413760748856
+"wage2 nivel","beta_IQ",0.68758449817588
+"wage2 nivel","beta_I(educ * IQ)",0.33324492337042
+"wage2 log-nivel","beta_educ",0.0779865618818297
+"hprice2","E(price)",22511.5098814229
+"hprice2","E(nox)",5.54978258949023
+"hprice2","E(rooms)",6.28405138108099
+"hprice2","E(stratio)",18.459288772387
+"hprice2 nivel-log","beta_log(nox)",-9344.08896757176
+"hprice2 nivel-log","beta_rooms",7069.15358481329
+"hprice2 nivel-log","beta_stratio",-1130.2860521551
+"hprice2 log-log","beta_log(nox)",-0.645329131490314
+"hprice2 log-log","beta_rooms",0.256727016660042
+"hprice2 log-log","beta_stratio",-0.0508733306263434
+"hprice2 cambio exacto","pct_rooms",29.269219515635
+"cps 2008","E(ahe)",18.9760923589378
+"cps 2008","beta_0",15.3317416503633
+"cps 2008","beta_bachelor",7.576594314861
+"cps 1992-2008 ($ 2008)","E(ahe)",18.4085863005298
+"cps 1992-2008 ($ 2008)","beta_(Intercept)",15.3132591137277
+"cps 1992-2008 ($ 2008)","beta_bachelor",6.46992708954921
+"cps 1992-2008 ($ 2008)","beta_d2008",0.0184825366352122
+"cps 1992-2008 ($ 2008)","beta_bachelor:d2008",1.10666722531193
+"cps 2004 educ x female","beta_education",0.0912403935481674
+"cps 2004 educ x female","beta_female",-0.326463635790603
+"cps 2004 educ x female","beta_education:female",0.0101506660615621

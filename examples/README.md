@@ -10,6 +10,8 @@ descargar sola y correr.
 | [`2.esperanza_condicional_educacion-salarios`](2.esperanza_condicional_educacion-salarios) | Clase 2 | Esperanza condicional del log salario dada la escolaridad, con regresión lineal y cuadrática |
 | [`2.esperanza_condicional_tamano-clase`](2.esperanza_condicional_tamano-clase) | Clase 2 | Dispersión entre tamaño de clase y puntaje, con la recta de regresión |
 | [`3.teoria_asintotica_simulacion-bernoulli`](3.teoria_asintotica_simulacion-bernoulli) | Clase 3 | Simulación de Monte Carlo: distribución muestral de la media y su versión estandarizada, para una Bernoulli |
+| [`4.MCO_estimacion_tamano-clase`](4.MCO_estimacion_tamano-clase) | Clase 4 | Regresión de notas sobre tamaño de clase con errores robustos, cinco modelos con controles (sesgo de variable omitida), descriptivas y figuras |
+| [`4.MCO_estimacion_formas-funcionales`](4.MCO_estimacion_formas-funcionales) | Clase 4 | Medias y coeficientes de los ejercicios de efectos marginales (niveles, logaritmos, dummies, interacciones) con datos de Wooldridge y Stock & Watson |
 | [`extra_discriminacion-mercado-laboral`](extra_discriminacion-mercado-laboral) | Complementaria | Discriminación por nombre: el mismo modelo estimado sobre un experimento y sobre datos observacionales, para ver cuándo los controles importan |
 
 ## Estructura de cada carpeta
@@ -26,7 +28,7 @@ y en `.csv` (para abrirla en Excel o Google Sheets sin compilar LaTeX).
 
 ## Cómo correr cualquiera de ellos
 
-1. Instalar los paquetes una sola vez. Estos cinco cubren los cinco ejemplos:
+1. Instalar los paquetes una sola vez. Estos cinco cubren todos los ejemplos:
 
    ```r
    install.packages(c("tidyverse", "haven", "sandwich", "modelsummary", "kableExtra"))
@@ -55,6 +57,12 @@ Los subconjuntos de CASEN 2024 incluidos aquí traen solo las variables que usa
 cada ejemplo y no incluyen comuna ni otras variables identificatorias. La CASEN
 completa se descarga del
 [Observatorio Social](https://observatorio.ministeriodesarrollosocial.gob.cl/encuesta-casen).
+
+Los ejemplos de la clase 4 usan datos de libros de texto de uso público: el
+California Test Score Data Set (Stock y Watson),
+`WAGE2` y `HPRICE2` (Wooldridge), y las bases CPS de Stock y Watson
+(`cps92_08`, y `CPSSWEducation` del paquete
+[AER](https://cran.r-project.org/package=AER)).
 
 El ejemplo de discriminación usa dos fuentes de Estados Unidos: los datos del
 experimento de Bertrand y Mullainathan (2004), distribuidos en el paquete

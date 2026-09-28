@@ -25,6 +25,8 @@ Material del curso, a cargo de Ramiro de Elejalde.
   - [Educación y salarios en Chile (CASEN 2024)](https://github.com/ramirode/econometria_mae/tree/main/examples/2.esperanza_condicional_educacion-salarios)
   - [Tamaño de clase y notas (California Test Score Data)](https://github.com/ramirode/econometria_mae/tree/main/examples/2.esperanza_condicional_tamano-clase)
   - [Simulación de Monte Carlo: consistencia y TCL con una Bernoulli](https://github.com/ramirode/econometria_mae/tree/main/examples/3.teoria_asintotica_simulacion-bernoulli)
+  - [Estimación por MCO: tamaño de clase y notas (California Test Score Data)](https://github.com/ramirode/econometria_mae/tree/main/examples/4.MCO_estimacion_tamano-clase)
+  - [Formas funcionales y efectos marginales (Wooldridge; Stock y Watson)](https://github.com/ramirode/econometria_mae/tree/main/examples/4.MCO_estimacion_formas-funcionales)
   - [Discriminación en el mercado laboral: experimento vs. datos observacionales (Bertrand y Mullainathan 2004; CPS 2024)](https://github.com/ramirode/econometria_mae/tree/main/examples/extra_discriminacion-mercado-laboral)
 - [Tareas](https://github.com/ramirode/econometria_mae/tree/main/problem-sets)
   - [Tarea 1](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps1.pdf)
