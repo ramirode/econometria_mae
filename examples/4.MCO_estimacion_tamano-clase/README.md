@@ -11,7 +11,7 @@ variable omitida.
 |---|---|
 | `input/caschool.dta` | "California Test Score Data Set" (Stock & Watson): 420 distritos escolares de California, año escolar 1998-1999. Dataset clásico del libro de texto (`CASchools`), de uso público. |
 | `code/01_class_size_ols.R` | El script: genera todo lo de `output/`. |
-| `output/desc_stats.tex` / `.csv` | Media, desvío estándar y percentiles de `str` y `testscr`. |
+| `output/desc_stats.tex` / `.csv` | Media, desvío estándar y percentiles de `str`, `el_pct` y `testscr`. |
 | `output/scatter_str_testscr.png` | Dispersión de notas contra ratio alumnos/profesor. |
 | `output/ols_str_testscr.png` | La misma dispersión con la recta de regresión. |
 | `output/reg_model1.tex` / `.csv` | `testscr ~ str`, errores robustos (HC1). |

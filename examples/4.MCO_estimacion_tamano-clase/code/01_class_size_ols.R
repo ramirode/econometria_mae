@@ -2,7 +2,7 @@
 # estandar robustos, para el deck 4.MCO_estimacion.
 #
 # Genera (en output/):
-#   - desc_stats.tex/.csv      estadisticas descriptivas de str y testscr
+#   - desc_stats.tex/.csv      estadisticas descriptivas de str, el_pct y testscr
 #   - scatter_str_testscr.png  dispersion de notas contra ratio alumnos/profesor
 #   - ols_str_testscr.png      la misma dispersion con la recta de regresion
 #   - reg_model1.tex/.csv      testscr ~ str
@@ -64,9 +64,9 @@ cat("N distritos:", nrow(d), "\n")
 desc_fun <- function(x) {
   c(mean(x), sd(x), quantile(x, c(0.10, 0.25, 0.50, 0.75, 0.90), type = 2))
 }
-desc <- t(sapply(d[, c("str", "testscr")], desc_fun)) # t() traspone: una fila por variable
+desc <- t(sapply(d[, c("str", "el_pct", "testscr")], desc_fun)) # t() traspone: una fila por variable
 desc <- data.frame(
-  Variable = c("Estudiantes/profesor", "Nota en test"),
+  Variable = c("Estudiantes/profesor", "% aprendices de inglés", "Nota en test"),
   desc,
   row.names = NULL
 )

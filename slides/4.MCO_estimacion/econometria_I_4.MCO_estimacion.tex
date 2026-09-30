@@ -103,6 +103,7 @@
 			\begin{itemize}
 				\item Notas de examen de 5to grado (Stanford-9 achievement test, matem\'atica y lectura), media del distrito (\term{testscr})
 				\item Ratio estudiantes por profesor: n\'umero de estudiantes en el distrito dividido por el n\'umero de profesores tiempo completo (\term{str}).
+				\item Porcentaje de estudiantes cuya lengua madre no es ingl\'es en el distrito (\term{el\_pct}).
 			\end{itemize}
 		\end{itemize}
 	\end{frame}
@@ -110,11 +111,12 @@
 	\begin{frame}
 		\frametitle{Estad\'isticas descriptivas}
 		\begin{table}
-				\caption{Resumen de la distribuci\'on de los ratios de estudiantes por profesor y notas en test estandarizados para 5to grado para 420 distritos escolares en California en 1998}
+				\caption{Resumen de la distribuci\'on de los ratios de estudiantes por profesor, del porcentaje de estudiantes que aprenden ingl\'es y de las notas en test estandarizados para 5to grado para 420 distritos escolares en California en 1998}
 				\centering
 				\footnotesize
 				\input{tables/desc_stats}
-			\end{table}
+				\end{table}
+			\small Correlaci\'on muestral entre \emph{str} y \emph{el\_pct}: $0.19$.
 	\end{frame}
 	% --------------------------------------------------- Slide --
 	\begin{frame}
@@ -245,13 +247,13 @@
 			testscr_i = \beta_0 + \beta_1 \, str_i + u_i,
 			\end{align*}
 			donde $\beta_1=\frac{\Cov(str_i, testscr_i)}{\Var(str_i)}$, $\beta_0 =\E(testscr_i)-\beta_1 \E(str_i)$. 
-			\item[] \alert{Importante}: Inclusive si creemos que la esperanza condicional no es lineal $y_i=m(x_i)+u_i$, el modelo de regresi\'on nos da la mejor aproximaci\'on lineal.
+			\item[] \alert{Importante}: Incluso si creemos que la esperanza condicional no es lineal $y_i=m(x_i)+u_i$, el modelo de regresi\'on nos da la mejor aproximaci\'on lineal.
 
 		\end{itemize}
 	\end{frame}	
 	% --------------------------------------------------- Slide --
-	\begin{frame}
-		\frametitle{Estimaci\'on por M\'inimos Cuadrados Ordinarios}
+	\begin{frame}[shrink=4]
+			\frametitle{Estimaci\'on por M\'inimos Cuadrados Ordinarios}
 		\begin{itemize}
 			\item <1-> []
 			\begin{align*}
@@ -290,13 +292,13 @@
 	\end{frame}
 	
 	% --------------------------------------------------- Slide --
-	\begin{frame}
-		\frametitle{Estimaci\'on MCO: Tama\~no de clase y rendimiento acad\'emico}
-		Regresi\'on de \emph{testscr} sobre \emph{str} y \emph{el\_pct}, con errores est\'andar robustos entre par\'entesis.
+	\begin{frame}[shrink=5]
+			\frametitle{Estimaci\'on MCO: Tama\~no de clase y rendimiento acad\'emico}
+			Regresi\'on de \emph{testscr} sobre \emph{str} y \emph{el\_pct}, con errores est\'andar robustos entre par\'entesis.
 		\small
 		\begin{center}\renewcommand{\arraystretch}{0.8}\input{tables/reg_model2}\end{center}
 		\begin{itemize}
-			\item En esta unidad discutimos estimaci\'on puntual, se (robustos!) y $R^2$.
+			\item En esta unidad discutimos estimaci\'on puntual, errores est\'andar (se) robustos y $R^2$.
 			\item En la siguiente unidad contraste de hip\'otesis (t, F) e intervalos de confianza. 
 		\end{itemize}
 	\end{frame}
@@ -595,12 +597,12 @@
 		\begin{itemize}
 			\item <1-> Demostraci\'on: 
 			\begin{align*}
-				\hat \beta_{1} & = \frac{\widehat{\Cov}(\tilde x_{1i},y_i)}{\widehat{\Var}(\tilde x_{1i})},\\
-				& = \frac{\widehat{\Cov}(\tilde x_{1i},\hat\beta_0+\hat\beta_1x_{1i}+...+\hat\beta_K x_{Ki}+ \hat u_i)}{\widehat{\Var}(\tilde x_{1i})}.
+				\frac{\widehat{\Cov}(\tilde x_{1i},y_i)}{\widehat{\Var}(\tilde x_{1i})}
+					& = \frac{\widehat{\Cov}(\tilde x_{1i},\hat\beta_0+\hat\beta_1x_{1i}+...+\hat\beta_K x_{Ki}+ \hat u_i)}{\widehat{\Var}(\tilde x_{1i})}.
 			\end{align*}
 			\begin{enumerate}
-				\item[(1)] $\widehat{\Cov}(\tilde x_{1i},x_{ji})=0$ para todo $j\neq 1$, por construcci\'on,
-				\item[(2)] $\widehat{\Cov}(\tilde x_{1i},\hat u_i)=0$ porque $\hat u_i$ no est\'a correlado con $x_i$'s y $\tilde x_{1i}$ es una funci\'on lineal de $x_i$'s.
+				\item[(1)] $\widehat{\Cov}(\tilde x_{1i},x_{ji})=0$ para todo $j\neq 1$, por construcci\'on. En particular $\widehat{\Cov}(\tilde x_{1i},\hat x_{1i})=0$, porque $\hat x_{1i}$ es una combinaci\'on lineal de esos $x_{ji}$,
+				\item[(2)] $\widehat{\Cov}(\tilde x_{1i},\hat u_i)=0$ porque $\hat u_i$ no est\'a correlacionado con $x_i$'s y $\tilde x_{1i}$ es una funci\'on lineal de $x_i$'s.
 			\end{enumerate}
 			Entonces,
 			\small
@@ -662,11 +664,11 @@
 			\begin{align*}
 				\plim \hat \beta & = \plim \beta +  \left( \plim \frac{1}{N}\sum_{i=1}^{N}x_ix_i'\right)^{-1}\plim\left( \frac{1}{N}\sum_{i=1}^{N}x_iu_i\right)= \beta,
 			\end{align*}
-			usando LGN y TFC en
-			\begin{align*}
-				\plim\left(  \frac{1}{N}\sum_{i=1}^{N}x_ix_i'\right)& = \E(x_ix_i'), \\
-				\plim \frac{1}{N}\sum_{i=1}^{N}x_iu_i & = \E(x_iu_i)=0,
-			\end{align*}
+			usando LGN y TFC (la inversa existe y es continua en $\E(x_ix_i')$ por OLS3) en
+				\begin{align*}
+					\plim\left(  \frac{1}{N}\sum_{i=1}^{N}x_ix_i'\right)& = \E(x_ix_i'), \\
+					\plim \frac{1}{N}\sum_{i=1}^{N}x_iu_i & = \E(x_iu_i)=0.
+				\end{align*}
 		\end{itemize}
 	\end{frame}
 	
@@ -754,21 +756,11 @@
 %	\begin{frame}
 %	\end{frame}
 	
-	\begin{frame}[shrink=10]
-		\frametitle{Ejemplo: Modelo de regresi\'on simple}
-		\vspace{-.5cm}
-		\small
-		\begin{itemize}
-			\item[]
-			\begin{align*}
-				y_i = \beta_0 + \beta_1 x_{1i}+u_i,
-			\end{align*}
-			donde $\E(u_i)=\E(x_{1i}u_i)=0$
-			\item[] El estimador OLS es,
-			\begin{align*}
-				\hat \beta_1 & =\frac{\frac{1}{N}\sum_{i=1}^{N} y_{i}(x_{1i}-\bar x_1)}{\frac{1}{N}\sum_{i=1}^{N} x_{1i}(x_{1i}-\bar x_1)}=\frac{\widehat{\Cov}(x_{1i},y_i)}{\widehat{\Var}(x_{1i})}.
-				\end{align*}
-			\item La distribuci\'on asint\'otica es
+	\begin{frame}
+			\frametitle{Ejemplo: Modelo de regresi\'on simple}
+			\begin{itemize}
+				\item[] En el modelo $y_i = \beta_0 + \beta_1 x_{1i}+u_i$, donde $\E(u_i)=\E(x_{1i}u_i)=0$,
+				\item La distribuci\'on asint\'otica es
 			\begin{align*}
 				\sqrt{N} (\hat \beta_1 - \beta_1) &\dto \N (0,\frac{\E[u^2(x_1 -\E (x_1))^2]}{\Var(x_1)^2}),
 			\end{align*}				
@@ -902,7 +894,7 @@
 				& = \E[(y_i-\E(y_i|x_i))^2|x_i]+\E[(\E(y_i|x_i)-x_i'\beta)^2|x_i],\\
 				& = \Var(y_i|x_i)+\E[(\E(y_i|x_i)-x_i'\beta)^2|x_i].
 			\end{align*}
-			Inclusive si $\Var(y_i|x_i)$ es constante, $\E(u_i^2|x_i)$  depende de $x_i$ seg\'un el modelo de regresi\'on sea una mejor o peor aproximaci\'on a la esperanza condicional para distintos valores de $x_i$.
+			Incluso si $\Var(y_i|x_i)$ es constante, $\E(u_i^2|x_i)$  depende de $x_i$ seg\'un el modelo de regresi\'on sea una mejor o peor aproximaci\'on a la esperanza condicional para distintos valores de $x_i$.
 			\item Concluimos que el supuesto de homoscedasticidad es poco probable que se cumpla en la pr\'actica.
 		\end{itemize}
 	\end{frame}
@@ -911,7 +903,7 @@
         \frametitle{Ejemplo: Educaci\'on y salarios en US}
         \vspace{-.5cm}
         \begin{figure}
-            \includegraphics[width=0.58\textwidth]{figures/AP_figure_educacion_salarios_regresion.pdf}
+            \includegraphics[width=0.5\textwidth]{figures/AP_figure_educacion_salarios_regresion.pdf}
             \caption{Regresi\'on y esperanza condicional del log salarios semanales en el nivel educativo. La muestra incluye hombres blancos entre 40 y 49 a\~nos de la muestra del 5\% del Censo 1980 (IPUMS).}
         \end{figure}
     \end{frame}
@@ -945,21 +937,21 @@
 	\end{frame}
 	
 	% --------------------------------------------------- Slide --
-	\begin{frame}[shrink=12]
-		\frametitle{Teorema de Gauss-Markov}
-		Si $\E(u_i|x_i)=0$ y $\E(u_i^2|x_i)=\sigma^2$ (homoscedasticidad), entonces $\hat \beta$ es el estimador de menor varianza (condicional en $X$) entre los estimadores insesgados y lineales en $y$.
-		\begin{itemize}
-			\item <2-> Demostraci\'on (sketch): Calculamos la varianza condicional
-			\footnotesize
-			\begin{align*}
-				\Var&(\hat \beta|X) = \E[(\hat \beta-\beta)(\hat \beta-\beta)'|X],\\
-				&= \left( \frac{1}{N}\sum_{i=1}^{N}x_ix_i'\right)^{-1}\E\left[\left( \frac{1}{N}\sum_{i=1}^{N}x_iu_i\right)\left( \frac{1}{N}\sum_{i=1}^{N}x_i'u_i\right)|X\right]\left( \frac{1}{N}\sum_{i=1}^{N}x_ix_i'\right)^{-1},\\
-				&= \left( \frac{1}{N}\sum_{i=1}^{N}x_ix_i'\right)^{-1}\E\left[\left( \frac{1}{N^2}\sum_{i=1}^{N}x_ix_i'u_i^2\right)|X\right]\left( \frac{1}{N}\sum_{i=1}^{N}x_ix_i'\right)^{-1},\\
-				&= \left( \frac{1}{N}\sum_{i=1}^{N}x_ix_i'\right)^{-1}\left( \frac{1}{N^2}\sum_{i=1}^{N}x_ix_i'\E(u_i^2|x_i)\right)\left( \frac{1}{N}\sum_{i=1}^{N}x_ix_i'\right)^{-1},\\
-				&= \frac{\sigma^2}{N}\left( \frac{1}{N}\sum_{i=1}^{N}x_ix_i'\right)^{-1}.
-			\end{align*}
-		\end{itemize}
-	\end{frame}
+	\begin{frame}
+			\frametitle{Teorema de Gauss-Markov}
+			Si $\E(u_i|x_i)=0$ y $\E(u_i^2|x_i)=\sigma^2$ (homoscedasticidad), entonces $\hat \beta$ es el estimador de menor varianza (condicional en $X$) entre los estimadores insesgados y lineales en $y$.
+			\begin{itemize}
+				\item <2-> Demostraci\'on (sketch): Sea $\hat Q=\frac{1}{N}\sum_{i=1}^{N}x_ix_i'$. Calculamos la varianza condicional
+				\small
+				\begin{align*}
+					\Var(\hat \beta|X) &= \E[(\hat \beta-\beta)(\hat \beta-\beta)'|X],\\
+					&= \hat Q^{-1}\,\E\left[\left( \frac{1}{N}\sum_{i=1}^{N}x_iu_i\right)\left( \frac{1}{N}\sum_{i=1}^{N}x_i'u_i\right)|X\right]\hat Q^{-1},\\
+					&= \hat Q^{-1}\left( \frac{1}{N^2}\sum_{i=1}^{N}x_ix_i'\,\E(u_i^2|x_i)\right)\hat Q^{-1}
+					= \frac{\sigma^2}{N}\hat Q^{-1},
+				\end{align*}
+				usando que $\E(u_iu_j|X)=0$ para $i\neq j$ (muestra i.i.d.\ y $\E(u_i|x_i)=0$).
+			\end{itemize}
+		\end{frame}
 	% Este resultado es para cualquier N.
 	%La varianza obtiene la cota Cramer-Rao por lo tanto no existe otro estiamdor insesgado de menor varianza.
 	% Usamos que dada que la muestra es iid \E(u_iu_j|X)=\E(u_i|X)\E(u_j|X)=\E(u_i|x_i)\E(u_j|x_j)=0
@@ -987,8 +979,8 @@
 		
 	% --------------------------------------------------- Slide --
 	\section{Estimaci\'on de la matriz de varianzas-covarianzas}
-	\begin{frame}[shrink=8]
-		\frametitle{Estimaci\'on de la matriz de varianzas-covarianzas}
+	\begin{frame}
+			\frametitle{Estimaci\'on de la matriz de varianzas-covarianzas}
 		\begin{itemize}
 			\item Supongamos homoscedasticidad $\E(u_i^2|x_i) = \sigma^2$.
 			\item [] Estamos interesados en un estimador consistente de 
@@ -1002,20 +994,19 @@
 				\end{align*}
 			}
 			donde $\hat u_i=y_i -x_i'\hat \beta$.
-			\item <3->[] \term{Demostraci\'on}: Anteriormente demostramos que 
-			\begin{align*}
-				\plim \left( \frac{1}{N}\sum_{i=1}^{N}x_ix_i'\right)^{-1} = \E(x_ix_i')^{-1},
-			\end{align*}
-			nos queda demostrar que $\plim\hat \sigma^2 = \sigma^2$.
-		\end{itemize}
+			\end{itemize}
 	\end{frame}
 	
 	% --------------------------------------------------- Slide --
 	\begin{frame}
 		\frametitle{Homoscedasticidad}
 		\begin{itemize}
-			\item <1-> Nos queda demostrar que $\plim \hat \sigma^2 = \sigma^2$:
-		\end{itemize}
+			\item \term{Demostraci\'on}: Anteriormente demostramos que 
+				\begin{align*}
+					\plim \left( \frac{1}{N}\sum_{i=1}^{N}x_ix_i'\right)^{-1} = \E(x_ix_i')^{-1}.
+				\end{align*}
+				\item <1-> Nos queda demostrar que $\plim \hat \sigma^2 = \sigma^2$:
+			\end{itemize}
 	\end{frame}
 	
 %	\begin{frame}
@@ -1031,11 +1022,11 @@
 %	\end{frame}
 	
 	% --------------------------------------------------- Slide --
-	\begin{frame}[shrink=7]
-		\frametitle{Homoscedasticidad}
-		\begin{itemize}
-			\item <1-> Nos queda demostrar que $\plim \hat \sigma^2 = \sigma^2$:
-			\small
+	\begin{frame}
+			\frametitle{Homoscedasticidad}
+			\begin{itemize}
+				\item <1-> Nos queda demostrar que $\plim \hat \sigma^2 = \sigma^2$:
+				\footnotesize
 			\begin{align*}
 				\frac{1}{N}&\sum_{i=1}^{N}\hat u_i^2  = \frac{1}{N}\sum_{i=1}^{N}(y_i-x_i'\hat \beta)^2,\\
 				& = \frac{1}{N}\sum_{i=1}^{N} [(y_i-x_i'\beta)-(x_i'\hat \beta-x_i'\beta)]^2,\\
@@ -1134,7 +1125,8 @@
 				\widehat{\Avar}(\hat \beta)&=\frac{1}{N}\left( \frac{1}{N}\sum_{i=1}^{N}x_ix_i'\right)^{-1} \left(\frac{1}{N}\sum_{i=1}^{N}\hat u_i^2x_ix_i' \right)\left( \frac{1}{N}\sum_{i=1}^{N}x_ix_i'\right)^{-1}.
 			\end{align*}
 			\item [] Por lo tanto $s.e.(\hat \beta_k)=\sqrt{\widehat{\Avar}(\hat\beta)_{kk}}$
-		\end{itemize}
+		\item [] \small Nota: los programas (\emph{robust} en Stata, HC1 en R) multiplican $\widehat{\Avar}(\hat\beta)$ por $N/(N-K)$. Asint\'oticamente es irrelevante; las tablas de estas l\'aminas usan HC1.
+			\end{itemize}
 	\end{frame}
 	% --------------------------------------------------- Slide --
 	\begin{frame}
@@ -1197,9 +1189,9 @@
 			\end{align*}
 			donde $X$ es una matriz de $N \times K$, $y$ es un vector de $N \times 1$ y 
 			\begin{align*}
-				S =\frac{1}{N} X'diag(\hat u_1^2,\cdots,\hat u_N^2) X,
+				S =\frac{1}{N} X'\operatorname{diag}(\hat u_1^2,\cdots,\hat u_N^2) X,
 			\end{align*}
-			donde $diag(.)$ es una matriz diagonal de $N \times N$ con $\hat u_1^2,\cdots,\hat u_N^2$ en la diagonal principal.
+			donde $\operatorname{diag}(\cdot)$ es una matriz diagonal de $N \times N$ con $\hat u_1^2,\cdots,\hat u_N^2$ en la diagonal principal.
 		\end{itemize}
 	\end{frame}
 	\section{Bondad de ajuste: $R^2$}
@@ -1274,8 +1266,7 @@
 				\item ratio estudiantes por profesor (\emph{str}), 
 				\item porcentaje de personas cuya lengua madre no es ingl\'es en el distrito (\emph{el\_pct}), 
 				\item porcentaje elegible para un subsidio para el almuerzo (\emph{meal\_pct}), 
-				\item porcentaje que recibe un subsidio p\'ublico (\emph{calw\_pct}), y
-				\item ingreso medio en el distrito (\emph{avginc}).
+				\item porcentaje que recibe un subsidio p\'ublico (\emph{calw\_pct}).
 			\end{enumerate}
 		\end{itemize}
 	\end{frame}
@@ -1309,26 +1300,25 @@
 %	\end{frame}
 
 	\begin{frame}
-		\frametitle{Sesgo de variable omitida}
-		\begin{itemize}
-			\item El siguiente modelo de regresi\'on mide un efecto causal
-			\begin{align*}
-				y_i &= \beta_0 + \beta_1 x_{1i}+\beta_2 x_{2i}+u_i.
-			\end{align*}
-			Sin embargo, no podemos observar $x_{2i}$ y estimamos el modelo
-			\begin{align*}
-				y_i &= \gamma_0+\gamma_1 x_{1i}+v_i.
-			\end{align*}
-			\begin{align*}
-				\plim\hat \gamma_1 &= \frac{\plim\widehat\Cov(x_{1i},y_i)}{\plim\widehat\Var(x_{1i})}    =\frac{\Cov(x_{1i},y_i)}{\Var(x_{1i})}
-				=\beta_1 + \beta_2\frac{\Cov(x_{1i},x_{2i})}{\Var(x_{1i})}.
-			\end{align*}
-			\begin{align*}
-				\text{Sesgo Asint\'otico}(\hat \gamma_1)=\plim\hat \gamma_1-\beta_1=\beta_2\frac{\Cov(x_{1i},x_{2i})}{\Var(x_{1i})}.
-			\end{align*}
-			\item[] \alert{El signo del sesgo asint\'otico depende de $\beta_2$ y $\Cov(x_{1i},x_{2i})$}
-		\end{itemize}
-	\end{frame}
+			\frametitle{Sesgo de variable omitida}
+			\begin{itemize}
+				\item El siguiente modelo de regresi\'on mide un efecto causal
+				\begin{align*}
+					y_i &= \beta_0 + \beta_1 x_{1i}+\beta_2 x_{2i}+u_i, \quad \text{donde } \Cov(x_{1i},u_i)=\Cov(x_{2i},u_i)=0.
+				\end{align*}
+				Sin embargo, no podemos observar $x_{2i}$ y estimamos el modelo
+				\begin{align*}
+					y_i &= \gamma_0+\gamma_1 x_{1i}+v_i.
+				\end{align*}
+				\vspace{-1em}
+				\begin{align*}
+					\plim\hat \gamma_1 &= \frac{\plim\widehat\Cov(x_{1i},y_i)}{\plim\widehat\Var(x_{1i})}    =\frac{\Cov(x_{1i},y_i)}{\Var(x_{1i})}
+					=\beta_1 + \beta_2\frac{\Cov(x_{1i},x_{2i})}{\Var(x_{1i})},\\
+					\text{Sesgo Asint\'otico}(\hat \gamma_1)&=\plim\hat \gamma_1-\beta_1=\beta_2\frac{\Cov(x_{1i},x_{2i})}{\Var(x_{1i})}.
+				\end{align*}
+				\item[] \alert{El signo del sesgo asint\'otico depende de $\beta_2$ y $\Cov(x_{1i},x_{2i})$}
+			\end{itemize}
+		\end{frame}
 	
 
 	
@@ -1475,8 +1465,8 @@
             		\E(price|nox, rooms, stratio)  =& \beta_0 +\beta_{lnox} \,\log(nox) +\beta_{rooms}\, rooms \\
            		 &+ \beta_{stratio} \,stratio,
             \end{align*}
-            donde \emph{price} es el precio de la vivienda, \emph{nox} es la cantidad de \'oxido nitroso en el aire (contaminaci\'on), \emph{rooms} es el n\'umero de ambientes y \emph{stratio} es el ratio estudiantes/profesor en la comuna.
-            \item Informaci\'on: $\E(price)=22,511$, $\E(nox)=5.55$, $\E(rooms)=6.28$, $\E(stratio)=18$, $\beta_{lnox}=-9,344$, $\beta_{rooms}=7,069$, y $\beta_{stratio}=-1,130$.
+            donde \emph{price} es el precio de la vivienda, \emph{nox} es la cantidad de \'oxido nitroso en el aire (contaminaci\'on), \emph{rooms} es el n\'umero de habitaciones y \emph{stratio} es el ratio estudiantes/profesor en la comuna.
+            \item Informaci\'on: $\E(price)=22{,}511$, $\E(nox)=5.55$, $\E(rooms)=6.28$, $\E(stratio)=18$, $\beta_{lnox}=-9{,}344$, $\beta_{rooms}=7{,}069$, y $\beta_{stratio}=-1{,}130$.
             \item Efecto marginal de $nox$.
         \end{itemize}
     \end{frame}
@@ -1600,17 +1590,17 @@
                 \begin{align*}
                 		y & =\beta_0 + \beta_1 \log x_{1} + \beta_2 x_2 + u,
                 \end{align*}
-                Un cambio de $x_1$ en un 1\% est\'a asociado con un cambio en la media de $y$ de $0.01\, \beta_1$ unidades.
+                Un cambio de $x_1$ en un 1\% est\'a asociado, aproximadamente, con un cambio en la media de $y$ de $0.01\, \beta_1$ unidades.
                 \item Log-nivel
                 \begin{align*}
                 		\log y & =\beta_0 + \beta_1 x_{1} + \beta_2 x_2 + u,
                 \end{align*}
-                Un cambio de $x_1$ en 1 unidad est\'a asociado con un cambio en la media de $y$ de $100 \beta_1 \%$.
+                Un cambio de $x_1$ en 1 unidad est\'a asociado, aproximadamente, con un cambio en la media de $y$ de $100 \beta_1 \%$.
                 \item Log-log
                 \begin{align*}
                 		\log y & =\beta_0 + \beta_1 \log(x_{1}) + \beta_2 x_2 + u,
                 \end{align*}
-                Un cambio de $x_1$ en un 1\% est\'a asociado con un cambio en la media de $y$ de $\beta_1 \%$ (elasticidad).
+                Un cambio de $x_1$ en un 1\% est\'a asociado, aproximadamente, con un cambio en la media de $y$ de $\beta_1 \%$ (elasticidad).
             \end{enumerate}
         \end{itemize}
     \end{frame}
@@ -1638,7 +1628,7 @@
     				\E(earnings|dvet) =& \beta_0 +\beta_{dvet} \,dvet ,
     			\end{align*}
     			donde \emph{earnings} es el ingreso en 1988-1991 de los hombres que solicitaron entrar a las fuerzas armadas entre 1979 y 1982 y \emph{dvet} es una dummy de veterano de guerra.
-    			\item Informaci\'on: $\E(earnings)=13,611$, y $\beta_{dvet}=1,718$.
+    			\item Informaci\'on: $\E(earnings)=12{,}431$, y $\beta_{dvet}=1{,}101$.
     			\item Efecto marginal de $dvet$.
     		\end{itemize}
     \end{frame}
@@ -1669,7 +1659,7 @@
     
     
     % --------------------------------------------------- Slide --
-    \begin{frame}[shrink=8]
+    \begin{frame}
         \frametitle{Variables binarias o dummies}
         \begin{itemize}
             \item  Interacciones entre variables dummies (por ejemplo, $female$, y $married$)
@@ -1680,15 +1670,20 @@
             		&\Rightarrow \E(y|d_1\!=\!0,d_2\!=\!1)=\beta_0+\beta_2\\
             		&\Rightarrow \E(y|d_1\!=\!0,d_2\!=\!0)=\beta_0
             \end{align*}
-            \uncover<2->{
-                Dos modelos equivalentes 
-                \begin{align}
-                y&=\beta_0 + \beta_1 \, female + \beta_2\, married + \nonumber \\
-                &\beta_3\, female \times married+u,\\
-                y&=\delta_0 + \delta_1 \, female\_married + \delta_2\, female\_nonmarried + \nonumber \\
-                &\delta_3\, male\_married+u.
-                \end{align}
-            }
+        \end{itemize}
+    \end{frame}
+
+    % --------------------------------------------------- Slide --
+    \begin{frame}
+        \frametitle{Variables binarias o dummies}
+        \begin{itemize}
+            \item Dos modelos equivalentes
+            \begin{align}
+            y&=\beta_0 + \beta_1 \, female + \beta_2\, married + \nonumber \\
+            &\beta_3\, female \times married+u,\\
+            y&=\delta_0 + \delta_1 \, female\_married + \delta_2\, female\_nonmarried + \nonumber \\
+            &\delta_3\, male\_married+u.
+            \end{align}
         \end{itemize}
     \end{frame}
     
@@ -1702,7 +1697,7 @@
     				&+\beta_{dvet\_dnwhite} \,dvet \times dnwhite,
     			\end{align*}
     			donde \emph{earnings} es el ingreso en 1988-1991 de los hombres que solicitaron entrar a las fuerzas armadas entre 1979 y 1982, \emph{dvet} es una dummy de veterano de guerra y \emph{dnwhite} es una dummy que indica que la persona NO es de raza blanca.
-    			\item Informaci\'on: $\E(earnings)=13,611$, $\beta_{dvet}=1,233$, $\beta_{dnwhite}=-3,391$ y $\beta_{dvet\_dnwhite}=1,215$.
+    			\item Informaci\'on: $\E(earnings)=12{,}431$, $\beta_{dvet}=787$, $\beta_{dnwhite}=-2{,}272$ y $\beta_{dvet\_dnwhite}=629$.
     			\item Efecto marginal de $dvet$.
     		\end{itemize}
     \end{frame}
