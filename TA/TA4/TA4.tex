@@ -1,0 +1,109 @@
+% !TeX spellcheck = es_ES
+\documentclass[letterpaper,11pt]{article}
+\input{../preambulo.tex}
+
+\title{Análisis Econométrico \\ Ayudantía 4}
+\author{Magíster en Economía, Universidad Alberto Hurtado}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent Esta ayudantía comienza con un control breve (\textbf{Control 2}, 15 minutos, sin
+apuntes) sobre el contenido de la Tarea 2. Luego revisamos en conjunto los ejercicios 1, 2 y 4
+de la Tarea 2 --- se reproducen aquí para tenerlos a mano durante la revisión.
+
+\vspace{1em}
+
+\noindent\textbf{Ejercicio 1 de la Tarea 2 (20 puntos). Bernoulli.}
+
+Dada una muestra i.i.d.\ de tamaño $N$ de una variable aleatoria $y$ con distribución Bernoulli
+con probabilidad de éxito $p$. Es decir,
+\begin{align*}
+y = \begin{cases}
+1 & \text{con probabilidad } p,\\
+0 & \text{con probabilidad } 1-p.
+\end{cases}
+\end{align*}
+En lo que sigue puede utilizar que $\E(y)=p$ y $\Var(y)=p(1-p)$.
+\begin{enumerate}
+    \item Demuestre que la media muestral $\bar y=\frac{1}{N}\sum_i y_i$ es un estimador
+    consistente de $p$.
+    \item Demuestre que $\bar y(1-\bar y)$ es un estimador consistente de $\Var(y)=p(1-p)$.
+    \item Obtenga la distribución asintótica de $\sqrt{N}(\bar y-p)$. Obtenga una distribución
+    aproximada de $\bar y$ para muestras grandes.
+    \item Obtenga la distribución asintótica de
+    $\sqrt{N}\frac{(\bar y-p)}{\sqrt{\bar y(1-\bar y)}}$. Explique por qué este resultado es más
+    útil en la práctica que el de la parte (c).
+\end{enumerate}
+
+\vspace{1em}
+
+\noindent\textbf{Ejercicio 2 de la Tarea 2 (20 puntos). Covarianza muestral.}
+
+La covarianza muestral se define como
+$S_{xy}=\frac{1}{N}\sum_{i=1}^N (x_i-\bar x)(y_i-\bar y)$ y la covarianza poblacional como
+$\sigma_{xy}=\E(xy)-\E(x)\E(y)$. Sean $\mu_x=\E(x)$ y $\mu_y=\E(y)$.
+\begin{enumerate}
+    \item Demuestre que la covarianza muestral se puede escribir como
+    \begin{align*}
+    S_{xy}=\frac{1}{N}\sum_{i=1}^N (x_i-\mu_x)(y_i-\mu_y)-(\bar x-\mu_x)(\bar y-\mu_y).
+    \end{align*}
+    \item Demuestre que la covarianza muestral es un estimador consistente de la covarianza
+    poblacional, $S_{xy}\pto \sigma_{xy}$.
+    \item Demuestre que
+    \begin{align*}
+    \sqrt{N}(S_{xy}-\sigma_{xy})\dto \N\left(0,\ \E[(x-\mu_x)^2(y-\mu_y)^2]-\sigma_{xy}^2\right).
+    \end{align*}
+    Pista: parta de la descomposición de la parte (a), aplique el teorema central del límite al
+    primer término y el teorema de Slutsky para mostrar que el segundo término es
+    asintóticamente despreciable.
+\end{enumerate}
+
+\vspace{1em}
+
+\noindent\textbf{Ejercicio 4 de la Tarea 2 (20 puntos). Método delta: cociente.}
+
+$\hat\theta_N=(\hat\theta_{1N},\hat\theta_{2N})'$ es un estimador consistente y
+$\sqrt{N}$-asintóticamente normal del vector $\theta=(\theta_1,\theta_2)'$ donde
+$\theta_2\neq 0$. Defina $\hat\gamma_N=\hat\theta_{1N}/\hat\theta_{2N}$ como un estimador de
+$\gamma=\theta_1/\theta_2$.
+\begin{enumerate}
+    \item Demuestre que $\hat\gamma_N$ es un estimador consistente de $\gamma$.
+    \item Encuentre la varianza asintótica de $\hat\gamma_N$ ($\Avar(\hat\gamma_N)$) en función
+    de $\theta$ y la varianza asintótica de $\hat\theta_N$ ($\Avar(\hat\theta_N)$).\\
+    Pista: primero encuentre la distribución asintótica de $\sqrt{N}(\hat\gamma_N-\gamma)$.
+    \item Suponga que se obtiene de una muestra aleatoria que $\hat\theta_N=(-4,2)'$ y una
+    estimación de $\Avar(\hat\theta_N)$ es
+    \begin{align*}
+    \begin{pmatrix} 1 & -0{,}1 \\ -0{,}1 & 0{,}25 \end{pmatrix}.
+    \end{align*}
+    Calcule $\hat\gamma_N$ y su error estándar asintótico $se(\hat\gamma_N)$.
+\end{enumerate}
+
+\vspace{2em}
+\noindent\rule{\textwidth}{0.4pt}
+
+\section*{Material adicional (opcional)}
+
+\noindent Práctica extra, no obligatoria y no cubierta en esta ayudantía. Es muy parecido al
+ejercicio 4.
+
+\vspace{1em}
+
+\noindent\textbf{Ejercicio 3 de la Tarea 2 (20 puntos). Método delta: $\log(\hat\theta_N)$.}
+
+$\hat\theta_N$ es un estimador consistente y $\sqrt{N}$-asintóticamente normal del parámetro
+$\theta>0$. Defina $\hat\gamma_N=\log(\hat\theta_N)$ como un estimador de $\gamma=\log(\theta)$.
+\begin{enumerate}
+    \item Demuestre que $\hat\gamma_N$ es un estimador consistente de $\gamma$.
+    \item Suponga que la varianza asintótica de $\sqrt{N}(\hat\theta_N-\theta)$ es $V$.
+    Encuentre la distribución asintótica de $\sqrt{N}(\hat\gamma_N-\gamma)$.
+    \item Encuentre la distribución asintótica de $\hat\gamma_N$. Suponga que se obtiene de una
+    muestra aleatoria que $\hat\theta_N=4$ y $se(\hat\theta_N)=2$. Calcule $\hat\gamma_N$ y su
+    error estándar asintótico $se(\hat\gamma_N)$.
+\end{enumerate}
+
+\vspace{1em}
+
+\end{document}
