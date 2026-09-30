@@ -30,6 +30,9 @@ Material del curso, a cargo de Ramiro de Elejalde.
     - [Código en R: experimento vs. datos observacionales (Bertrand y Mullainathan 2004; CPS 2024)](https://github.com/ramirode/econometria_mae/tree/main/examples/extra_discriminacion-mercado-laboral)
   - [Complementaria: Servicio militar e ingresos (Angrist 1998)](https://github.com/ramirode/econometria_mae/blob/main/slides/extra/Veteranos/econometria_I_Veteranos.pdf)
     - [Código en R: regresión simple, múltiple y sesgo de variable omitida (Angrist 1998)](https://github.com/ramirode/econometria_mae/tree/main/examples/4.MCO_estimacion_veteranos-angrist)
+- Pruebas de años anteriores
+  - [Prueba 1, 2024](https://github.com/ramirode/econometria_mae/blob/main/pruebas/econometria_I_examen_1_2024.pdf)
+  - [Prueba 1, 2025](https://github.com/ramirode/econometria_mae/blob/main/pruebas/econometria_I_examen_1_2025.pdf)
 - [Tareas](https://github.com/ramirode/econometria_mae/tree/main/problem-sets)
   - [Tarea 1](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps1.pdf)
   - [Tarea 2](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps2.pdf)
