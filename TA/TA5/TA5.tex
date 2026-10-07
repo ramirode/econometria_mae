@@ -1,0 +1,188 @@
+% !TeX spellcheck = es_ES
+\documentclass[letterpaper,11pt]{article}
+\input{../preambulo.tex}
+
+\title{Análisis Econométrico \\ Ayudantía 5}
+\author{Magíster en Economía, Universidad Alberto Hurtado}
+\date{}
+
+% Funciones de R sugeridas: entre corchetes, alineadas a la derecha; si no caben en la
+% linea pasan enteras a la siguiente.
+\newcommand{\fn}[1]{{\unskip\nobreak\hfill\penalty50\hskip1em\null\nobreak\hfill
+    \mbox{[#1]}\parfillskip=0pt\finalhyphendemerits=0\par}}
+
+\begin{document}
+\maketitle
+
+\noindent Temas: primeros pasos en R. Importar datos, crear variables, estadísticas
+descriptivas, gráficos, regresión simple y múltiple por MCO, y tablas de resultados.
+
+\medskip
+\noindent En esta ayudantía el ayudante escribe y corre el código en pantalla, ejercicio por
+ejercicio; no hace falta traer computador. En cada parte se indican entre corchetes las
+funciones de R que se usan. Los ejercicios 1 a 6 son los de la sesión (80 minutos); el 7 queda
+como práctica adicional.
+
+\section*{Si quiere replicarlo en su computador}
+
+\noindent Si quiere, puede replicar todo en su computador, durante la ayudantía o después. El
+script completo, \texttt{TA5.R}, y los datos están en el repositorio del curso. Esto es lo que
+tiene que hacer:
+
+\begin{enumerate}[itemsep=0.4em]
+    \item Instale \href{https://cran.r-project.org}{R} y
+          \href{https://posit.co/download/rstudio-desktop/}{RStudio}. Si no puede instalarlos,
+          cree una cuenta gratuita en \href{https://posit.cloud}{Posit Cloud}, que corre RStudio
+          en el navegador: \emph{New Project $\to$ New Project from Git Repository} y pegue
+          \texttt{https://github.com/ramirode/econometria\_mae.git}.
+    \item Abra RStudio y corra en la consola (una sola vez; tarda varios minutos):
+\begin{verbatim}
+install.packages(c("tidyverse", "haven", "sandwich",
+                   "modelsummary", "kableExtra"))
+\end{verbatim}
+    \item Cree una carpeta \texttt{TA5} con dos subcarpetas, \texttt{code} e \texttt{input}.
+          Guarde el script \texttt{TA5.R} en \texttt{code} y los datos \texttt{ch8\_cps.dta} en
+          \texttt{input}. Ambos archivos están en el repositorio del curso, en
+          \href{https://github.com/ramirode/econometria_mae/tree/main/TA/TA5}{\texttt{TA/TA5}}.
+          En Posit Cloud la carpeta ya existe: \texttt{/cloud/project/TA/TA5}.
+    \item Abra \texttt{TA5.R} y cambie la línea \texttt{dir\_proyecto <- "..."} por la ruta a
+          su carpeta \texttt{TA5}. Es lo único que hay que modificar.
+\end{enumerate}
+
+\section*{Los datos}
+
+\noindent El archivo \texttt{ch8\_cps.dta} contiene datos de trabajadores de tiempo completo de
+entre 21 y 64 años encuestados en la \emph{Current Population Survey} de EEUU de marzo de 2005.
+Las variables son:
+\begin{itemize}[itemsep=0em]
+    \item \texttt{ahe}: salario promedio por hora en 2004 (en dólares),
+    \item \texttt{yrseduc}: años de educación,
+    \item \texttt{female}: igual a 1 si la persona es mujer,
+    \item \texttt{age}: edad en años,
+    \item \texttt{northeast}, \texttt{midwest}, \texttt{south}, \texttt{west}: dummies de región.
+\end{itemize}
+
+\section*{Ejercicios}
+
+\begin{enumerate}[itemsep=0.8em]
+
+%% ---------------------------------------------------------------- 1
+\item \emph{Importar e inspeccionar los datos.}
+    \begin{enumerate}
+        \item Fije la carpeta de trabajo en \texttt{TA5} y cargue los paquetes.
+              \fn{\texttt{setwd}, \texttt{library}}
+        \item Importe los datos y guárdelos en un objeto llamado \texttt{d}.
+              \fn{\texttt{read\_dta}}
+        \item ¿Cuántas observaciones y cuántas variables tiene la base? ¿Qué es una observación?
+              \fn{\texttt{nrow}, \texttt{ncol}, \texttt{names}, \texttt{head}, \texttt{glimpse}}
+        \item Revise el mínimo, la media y el máximo de cada variable. ¿Hay valores faltantes o
+              valores que le llamen la atención?
+              \fn{\texttt{summary}}
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 2
+\item \emph{Crear variables.}
+    \begin{enumerate}
+        \item Cree la variable \texttt{lahe}, el logaritmo natural de \texttt{ahe}.
+              \fn{\texttt{mutate}, \texttt{log}}
+        \item Cree la variable \texttt{sexo}, igual a \texttt{"Mujer"} si \texttt{female} es 1 y
+              a \texttt{"Hombre"} si es 0. Verifique que quedó bien construida.
+              \fn{\texttt{if\_else}, \texttt{count}}
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 3
+\item \emph{Estadísticas descriptivas.}
+    \begin{enumerate}
+        \item Calcule la media y la desviación estándar de \texttt{ahe}, \texttt{lahe},
+              \texttt{yrseduc}, \texttt{age} y \texttt{female}. ¿Cómo se interpreta la media de
+              \texttt{female}?
+              \fn{\texttt{summarise}, \texttt{mean}, \texttt{sd}}
+        \item Calcule el número de observaciones y las medias de \texttt{ahe}, \texttt{yrseduc} y
+              \texttt{age} por separado para hombres y mujeres. ¿Cuál es la brecha de salarios
+              entre hombres y mujeres, en porcentaje? ¿Quiénes tienen más educación?
+              \fn{\texttt{group\_by}, \texttt{n}}
+        \item Construya una tabla de frecuencias de \texttt{yrseduc}. ¿Cuáles son los niveles de
+              educación más frecuentes?
+              \fn{\texttt{count}}
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 4
+\item \emph{Gráficos.}
+    \begin{enumerate}
+        \item Grafique un histograma de \texttt{ahe} y otro de \texttt{lahe}. Describa la forma
+              de cada distribución.
+              \fn{\texttt{ggplot}, \texttt{geom\_histogram}}
+        \item Compare la distribución de \texttt{lahe} de hombres y mujeres con un diagrama de
+              caja.
+              \fn{\texttt{geom\_boxplot}}
+        \item Calcule la media de \texttt{lahe} para cada valor de \texttt{yrseduc} y grafíquela
+              contra \texttt{yrseduc}. ¿Qué objeto poblacional está estimando? ¿Le parece
+              aproximadamente lineal?
+              \fn{\texttt{group\_by}, \texttt{geom\_point}}
+        \item Guarde los gráficos como imágenes en una carpeta \texttt{output}.
+              \fn{\texttt{dir.create}, \texttt{ggsave}}
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 5
+\item \emph{Regresión simple.} Considere el modelo
+    \begin{align*}
+    lahe_i = \beta_0 + \beta_1\, yrseduc_i + u_i.
+    \end{align*}
+    \begin{enumerate}
+        \item Estime el modelo por MCO. Interprete $\hat\beta_1$.
+              \fn{\texttt{lm}, \texttt{summary}, \texttt{coef}}
+        \item Calcule los errores estándar robustos a heterocedasticidad y compárelos con los
+              que reporta \texttt{summary}.
+              \fn{\texttt{vcovHC}, \texttt{diag}, \texttt{sqrt}}
+        \item Verifique que $\hat\beta_1$ es igual a la covarianza muestral entre
+              \texttt{yrseduc} y \texttt{lahe} dividida por la varianza muestral de
+              \texttt{yrseduc}, y que $\hat\beta_0=\overline{lahe}-\hat\beta_1\,\overline{yrseduc}$.
+              \fn{\texttt{cov}, \texttt{var}}
+        \item Guarde los valores predichos y los residuos como variables nuevas. Verifique que
+              los residuos tienen media cero y covarianza cero con \texttt{yrseduc}. ¿Por qué
+              se cumple esto siempre?
+              \fn{\texttt{fitted}, \texttt{resid}}
+        \item Agregue la recta de regresión al gráfico del ejercicio 4(c). ¿Qué log salario
+              predice el modelo para una persona con 12 años de educación? ¿Y con 16?
+              \fn{\texttt{geom\_smooth}, \texttt{predict}}
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 6
+\item \emph{Regresión múltiple y tabla de resultados.} Considere los modelos
+    \begin{align*}
+    lahe_i &= \beta_0 + \beta_1\, yrseduc_i + \beta_2\, female_i + u_i,\\
+    lahe_i &= \beta_0 + \beta_1\, yrseduc_i + \beta_2\, female_i + \beta_3\, age_i + u_i.
+    \end{align*}
+    \begin{enumerate}
+        \item Estime los dos modelos. Interprete $\hat\beta_2$ y compárelo con la brecha de
+              salarios del ejercicio 3(b).
+              \fn{\texttt{lm}}
+        \item El coeficiente de \texttt{yrseduc}, ¿aumenta o disminuye al agregar
+              \texttt{female}? Explique el signo del cambio con la fórmula del sesgo de variable
+              omitida y verifique que la fórmula se cumple exactamente en la muestra.
+        \item Arme una tabla con los tres modelos (el del ejercicio 5 y estos dos), con errores
+              estándar robustos, y guárdela en \texttt{output}.
+              \fn{\texttt{list}, \texttt{modelsummary}}
+        \item ¿Cree que $\hat\beta_1$ mide el efecto causal de un año más de educación sobre el
+              salario? Mencione una variable omitida y el signo del sesgo que genera.
+    \end{enumerate}
+
+\end{enumerate}
+
+\section*{Práctica adicional}
+
+\begin{enumerate}[itemsep=1.2em,start=7]
+\item \emph{MCO con matrices y regresiones por sexo.} Sea $\mathbf{X}$ la matriz de $N\times 4$ cuyas columnas son un
+    vector de unos, \texttt{yrseduc}, \texttt{female} y \texttt{age}, y sea $\mathbf{y}$ el
+    vector de \texttt{lahe}.
+    \begin{enumerate}
+        \item Calcule $\hat\beta=(\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}$ y verifique
+              que coincide con el resultado de \texttt{lm}.
+              \fn{\texttt{cbind}, \texttt{t}, \texttt{\%*\%}, \texttt{solve}}
+        \item Estime la regresión simple del ejercicio 5 por separado para hombres y para
+              mujeres. ¿Para quiénes es mayor el retorno a la educación?
+              \fn{\texttt{filter}}
+    \end{enumerate}
+\end{enumerate}
+
+\end{document}

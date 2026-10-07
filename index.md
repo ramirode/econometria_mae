@@ -41,6 +41,7 @@ Material del curso, a cargo de Ramiro de Elejalde.
   - [Ayudantía 2](https://github.com/ramirode/econometria_mae/blob/main/TA/TA2/TA2.pdf)
   - [Ayudantía 3](https://github.com/ramirode/econometria_mae/blob/main/TA/TA3/TA3.pdf)
   - [Ayudantía 4](https://github.com/ramirode/econometria_mae/blob/main/TA/TA4/TA4.pdf)
+  - [Ayudantía 5](https://github.com/ramirode/econometria_mae/blob/main/TA/TA5/TA5.pdf) ([datos](https://github.com/ramirode/econometria_mae/tree/main/TA/TA5/input))
 
 ---
 
