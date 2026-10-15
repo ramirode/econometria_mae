@@ -131,10 +131,12 @@ Total: 100 puntos
 
 Los ejercicios 3, 4 y 5 requieren estimar modelos con datos. Utilice R (u otro software
 estad\'istico) y adjunte su c\'odigo. Reporte errores est\'andar robustos a
-heteroscedasticidad. Los datos est\'an en el repositorio del curso:
-\href{https://github.com/ramirode/econometria_mae/raw/main/examples/4.MCO_estimacion_formas-funcionales/input/wage2.dta}{\texttt{wage2.dta}}
-y
-\href{https://github.com/ramirode/econometria_mae/raw/main/examples/4.MCO_estimacion_formas-funcionales/input/hprice2.dta}{\texttt{hprice2.dta}}.
+heteroscedasticidad. Los datos est\'an en el repositorio del curso, en formato R
+(\href{https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/wage2.rds}{\texttt{wage2.rds}},
+\href{https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/hprice2.rds}{\texttt{hprice2.rds}}; se leen con \texttt{readRDS})
+y en formato Stata
+(\href{https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/wage2.dta}{\texttt{wage2.dta}},
+\href{https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/hprice2.dta}{\texttt{hprice2.dta}}).
 
 \begin{enumerate}
 
@@ -187,7 +189,7 @@ y
         noche reducir las horas de sue\~no a 7 horas por noche si quieren prolongar sus
         vidas? ?`Por qu\'e o por qu\'e no? Explique.
 
-    \item (20 puntos) Utilice los datos de \texttt{wage2.dta} del trabajo de Blackburn y
+    \item (20 puntos) Utilice los datos de \texttt{wage2} del trabajo de Blackburn y
         Neumark (QJE, 1992): 935 hombres de entre 28 y 38 a\~nos en 1980. Las variables
         \texttt{wage} (salario mensual, en d\'olares), \texttt{married} (igual a 1 si est\'a
         casado) y \texttt{urban} (igual a 1 si vive en una zona urbana) definen el modelo
@@ -206,7 +208,7 @@ y
                 ?`Qu\'e ocurre? Explique.
         \end{enumerate}
 
-    \item (30 puntos) Utilice los datos de \texttt{wage2.dta} para estudiar los retornos de
+    \item (30 puntos) Utilice los datos de \texttt{wage2} para estudiar los retornos de
         la educaci\'on. Adem\'as de las variables del ejercicio anterior, la base incluye
         \texttt{educ} (a\~nos de educaci\'on), \texttt{IQ} (resultado en un test de
         inteligencia), \texttt{exper} (a\~nos de experiencia laboral), \texttt{tenure} (a\~nos
@@ -233,7 +235,7 @@ y
                 resultados de (a) y (b).
         \end{enumerate}
 
-    \item (20 puntos) Utilice los datos de \texttt{hprice2.dta} del trabajo de Harrison y
+    \item (20 puntos) Utilice los datos de \texttt{hprice2} del trabajo de Harrison y
         Rubinfeld (JEEM, 1978) sobre el efecto de la contaminaci\'on en el precio de las
         viviendas: 506 comunidades del \'area metropolitana de Boston en 1970. Las variables son
         \texttt{price} (precio mediano de las viviendas, en d\'olares), \texttt{nox}
