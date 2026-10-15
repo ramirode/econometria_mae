@@ -1,0 +1,113 @@
+% !TeX spellcheck = es_ES
+\documentclass[letterpaper,11pt]{article}
+\input{../preambulo.tex}
+
+\title{Análisis Econométrico \\ Ayudantía 6}
+\author{Magíster en Economía, Universidad Alberto Hurtado}
+\date{}
+
+% Funciones de R sugeridas: entre corchetes, alineadas a la derecha; si no caben en la
+% linea pasan enteras a la siguiente.
+\newcommand{\fn}[1]{{\unskip\nobreak\hfill\penalty50\hskip1em\null\nobreak\hfill
+    \mbox{[#1]}\parfillskip=0pt\finalhyphendemerits=0\par}}
+
+\begin{document}
+\maketitle
+
+\noindent Temas: unidades de medida, modelos cuadráticos, interacciones entre una variable
+binaria y una continua, y efectos marginales.
+
+\medskip
+\noindent Los ejercicios 1 y 2 se resuelven en la pizarra. Los ejercicios 3 y 4 son
+una demostración en R: el ayudante corre el código en pantalla, así que no hace falta traer
+computador. El ejercicio 3 usa los mismos datos de la Ayudantía 5.
+
+\section*{Si quiere replicarlo en su computador}
+
+\noindent El script completo, \texttt{TA6.R}, y los datos están en el repositorio del curso,
+en \href{https://github.com/ramirode/econometria_mae/tree/main/TA/TA6}{\texttt{TA/TA6}}. Los
+pasos son los mismos de la Ayudantía 5: cree una carpeta \texttt{TA6} con las subcarpetas
+\texttt{code} (para \texttt{TA6.R}) e \texttt{input} (para \texttt{ch8\_cps.dta}), y cambie la
+línea \texttt{dir\_proyecto <- "..."} por la ruta a su carpeta \texttt{TA6}. En Posit Cloud la
+carpeta ya existe: \texttt{/cloud/project/TA/TA6}. Usa los mismos paquetes de la Ayudantía 5.
+
+\section*{Ejercicios}
+
+\begin{enumerate}[itemsep=0.8em]
+
+%% ---------------------------------------------------------------- 1
+\item \emph{Unidades de medida.} Se estima por MCO el modelo
+    $y_i=\beta_0+\beta_1x_i+u_i$, con estimaciones $\hat\beta_0$ y $\hat\beta_1$, residuos
+    $\hat u_i$ y coeficiente de determinación $R^2$.
+    \begin{enumerate}
+        \item Se cambian las unidades de la variable dependiente: $y_i^*=c\,y_i$, con $c>0$
+              (por ejemplo, salarios en miles de pesos en vez de pesos, $c=1/1000$). Encuentre
+              las estimaciones MCO de la regresión de $y^*$ en $x$ en función de
+              $\hat\beta_0$ y $\hat\beta_1$. ¿Qué pasa con los residuos y con el $R^2$?
+        \item Se cambian las unidades de la variable explicativa: $x_i^*=a\,x_i$, con
+              $a\neq 0$. ¿Qué pasa con $\hat\beta_0$, $\hat\beta_1$, los residuos y el $R^2$?
+        \item Suponga ahora que el modelo es $\log(y_i)=\beta_0+\beta_1x_i+u_i$. ¿Qué pasa con
+              las estimaciones si $y$ se mide en otras unidades, $y_i^*=c\,y_i$? ¿Por qué
+              cambia sólo la constante?
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 2
+\item \emph{Modelo cuadrático.} Considere
+    $\E(y|x)=\beta_0+\beta_1x+\beta_2x^2$.
+    \begin{enumerate}
+        \item Encuentre el efecto marginal de $x$ sobre $\E(y|x)$. ¿Depende de $x$?
+        \item Suponga $\beta_1>0$ y $\beta_2<0$. Encuentre el valor de $x$ en que $\E(y|x)$
+              alcanza su máximo.
+        \item Si la variable dependiente es $\log(y)$, ¿cómo se interpreta el efecto
+              marginal de (a)?
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 3
+\item \emph{Interacción entre sexo y educación (R).} Considere el modelo
+    \begin{align*}
+    lahe_i = \beta_0 + \beta_1\, female_i + \beta_2\, yrseduc_i
+             + \beta_3\, female_i\times yrseduc_i + u_i,
+    \end{align*}
+    donde $lahe$ es el logaritmo del salario por hora, $female$ es igual a 1 si la persona es
+    mujer y $yrseduc$ son los años de educación.
+    \begin{enumerate}
+        \item Estime el modelo. Escriba $\E(lahe|female,yrseduc)$ para hombres y para mujeres
+              en función de los $\beta$'s. ¿Cuál es el retorno de un año de educación para
+              cada sexo?
+              \fn{\texttt{lm}, \texttt{coef}}
+        \item Estime la regresión de $lahe$ en $yrseduc$ por separado para hombres y para
+              mujeres. Compare las constantes y las pendientes con las del modelo con
+              interacción.
+              \fn{\texttt{filter}, \texttt{modelsummary}}
+        \item Use el modelo con interacción para calcular la brecha de salarios entre mujeres
+              y hombres con 12 años de educación (secundaria completa) y con 16 años
+              (universitaria completa). Exprésela en porcentaje de forma exacta. ¿La brecha
+              aumenta o disminuye con la educación?
+              \fn{\texttt{exp}}
+        \item Agregue al modelo con interacción la edad ($age$) y la edad al cuadrado dividida por 100
+              ($age^2/100$). Calcule el efecto marginal de la edad a los 30 y a los 50 años,
+              y la edad en que el log salario predicho alcanza su máximo.
+              \fn{\texttt{mutate}, \texttt{lm}, \texttt{coef}}
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 4
+\item \emph{Errores estándar con heteroscedasticidad (R).} Simule $R=2000$ muestras de
+    tamaño $N=200$ del modelo
+    \begin{align*}
+    y_i=1+2x_i+u_i,\qquad x_i\sim\text{Uniforme}(0,2),\qquad u_i=x_i^2\,e_i,\qquad
+    e_i\sim\N(0,1),
+    \end{align*}
+    con $e_i$ independiente de $x_i$. En cada muestra, estime la regresión de $y$ en $x$ y
+    guarde $\hat\beta_1$, su error estándar clásico (que supone homoscedasticidad) y su error
+    estándar robusto.
+    \begin{enumerate}
+        \item ¿Es heteroscedástico el error? Calcule $\E(u_i^2|x_i)$.
+        \item Compare la desviación estándar de $\hat\beta_1$ entre las $R$ muestras con el
+              promedio de cada error estándar. ¿Cuál se acerca más? ¿Cuál subestima la
+              variabilidad de $\hat\beta_1$?
+              \fn{\texttt{set.seed}, \texttt{runif}, \texttt{rnorm}, \texttt{vcov},
+              \texttt{vcovHC}}
+    \end{enumerate}
+\end{enumerate}
+
+\end{document}

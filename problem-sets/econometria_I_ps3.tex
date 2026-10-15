@@ -1,0 +1,263 @@
+% !TeX spellcheck = es_ES
+%\documentclass[letterpaper,12pt]{article}
+\documentclass[letterpaper,11pt]{article}
+
+% Language & Input
+  \usepackage[english]{babel} % Language: English
+  \usepackage[ansinew]{inputenc} % Input
+% Font
+  \usepackage[T1]{fontenc} % Font encoding
+  \usepackage{lmodern,microtype} % Typeface
+% Math
+  \usepackage{amsmath,amsthm,amssymb,amsfonts} % AMS math
+  \usepackage{dsfont,mathrsfs,ushort} % Math style
+% Style
+  \usepackage[bf,sf,tiny,center]{titlesec} % Section titles 
+  \usepackage{geometry} % Page & margins
+  \usepackage{setspace} % Spacing
+  \usepackage{enumitem} % Lists
+  \usepackage{abstract} % Abstract
+  \usepackage{color}
+% References
+  \usepackage[longnamesfirst]{natbib} % Manages bibiography
+% Figures
+  \usepackage{graphicx} % Additional options for includefigure
+  \usepackage[font={small}]{caption}
+% Tables
+  \usepackage{booktabs} % Table format
+  \usepackage{dcolumn} % Align on the decimal point of numbers in tabular columns.
+  \usepackage{multirow} % Multirows in a table
+  \usepackage{lscape} % Tables in landscape form
+  \usepackage{ctable} % Tables with captions and notes all the same width 
+% Hyperlinks
+  \usepackage{hyperref}
+% Addons
+  \usepackage[l2tabu, orthodox]{nag} % Warn the user about the use of such obso­lete things
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Style & Structure
+%% Titles (Carlos Perez)
+%  \titlelabel{\thetitle.}
+%  \titleformat*{\subsection}{\centering\sffamily\itshape}
+%  \titleformat{\subsubsection}[runin]{\sffamily}{}{0em}{}[.]
+%  \titlespacing{\subsubsection}{0pt}{*2}{\wordsep}
+  
+% Title page (Luis Cabral)
+\makeatletter
+    \renewcommand{\@maketitle}{%
+    \newpage\parindent0in\null\vskip2em%
+    {\LARGE\textbf{\textsf{\@title}}\par\vskip2em}%
+    \@author\par\vskip2em%
+    \@date%
+    \par
+    \thispagestyle{empty}\setcounter{page}{1}%\newpage
+    }%
+\makeatother
+\renewenvironment{abstract}% Change the way abstract is presented
+{\vskip2em\noindent{\textbf{\textsf{Abstract.}}}\hspace*{1ex}}{}
+
+% Sections
+  \renewcommand\thesection{\arabic{section}}
+  \renewcommand\thesubsection{\Alph{subsection}}
+% Bibliography
+  \bibliographystyle{apa} %Alternative: {plain} {aea} {econometrica}
+% Spacing & lists and margins
+  \geometry{margin=2.54cm}
+  \setstretch{1.15} % Set spacing
+% Color
+  \definecolor{ntr}{rgb}{0.8,0,0} % not too red
+% Abstract
+  \renewcommand{\abstractnamefont}{\sffamily\small\bfseries}
+  \setlength{\abstitleskip}{-1em}
+% Hyperlinks
+  \hypersetup{colorlinks=true,linkcolor=ntr,citecolor=ntr,urlcolor=black,bookmarksnumbered=true}
+% Notes to tables and figures
+% Significant stars in tables
+  %\newcommand{\sym}[1]{\rlap{#1}}
+  \def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+% Games
+% Miscellaneous
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Theorems
+  \theoremstyle{plain}
+  \newtheorem{prop}{Proposition}
+  \newtheorem{assumption} {Assumption}
+  \newtheorem{theorem}{Theorem}
+  \newtheorem{lem}{Lemma}
+  \newtheorem{corollary}{Corollary}
+  \theoremstyle{definition}
+  \newtheorem{defi}{Definition}
+  \newtheorem{ex}{Example}
+  \theoremstyle{remark}
+  \newtheorem{remark}{Remark}
+  \def\propautorefname{Proposition}
+  \def\propositionautorefname{Proposition}
+  \def\defiautorefname{Definition}
+  \def\lemautorefname{Lemma}
+  \def\exampleautorefname{Example}
+  \def\corollaryautorefname{Corollary}
+  \def\exautorefname{Example}
+
+\newcommand{\SR}{\mathbb{R}}
+
+\DeclareMathOperator*{\Max}{m{a}x}
+\DeclareMathOperator*{\Min}{m{i}n}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\plim}{plim}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Avar}{AVar}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\E}{\mathbb{E}}
+\newcommand{\pto}{\stackrel{p}{\longrightarrow}}
+\newcommand{\dto}{\stackrel{d}{\longrightarrow}}
+\newcommand{\adistr}{\stackrel{a}{\sim}}
+\newcommand{\epsi}{\varepsilon}
+\newcommand{\tmle}{\hat \theta_{ML}}
+\newcommand{\tgmm}{\hat \theta_{GMM}}
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+\DeclareMathOperator{\N}{Normal}
+
+\DeclareMathOperator{\Corr}{Corr}
+
+\begin{document}
+
+	\title {An\'alisis Econom\'etrico  \\ Tarea 3}
+	\author{Mag\'ister en Econom\'ia, Universidad Alberto Hurtado}
+	\date{Fecha de entrega: 22 de octubre de 2026 (al principio de la ayudant\'ia)}
+
+\maketitle
+
+Total: 100 puntos
+
+Los ejercicios 3, 4 y 5 requieren estimar modelos con datos. Utilice R (u otro software
+estad\'istico) y adjunte su c\'odigo. Reporte errores est\'andar robustos a
+heteroscedasticidad. Los datos est\'an en el repositorio del curso:
+\href{https://github.com/ramirode/econometria_mae/raw/main/examples/4.MCO_estimacion_formas-funcionales/input/wage2.dta}{\texttt{wage2.dta}}
+y
+\href{https://github.com/ramirode/econometria_mae/raw/main/examples/4.MCO_estimacion_formas-funcionales/input/hprice2.dta}{\texttt{hprice2.dta}}.
+
+\begin{enumerate}
+
+    \item (20 puntos) Suponga homoscedasticidad. En clases vimos que, en ese caso, la varianza
+        asint\'otica del estimador MCO es $\Avar(\hat \beta)=\frac{\sigma^2}{N}\E(x_ix_i')^{-1}$.
+        \begin{enumerate}
+            \item (10 puntos) Considere el modelo de regresi\'on simple
+                \begin{align*}
+                y_i=\beta_0+\beta_1 x_{1i}+u_i,
+                \end{align*}
+                donde $\E(u_i)=0$, $\E(x_{1i}\, u_i)=0$ y $\E(u_i^2|x_{1i})=\sigma^2$. Utilice la
+                f\'ormula anterior con $x_i=(1, x_{1i})'$ para demostrar que
+                \begin{align*}
+                \Avar(\hat \beta_1)=\frac{\sigma^2}{N}\frac{1}{\Var(x_{1i})}.
+                \end{align*}
+            \item (5 puntos) Considere ahora el modelo con dos variables explicativas
+                \begin{align*}
+                y_i=\beta_0+\beta_1 x_{1i}+\beta_2 x_{2i}+v_i,
+                \end{align*}
+                donde $\E(v_i)=\E(x_{1i}\,v_i)=\E(x_{2i}\,v_i)=0$ y
+                $\E(v_i^2|x_{1i},x_{2i})=\sigma_v^2$. En clases vimos que
+                \begin{align*}
+                \Avar(\hat \beta_1)=\frac{\sigma_v^2}{N}\frac{1}{\Var(r_{1i})},
+                \end{align*}
+                donde $\gamma_0+\gamma_1x_{2i}$ es el proyector lineal de $x_{1i}$ en una
+                constante y $x_{2i}$, y $r_{1i}=x_{1i}-\gamma_0-\gamma_1x_{2i}$ es su residuo.
+                Demuestre que
+                \begin{align*}
+                \Var(r_{1i})=\Var(x_{1i})\,(1-\rho^2),
+                \end{align*}
+                donde $\rho$ es el coeficiente de correlaci\'on entre $x_{1i}$ y $x_{2i}$: la
+                covarianza dividida por el producto de las desviaciones est\'andar,
+                \begin{align*}
+                \rho=\Corr(x_{1i},x_{2i})=\frac{\Cov(x_{1i},x_{2i})}{\sqrt{\Var(x_{1i})}\,\sqrt{\Var(x_{2i})}}.
+                \end{align*}
+            \item (5 puntos) Explique c\'omo depende $\Avar(\hat \beta_1)$ del tama\~no de la
+                muestra, de la varianza del error, de la varianza de $x_1$ y de la correlaci\'on
+                entre $x_1$ y $x_2$. ?`Qu\'e ocurre cuando $|\rho|\to 1$?
+        \end{enumerate}
+
+    \item (10 puntos) Un estudio reciente ha encontrado que la tasa de mortalidad de las
+        personas que duermen 7 horas por noche es menor que la tasa de mortalidad de
+        aquellas personas que duermen 8 o m\'as horas. El estudio utiliz\'o 1,1 millones de
+        observaciones de una muestra aleatoria de chilenos entre 30 y 102 a\~nos de edad. Cada
+        persona en la muestra fue seguida por 4 a\~nos. La tasa de mortalidad para personas que
+        duermen 7 horas fue calculada como el n\'umero de muertes durante los 4 a\~nos entre las
+        personas que duermen 7 horas sobre el n\'umero de personas que duermen 7 horas en la
+        muestra. C\'alculos similares se realizaron para el resto de las categor\'ias. En base a
+        los resultados del estudio, ?`usted recomendar\'ia a los chilenos que duermen 9 horas por
+        noche reducir las horas de sue\~no a 7 horas por noche si quieren prolongar sus
+        vidas? ?`Por qu\'e o por qu\'e no? Explique.
+
+    \item (20 puntos) Utilice los datos de \texttt{wage2.dta} del trabajo de Blackburn y
+        Neumark (QJE, 1992): 935 hombres de entre 28 y 38 a\~nos en 1980. Las variables
+        \texttt{wage} (salario mensual, en d\'olares), \texttt{married} (igual a 1 si est\'a
+        casado) y \texttt{urban} (igual a 1 si vive en una zona urbana) definen el modelo
+        \begin{align*}
+        \log(wage_i)=\beta_0+\beta_1 \, married_i+\beta_2 \, urban_i+\beta_3 \, married_i\times urban_i+u_i.
+        \end{align*}
+        \begin{enumerate}
+            \item (10 puntos) Estime el modelo. Escriba $\E(\log(wage)|married,urban)$ para
+                los cuatro grupos (casado urbano, casado rural, soltero urbano y soltero rural)
+                en funci\'on de los $\beta$'s, e interprete cada uno de los coeficientes
+                estimados.
+            \item (5 puntos) Calcule la media muestral de $\log(wage)$ en cada grupo y
+                verifique que coincide con el valor predicho por el modelo. Explique por qu\'e.
+            \item (5 puntos) Suponga que construye una dummy para cada uno de los cuatro grupos
+                y estima la regresi\'on de $\log(wage)$ en las cuatro dummies y una constante.
+                ?`Qu\'e ocurre? Explique.
+        \end{enumerate}
+
+    \item (30 puntos) Utilice los datos de \texttt{wage2.dta} para estudiar los retornos de
+        la educaci\'on. Adem\'as de las variables del ejercicio anterior, la base incluye
+        \texttt{educ} (a\~nos de educaci\'on), \texttt{IQ} (resultado en un test de
+        inteligencia), \texttt{exper} (a\~nos de experiencia laboral), \texttt{tenure} (a\~nos
+        en el empleo actual) y \texttt{south} (igual a 1 si vive en el sur de EE.UU.).
+        \begin{enumerate}
+            \item (5 puntos) Utilice un modelo de regresi\'on simple log-nivel para estimar el
+                efecto de un a\~no m\'as de educaci\'on ($educ$) en salarios ($wage$). Interprete
+                los resultados. ?`Usted piensa que el coeficiente estimado mide una relaci\'on
+                causal? Explique.
+            \item (10 puntos) El modelo de regresi\'on simple omite, entre otras cosas, la
+                habilidad innata. En los datos existe una proxy de la habilidad innata: $IQ$.
+                Antes de estimar, prediga si el coeficiente de $educ$ aumentar\'a o
+                disminuir\'a al incluir $IQ$ como variable explicativa adicional, y explique por
+                qu\'e. Luego estime el modelo con $IQ$, interprete el coeficiente de $educ$ y
+                compare con (a).
+            \item (10 puntos) La f\'ormula del sesgo de variable omitida tambi\'en se cumple en
+                la muestra, reemplazando momentos poblacionales por momentos muestrales. Primero,
+                compruebe este resultado en los datos: regrese $IQ$ en $educ$ y, en base a esa
+                estimaci\'on y a lo obtenido en (b), recupere la pendiente estimada en (a).
+                Segundo, demuestre anal\'iticamente que este resultado se cumple siempre en la
+                muestra.
+            \item (5 puntos) Estime el efecto de la educaci\'on sobre los salarios controlando
+                por $IQ$, $exper$, $tenure$, $married$, $south$ y $urban$. Compare con los
+                resultados de (a) y (b).
+        \end{enumerate}
+
+    \item (20 puntos) Utilice los datos de \texttt{hprice2.dta} del trabajo de Harrison y
+        Rubinfeld (JEEM, 1978) sobre el efecto de la contaminaci\'on en el precio de las
+        viviendas: 506 comunidades del \'area metropolitana de Boston en 1970. Las variables son
+        \texttt{price} (precio mediano de las viviendas, en d\'olares), \texttt{nox}
+        (concentraci\'on de \'oxido de nitr\'ogeno en el aire, en partes por 100 millones),
+        \texttt{rooms} (n\'umero promedio de habitaciones), \texttt{dist} (distancia ponderada
+        a cinco centros de empleo) y \texttt{stratio} (ratio estudiantes por
+        profesor).
+        \begin{enumerate}
+            \item (5 puntos) Utilice un modelo de regresi\'on simple log-log para estimar el
+                efecto de un aumento en $nox$ en $price$. Interprete los resultados. ?`Usted
+                piensa que el coeficiente estimado mide una relaci\'on causal? Explique.
+            \item (5 puntos) Agregue las siguientes variables explicativas al modelo:
+                $rooms$, $\log(dist)$ y $stratio$. Interprete la estimaci\'on del efecto de un
+                aumento de la contaminaci\'on en el precio de las viviendas, compare con (a) y
+                explique la diferencia.
+            \item (5 puntos) Obtenga la estimaci\'on del coeficiente de $\log(nox)$ del modelo
+                en (b) utilizando la regresi\'on particionada. Primero, guarde los residuos de una
+                regresi\'on de $\log(nox)$ en $rooms$, $\log(dist)$ y $stratio$. Segundo, regrese
+                $\log(price)$ en esos residuos. Verifique que la estimaci\'on coincide con (b).
+                No se preocupe por los errores est\'andar, s\'olo por las estimaciones puntuales.
+            \item (5 puntos) Compare el error est\'andar del coeficiente de $\log(nox)$ en (a) y
+                en (b). Calcule la correlaci\'on muestral entre $\log(nox)$ y $\log(dist)$ y
+                utilice la intuici\'on del ejercicio 1 para explicar la diferencia.
+        \end{enumerate}
+
+\end{enumerate}
+\end{document}

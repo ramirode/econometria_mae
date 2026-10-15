@@ -36,12 +36,14 @@ Material del curso, a cargo de Ramiro de Elejalde.
 - [Tareas](https://github.com/ramirode/econometria_mae/tree/main/problem-sets)
   - [Tarea 1](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps1.pdf)
   - [Tarea 2](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps2.pdf)
+  - [Tarea 3](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps3.pdf)
 - [Material de ayudantía](https://github.com/ramirode/econometria_mae/tree/main/TA)
   - [Ayudantía 1](https://github.com/ramirode/econometria_mae/blob/main/TA/TA1/TA1.pdf)
   - [Ayudantía 2](https://github.com/ramirode/econometria_mae/blob/main/TA/TA2/TA2.pdf)
   - [Ayudantía 3](https://github.com/ramirode/econometria_mae/blob/main/TA/TA3/TA3.pdf)
   - [Ayudantía 4](https://github.com/ramirode/econometria_mae/blob/main/TA/TA4/TA4.pdf)
   - [Ayudantía 5](https://github.com/ramirode/econometria_mae/blob/main/TA/TA5/TA5.pdf) ([datos](https://github.com/ramirode/econometria_mae/tree/main/TA/TA5/input))
+  - [Ayudantía 6](https://github.com/ramirode/econometria_mae/blob/main/TA/TA6/TA6.pdf) ([código y datos](https://github.com/ramirode/econometria_mae/tree/main/TA/TA6))
 
 ---
 
