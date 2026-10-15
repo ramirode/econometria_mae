@@ -36,7 +36,7 @@ Material del curso, a cargo de Ramiro de Elejalde.
 - [Tareas](https://github.com/ramirode/econometria_mae/tree/main/problem-sets)
   - [Tarea 1](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps1.pdf)
   - [Tarea 2](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps2.pdf)
-  - [Tarea 3](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps3.pdf) (datos en R: [wage2.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/wage2.rds), [hprice2.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/hprice2.rds); en Stata: [wage2.dta](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/wage2.dta), [hprice2.dta](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/hprice2.dta))
+  - [Tarea 3](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps3.pdf) (datos: [wage2.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/wage2.rds), [hprice2.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/hprice2.rds))
 - [Material de ayudantía](https://github.com/ramirode/econometria_mae/tree/main/TA)
   - [Ayudantía 1](https://github.com/ramirode/econometria_mae/blob/main/TA/TA1/TA1.pdf)
   - [Ayudantía 2](https://github.com/ramirode/econometria_mae/blob/main/TA/TA2/TA2.pdf)
