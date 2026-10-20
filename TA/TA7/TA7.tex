@@ -1,0 +1,154 @@
+% !TeX spellcheck = es_ES
+\documentclass[letterpaper,11pt]{article}
+\input{../preambulo.tex}
+
+\title{Análisis Econométrico \\ Ayudantía 7}
+\author{Magíster en Economía, Universidad Alberto Hurtado}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent Esta ayudantía comienza con un control breve (\textbf{Control 3}, 15 minutos, sin
+apuntes) sobre el contenido de la Tarea 3. Luego revisamos en conjunto los ejercicios 1, 3, 4
+y 5 de la Tarea 3 --- se reproducen aquí para tenerlos a mano durante la revisión. Los datos
+son \texttt{wage2.rds} y \texttt{hprice2.rds}, en la carpeta \texttt{problem-sets/datos/} del
+repositorio del curso.
+
+\vspace{1em}
+
+\noindent\textbf{Ejercicio 1 de la Tarea 3 (20 puntos). Varianza asintótica bajo
+homoscedasticidad.}
+
+Suponga homoscedasticidad. En clases vimos que, en ese caso, la varianza asintótica del
+estimador MCO es $\Avar(\hat \beta)=\frac{\sigma^2}{N}\E(x_ix_i')^{-1}$.
+\begin{enumerate}
+    \item Considere el modelo de regresión simple
+    \begin{align*}
+    y_i=\beta_0+\beta_1 x_{1i}+u_i,
+    \end{align*}
+    donde $\E(u_i)=0$, $\E(x_{1i}\, u_i)=0$ y $\E(u_i^2|x_{1i})=\sigma^2$. Utilice la fórmula
+    anterior con $x_i=(1, x_{1i})'$ para demostrar que
+    \begin{align*}
+    \Avar(\hat \beta_1)=\frac{\sigma^2}{N}\frac{1}{\Var(x_{1i})}.
+    \end{align*}
+    \item Considere ahora el modelo con dos variables explicativas
+    \begin{align*}
+    y_i=\beta_0+\beta_1 x_{1i}+\beta_2 x_{2i}+v_i,
+    \end{align*}
+    donde $\E(v_i)=\E(x_{1i}\,v_i)=\E(x_{2i}\,v_i)=0$ y $\E(v_i^2|x_{1i},x_{2i})=\sigma_v^2$. En
+    clases vimos que
+    \begin{align*}
+    \Avar(\hat \beta_1)=\frac{\sigma_v^2}{N}\frac{1}{\Var(r_{1i})},
+    \end{align*}
+    donde $\gamma_0+\gamma_1x_{2i}$ es el proyector lineal de $x_{1i}$ en una constante y
+    $x_{2i}$, y $r_{1i}=x_{1i}-\gamma_0-\gamma_1x_{2i}$ es su residuo. Demuestre que
+    \begin{align*}
+    \Var(r_{1i})=\Var(x_{1i})\,(1-\rho^2),
+    \end{align*}
+    donde $\rho=\Corr(x_{1i},x_{2i})$ es el coeficiente de correlación entre $x_{1i}$ y
+    $x_{2i}$.
+    \item Explique cómo depende $\Avar(\hat \beta_1)$ del tamaño de la muestra, de la varianza
+    del error, de la varianza de $x_1$ y de la correlación entre $x_1$ y $x_2$. ¿Qué ocurre
+    cuando $|\rho|\to 1$?
+\end{enumerate}
+
+\vspace{1em}
+
+\noindent\textbf{Ejercicio 3 de la Tarea 3 (20 puntos). Dummies e interacciones.}
+
+Utilice los datos de \texttt{wage2} del trabajo de Blackburn y Neumark (QJE, 1992): 935
+hombres de entre 28 y 38 años en 1980. Las variables \texttt{wage} (salario mensual, en
+dólares), \texttt{married} (igual a 1 si está casado) y \texttt{urban} (igual a 1 si vive en
+una zona urbana) definen el modelo
+\begin{align*}
+\log(wage_i)=\beta_0+\beta_1 \, married_i+\beta_2 \, urban_i+\beta_3 \, married_i\times urban_i+u_i.
+\end{align*}
+\begin{enumerate}
+    \item Estime el modelo. Escriba $\E(\log(wage)|married,urban)$ para los cuatro grupos
+    (casado urbano, casado rural, soltero urbano y soltero rural) en función de los $\beta$'s,
+    e interprete cada uno de los coeficientes estimados.
+    \item Calcule la media muestral de $\log(wage)$ en cada grupo y verifique que coincide con
+    el valor predicho por el modelo. Explique por qué.
+    \item Suponga que construye una dummy para cada uno de los cuatro grupos y estima la
+    regresión de $\log(wage)$ en las cuatro dummies y una constante. ¿Qué ocurre? Explique.
+\end{enumerate}
+
+\vspace{1em}
+
+\noindent\textbf{Ejercicio 4 de la Tarea 3 (30 puntos). Retornos de la educación.}
+
+Utilice los datos de \texttt{wage2} para estudiar los retornos de la educación. Además de las
+variables del ejercicio anterior, la base incluye \texttt{educ} (años de educación),
+\texttt{IQ} (resultado en un test de inteligencia), \texttt{exper} (años de experiencia
+laboral), \texttt{tenure} (años en el empleo actual) y \texttt{south} (igual a 1 si vive en el
+sur de EE.UU.).
+\begin{enumerate}
+    \item Utilice un modelo de regresión simple log-nivel para estimar el efecto de un año más
+    de educación ($educ$) en salarios ($wage$). Interprete los resultados. ¿Usted piensa que el
+    coeficiente estimado mide una relación causal? Explique.
+    \item El modelo de regresión simple omite, entre otras cosas, la habilidad innata. En los
+    datos existe una proxy de la habilidad innata: $IQ$. Antes de estimar, prediga si el
+    coeficiente de $educ$ aumentará o disminuirá al incluir $IQ$ como variable explicativa
+    adicional, y explique por qué. Luego estime el modelo con $IQ$, interprete el coeficiente
+    de $educ$ y compare con (a).
+    \item La fórmula del sesgo de variable omitida también se cumple en la muestra,
+    reemplazando momentos poblacionales por momentos muestrales. Primero, compruebe este
+    resultado en los datos: regrese $IQ$ en $educ$ y, en base a esa estimación y a lo obtenido
+    en (b), recupere la pendiente estimada en (a). Segundo, demuestre analíticamente que este
+    resultado se cumple siempre en la muestra.
+    \item Estime el efecto de la educación sobre los salarios controlando por $IQ$, $exper$,
+    $tenure$, $married$, $south$ y $urban$. Compare con los resultados de (a) y (b).
+\end{enumerate}
+
+\vspace{1em}
+
+\noindent\textbf{Ejercicio 5 de la Tarea 3 (20 puntos). Contaminación y precio de las
+viviendas.}
+
+Utilice los datos de \texttt{hprice2} del trabajo de Harrison y Rubinfeld (JEEM, 1978) sobre
+el efecto de la contaminación en el precio de las viviendas: 506 comunidades del área
+metropolitana de Boston en 1970. Las variables son \texttt{price} (precio mediano de las
+viviendas, en dólares), \texttt{nox} (concentración de óxido de nitrógeno en el aire, en
+partes por 100 millones), \texttt{rooms} (número promedio de habitaciones), \texttt{dist}
+(distancia ponderada a cinco centros de empleo) y \texttt{stratio} (ratio estudiantes por
+profesor).
+\begin{enumerate}
+    \item Utilice un modelo de regresión simple log-log para estimar el efecto de un aumento en
+    $nox$ en $price$. Interprete los resultados. ¿Usted piensa que el coeficiente estimado mide
+    una relación causal? Explique.
+    \item Agregue las siguientes variables explicativas al modelo: $rooms$, $\log(dist)$ y
+    $stratio$. Interprete la estimación del efecto de un aumento de la contaminación en el
+    precio de las viviendas, compare con (a) y explique la diferencia.
+    \item Obtenga la estimación del coeficiente de $\log(nox)$ del modelo en (b) utilizando la
+    regresión particionada. Primero, guarde los residuos de una regresión de $\log(nox)$ en
+    $rooms$, $\log(dist)$ y $stratio$. Segundo, regrese $\log(price)$ en esos residuos.
+    Verifique que la estimación coincide con (b). No se preocupe por los errores estándar,
+    sólo por las estimaciones puntuales.
+    \item Compare el error estándar del coeficiente de $\log(nox)$ en (a) y en (b). Calcule la
+    correlación muestral entre $\log(nox)$ y $\log(dist)$ y utilice la intuición del ejercicio 1
+    para explicar la diferencia.
+\end{enumerate}
+
+\vspace{2em}
+\noindent\rule{\textwidth}{0.4pt}
+
+\section*{Material adicional (opcional)}
+
+\noindent Para discutir si queda tiempo.
+
+\vspace{1em}
+
+\noindent\textbf{Ejercicio 2 de la Tarea 3 (10 puntos). Horas de sueño y mortalidad.}
+
+Un estudio reciente ha encontrado que la tasa de mortalidad de las personas que duermen 7 horas
+por noche es menor que la tasa de mortalidad de aquellas personas que duermen 8 o más horas. El
+estudio utilizó 1,1 millones de observaciones de una muestra aleatoria de chilenos entre 30 y
+102 años de edad. Cada persona en la muestra fue seguida por 4 años. La tasa de mortalidad para
+personas que duermen 7 horas fue calculada como el número de muertes durante los 4 años entre
+las personas que duermen 7 horas sobre el número de personas que duermen 7 horas en la muestra.
+Cálculos similares se realizaron para el resto de las categorías. En base a los resultados del
+estudio, ¿usted recomendaría a los chilenos que duermen 9 horas por noche reducir las horas de
+sueño a 7 horas por noche si quieren prolongar sus vidas? ¿Por qué o por qué no? Explique.
+
+\end{document}
