@@ -9,6 +9,7 @@ Material del curso Análisis Econométrico (Magíster en Economía, ILADES/UAH),
 - `slides/` — diapositivas de clases (`.tex` y figuras, listas para compilar; sin código de generación de figuras ni notas de clase). `slides/extra/` contiene material adicional que no forma parte del programa vigente (p. ej. Bootstrap)
 - `problem-sets/` — guías de ejercicios (sin soluciones)
 - `TA/` — material de ayudantía
+- `trabajo/` — instrucciones del trabajo grupal: entregas y criterios de evaluación
 
 ## Nota
 

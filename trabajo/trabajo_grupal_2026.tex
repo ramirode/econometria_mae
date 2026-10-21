@@ -1,0 +1,72 @@
+% !TeX spellcheck = es_ES
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage[spanish,es-noshorthands]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype}
+\usepackage[bf,sf,small]{titlesec}
+\titlespacing*{\section}{0pt}{10pt}{2pt}
+\usepackage[margin=2cm]{geometry}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\setlist{itemsep=1pt,topsep=2pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+
+\begin{document}
+
+\begin{center}
+{\large\bfseries\sffamily Análisis Econométrico 2026 --- Trabajo grupal}\\[4pt]
+{\sffamily Qué entregar en cada etapa}
+\end{center}
+
+El trabajo consiste en plantear una pregunta de investigación relevante, buscar datos para responder a la pregunta (encuestas, datos administrativos u otras fuentes públicas, como las series del Banco Central), presentar estadísticas descriptivas, implementar un análisis empírico y discutir los resultados de forma crítica. Vale 15\% de la nota final y se evalúa a partir del informe final y la presentación, con mayor peso en la presentación.
+
+Los grupos son de 3 integrantes. El análisis se hace en R. Cada entrega se envía por mail, con los documentos en PDF, a \href{mailto:ramirode@gmail.com}{\texttt{ramirode@gmail.com}} antes de las 23:59 del día indicado, salvo la entrega final, que se envía antes del inicio de la clase.
+
+\section*{1. Propuesta --- miércoles 21 de octubre (máx. 2 páginas)}
+\begin{itemize}
+  \item Integrantes del grupo.
+  \item Pregunta de investigación, en una oración, y por qué es interesante.
+  \item Base de datos: nombre, fuente (con link), años y unidad de observación (persona, hogar, comuna, región, mes, \ldots).
+  \item Variables:
+  \begin{itemize}
+    \item variable dependiente ($Y$);
+    \item variable explicativa de interés ($X$);
+    \item controles que piensan incluir.
+  \end{itemize}
+\end{itemize}
+
+\section*{2. Avance --- lunes 16 de noviembre (máx. 3 páginas)}
+\begin{itemize}
+  \item Pregunta y motivación, incluyendo uno o dos trabajos relacionados.
+  \item Datos: cómo construyeron la base (qué fuentes combinaron, qué filtros aplicaron, cuántas observaciones quedan) y cómo definieron cada variable.
+  \item Estadísticas descriptivas: una tabla y al menos un gráfico.
+  \item Ecuación a estimar y una primera estimación MCO.
+  \item Qué falta y principales dudas.
+\end{itemize}
+
+\section*{3. Informe final y presentación --- miércoles 2 de diciembre, antes de la clase}
+\begin{itemize}
+  \item Informe (máx. 10 páginas, sin contar tablas, figuras ni referencias) con introducción y pregunta, datos, estrategia empírica, resultados, limitaciones (ver criterios de evaluación) y conclusión.
+  \item Diapositivas de la presentación.
+  \item Código en R y bases de datos que permitan reproducir todos los resultados del informe. Si los archivos son muy grandes, envíen un link (Drive, Dropbox u otro).
+  \item Declaración de uso de IA: qué herramienta usaron, para qué y qué tuvieron que verificar o corregir.
+  \item Presentación de 15 minutos por grupo, más 5 minutos de preguntas. Presentan todos los integrantes.
+\end{itemize}
+
+\newpage
+\section*{Criterios de evaluación del trabajo final}
+Todos los criterios se aplican tanto al informe como a la presentación.
+\begin{itemize}
+  \item \textbf{Pregunta y motivación.} La pregunta es clara, precisa y relevante, y está motivada con referencias a la literatura pertinente.
+  \item \textbf{Datos y su descripción.} La construcción de la base es transparente y reproducible (se verifica con el código en R y las bases enviadas): qué información viene de cada fuente, cómo se combinan las bases, qué período y unidad de observación se usan y por qué, y cuántas observaciones quedan. Cada variable está definida con precisión. Tablas y gráficos ayudan a entender lo que pasa en los datos.
+  \item \textbf{Metodología.} La especificación responde la pregunta y cada decisión está justificada: transformaciones de variables, controles y dummies (por ejemplo, de mes o de región) y tipo de errores estándar. Las variables incluidas permiten interpretar el modelo; por ejemplo, no incluir a la vez una variable continua y una dummy construida a partir de ella.
+  \item \textbf{Interpretación de los resultados.} Los coeficientes se interpretan correctamente, en las unidades de las variables (niveles, logaritmos u otra transformación) y en términos de su magnitud económica, no solo de su significancia estadística. Cuando se comparan especificaciones (con y sin controles o dummies, por ejemplo de región o comuna), se explica qué revela el cambio en los coeficientes.
+  \item \textbf{Discusión de limitaciones.} Se identifican las principales amenazas a la validez interna (omisión de variables, forma funcional, error de medida, selección de muestra, simultaneidad) en el contexto concreto de la pregunta, y se discute la dirección probable del sesgo cuando sea posible. Se discute también la validez externa de los resultados.
+  \item \textbf{Presentación.} El informe y la presentación son claros y están bien organizados; las tablas y figuras se entienden por sí solas.
+\end{itemize}
+
+\end{document}
