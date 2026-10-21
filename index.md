@@ -26,6 +26,8 @@ Material del curso, a cargo de Ramiro de Elejalde.
   - [Clase 4: Estimación por MCO](https://github.com/ramirode/econometria_mae/blob/main/slides/4.MCO_estimacion/econometria_I_4.MCO_estimacion.pdf)
     - [Código en R: tamaño de clase y notas (California Test Score Data)](https://github.com/ramirode/econometria_mae/tree/main/examples/4.MCO_estimacion_tamano-clase)
     - [Código en R: Formas funcionales y efectos marginales (Wooldridge; Stock y Watson)](https://github.com/ramirode/econometria_mae/tree/main/examples/4.MCO_estimacion_formas-funcionales)
+  - [Clase 5: Inferencia por MCO](https://github.com/ramirode/econometria_mae/blob/main/slides/5.MCO_inferencia/econometria_I_5.MCO_inferencia.pdf)
+    - [Código en R: contrastes de hipótesis, intervalos de confianza y método delta (Stock y Watson; Wooldridge)](https://github.com/ramirode/econometria_mae/tree/main/examples/5.MCO_inferencia_contrastes)
   - [Complementaria: Discriminación en el mercado laboral](https://github.com/ramirode/econometria_mae/blob/main/slides/extra/Discriminacion/econometria_I_Discriminacion.pdf)
     - [Código en R: experimento vs. datos observacionales (Bertrand y Mullainathan 2004; CPS 2024)](https://github.com/ramirode/econometria_mae/tree/main/examples/extra_discriminacion-mercado-laboral)
   - [Complementaria: Servicio militar e ingresos (Angrist 1998)](https://github.com/ramirode/econometria_mae/blob/main/slides/extra/Veteranos/econometria_I_Veteranos.pdf)
