@@ -34,6 +34,7 @@
 % \usepackage[latin1]{inputenc} % Allows to type in latin (accents). Note: Does not work with XeLaTex
 % \usefonttheme[onlymath]{serif}  % Changes fonts for math to serif
 \usepackage[english]{babel} % Manages differences between languages: hyphenation etc
+\addto\captionsenglish{\renewcommand{\figurename}{Figura}\renewcommand{\tablename}{Tabla}} % Spanish caption labels
 
 \usepackage{appendixnumberbeamer} % Does not include backup slides in the number of pages
 
@@ -87,7 +88,7 @@
 \begin{frame}
 	\frametitle{Outline}
 	\tableofcontents
-	\alert{Referencias}: Cap. 7 y 9 de Hansen, cap. 3.5.2 y 4.2.3 de Wooldridge, y cap. 7 de Stock and Watson.
+	\alert{Referencias}: Cap. 7 y 9 de Hansen, cap. 3.5.2 y 4.2.3 de Wooldridge, y cap. 7 de Stock y Watson.
 \end{frame}
 %% --------------------------------------------------- Slide --
 %\section[Motivaci\'on: Tama\~no de clase y rendimiento acad\'emico]{Motivaci\'on: Efecto del tama\~no de clase en el rendimiento aca--d\'emico (California)}
@@ -177,7 +178,7 @@ Salida de Stata
 \begin{frame}
 \frametitle{Contraste de hip\'otesis e intervalos de confianza}
     \begin{itemize}
-        \item En esta unidad vamos a estudiar como incorporar la influencia de la aleatoriedad muestral en el an\'alisis de los resultados.
+        \item En esta unidad vamos a estudiar c\'omo incorporar la influencia de la aleatoriedad muestral en el an\'alisis de los resultados.
         \bigskip
         \begin{enumerate}
             \item [] $\implies$ \alert{Contraste de hip\'otesis}
@@ -476,7 +477,7 @@ Salida de Stata\\
         \begin{itemize} 
             \item \alert{Intuici\'on}: La regla de decisi\'on es rechazar $H_0$ si $T_N>c_\alpha$ donde $\Pr(T>c_\alpha)=\alpha$. Una regla de decisi\'on equivalente es calcular el p-valor $\Pr(T>T_N)=p_N$ y rechazar si $p_N<\alpha$.
             \item Dado que $\Pr(T>T_N)$ es decreciente en $T_N$, el p-valor  es una transformaci\'on mon\'otona de $T_N$ y por lo tanto es un estad\'istico equivalente. 
-            \item \alert{El p-valor es el nivel de significatividad marginal}: el mayor valor de $\alpha$ tal que se rechaza $H_0$.
+            \item \alert{El p-valor es el nivel de significatividad marginal}: el menor valor de $\alpha$ para el cual se rechaza $H_0$.
             \item  Para $H_0: \beta_j = \beta_{j,0}$ y $H_1: \beta_j \neq \beta_{j,0}$ con el estad\'istico t tenemos:
             \begin{align*}
                 p_N&=\Pr(T> T_N)=\Pr(|Z|>|t_N|)=2(1-\Phi(|t_N|)).
@@ -602,7 +603,7 @@ Salida de Stata\\
 \begin{frame}
 	\frametitle{Poder asint\'otico local}
 	\begin{itemize} 
-		\item Consistencia es un requisito m\'inimo para una test, pero no es una buena aproximaci\'on al poder del test.
+		\item Consistencia es un requisito m\'inimo para un test, pero no es una buena aproximaci\'on al poder del test.
 		\item Una \alert{alternativa local} es una hip\'otesis alternativa $H_{1,N}$ que converge a $H_0$ a cierta velocidad. En este caso, $\beta_{j,N}=\beta_{j,0}+N^{-1/2}h$ donde $h$ es un par\'ametro.
 		\item El \alert{poder asint\'otico local} de un test es el l\'imite cuando $N\to \infty$ del poder del test bajo la alternativa local:
 		\begin{align*}
@@ -618,7 +619,7 @@ Salida de Stata\\
 	\begin{itemize}
 		\item \alert{Poder asint\'otico local del test es decreciente en $v_{jj}$}
         \item [] Dada la alternativa local $H_{1,N}: \beta_{j,N}=\beta_{j,0}+N^{-1/2}h$, el poder asint\'otico es 
-        $\lim_{N\to \infty}\Pr(|t_N| > z_{1-\alpha/2}|H_{1,N})=\Phi(\delta-c_\alpha)+\Phi(-\delta-c_\alpha)$ donde $\delta=h/v_{jj}^{1/2}$. El poder local es decreciente en $v_{jj}$(dado h) .
+        $\lim_{N\to \infty}\Pr(|t_N| > z_{1-\alpha/2}|H_{1,N})=\Phi(\delta-c_\alpha)+\Phi(-\delta-c_\alpha)$ donde $\delta=h/v_{jj}^{1/2}$. El poder local es decreciente en $v_{jj}$ (dado $h$).
 	\end{itemize}
 \end{frame}
 %
@@ -633,7 +634,7 @@ Salida de Stata\\
 	\begin{itemize}
 		\item \alert{Poder asint\'otico local del test es decreciente en $v_{jj}$}
         \item [] Dada la alternativa local $H_{1,N}: \beta_{j,N}=\beta_{j,0}+N^{-1/2}h$, el poder asint\'otico es 
-        $\lim_{N\to \infty}\Pr(|t_N| > z_{1-\alpha/2}|H_{1,N})=\Phi(\delta-c_\alpha)+\Phi(-\delta-c_\alpha)$ donde $\delta=h/v_{jj}^{1/2}$. El poder local es decreciente en $v_{jj}$(dado h) .
+        $\lim_{N\to \infty}\Pr(|t_N| > z_{1-\alpha/2}|H_{1,N})=\Phi(\delta-c_\alpha)+\Phi(-\delta-c_\alpha)$ donde $\delta=h/v_{jj}^{1/2}$. El poder local es decreciente en $v_{jj}$ (dado $h$).
 		\item  [] \alert{Demostraci\'on}
 		\begin{align*}
 		t_N&=\frac{\hat \beta_j-\beta_{j,0}}{s.e.(\hat \beta_j)}=\frac{\hat \beta_j-\beta_{j,N}}{s.e.(\hat \beta_j)}+\sqrt{N}\frac{\beta_{j,N}-\beta_{j,0}}{\hat v_{jj}^{1/2}}\\
@@ -648,7 +649,7 @@ Salida de Stata\\
     \small
     \begin{itemize}
         \item \alert{Poder asint\'otico local del test es decreciente en $v_{jj}$}
-        \item [] Dada la alternativa local $H_{1,N}: \beta_j=\beta_{j,0}+N^{-1/2}h$, el poder asint\'otico es 
+        \item [] Dada la alternativa local $H_{1,N}: \beta_{j,N}=\beta_{j,0}+N^{-1/2}h$, el poder asint\'otico es 
         $\lim_{N\to \infty}\Pr(|t_N| > z_{1-\alpha/2}|H_{1,N})=\Phi(\delta-c_\alpha)+\Phi(-\delta-c_\alpha)$ donde $\delta=h/v_{jj}^{1/2}$. El poder local es creciente en $\delta$.
         \item  [] \alert{Demostraci\'on}
         \begin{align*}
@@ -672,7 +673,7 @@ Salida de Stata\\
 	\frametitle{Poder asint\'otico local es decreciente en $v_{jj}$}
 	\begin{figure}
      \includegraphics[width=0.65\textwidth]{figures/local_power_tstat.pdf}
-     \caption{Poder asint\'otico local t-estad\'istico.}
+     \caption{Poder asint\'otico local del estad\'istico t.}
      \end{figure}
 \end{frame}
 % --------------------------------------------------- Slide --
@@ -694,8 +695,8 @@ Salida de Stata\\
             \end{align*}
             \item  \alert{Valor cr\'itico} $c_\alpha=z_{1-\alpha}$:
             \begin{align*}
-                \lim_{N\to \infty}\Pr(\text{Rechazar }H_0|H_0)=\lim_{N\to \infty} \Pr(t_N > c_\alpha|H_0)=\Pr(Z > c_\alpha)&=\alpha
-                \iff c_\alpha=z_{1-\alpha}&.
+                \lim_{N\to \infty}\Pr(\text{Rechazar }H_0|H_0)=\lim_{N\to \infty} \Pr(t_N > c_\alpha|H_0)=\Pr(Z > c_\alpha)=\alpha
+                \iff c_\alpha=z_{1-\alpha}.
             \end{align*}
             Si $\alpha=0.05$, entonces $c_\alpha=z_{0.95}=1.645$.
             \item \alert{Regla de decisi\'on}: Si $t_N>c_\alpha$, rechazamos $H_0$.
@@ -746,7 +747,7 @@ Salida de Stata\\
         \end{align*}
         \item  \alert{Valor cr\'itico} $c_\alpha=z_{1-\alpha}$.
         Si $\alpha=0.05$, entonces $c_\alpha=z_{0.95}=1.645$.
-        \item \alert{Regla de decisi\'on}: Si $-t_N>c_\alpha$ \'o $t_N<-c_\alpha$, rechazamos $H_0$.
+        \item \alert{Regla de decisi\'on}: Si $t_N<-c_\alpha$ (es decir, $-t_N>c_\alpha$), rechazamos $H_0$.
     \end{itemize}
 \end{frame}
 % --------------------------------------------------- Slide --
@@ -815,7 +816,7 @@ Salida de Stata\\
     \frametitle{Intervalo de confianza}
     \begin{itemize}
     	\item $\hat \beta_j$ es una estimaci\'on puntual de $\beta_j$.
-    	\item Un concepto m\'as amplio, es un \alert{intervalo de confianza} $\hat C_{N}=[L_N,U_N]$ con el objetivo que $(1-\alpha)\%$ de la veces (\alert{nivel de cobertura o nivel de confianza}) dicho intervalo contenga a $\beta_j$:
+    	\item Un concepto m\'as amplio, es un \alert{intervalo de confianza} $\hat C_{N}=[L_N,U_N]$ con el objetivo de que el $100(1-\alpha)\%$ de las veces (\alert{nivel de cobertura o nivel de confianza}) dicho intervalo contenga a $\beta_j$:
 $\lim_{N\to \infty}\Pr(\beta_j \in \hat C_N)=1-\alpha$
 		\item Para un nivel de confianza de $1-\alpha$:
 		$$\hat C_N=[\hat \beta_j-c_\alpha \,s.e.(\hat \beta_j),\hat \beta_j+c_\alpha \,s.e.(\hat \beta_j)]$$
@@ -875,7 +876,7 @@ $\lim_{N\to \infty}\Pr(\beta_j \in \hat C_N)=1-\alpha$
 	}
 	[-1.10 - 1.96 $\times$ .433, -1.10 + 1.96 $\times$ .433] = [-1.950, -.253] \\
 	
-\alert{Stata utilizar los valores cr\'iticos de la t-student}
+\alert{Stata utiliza los valores cr\'iticos de la t de Student}
 \end{frame}
 % --------------------------------------------------- Slide --
 \section{Una restricci\'on lineal sobre m\'ultiples par\'ametros}
@@ -949,7 +950,7 @@ $\lim_{N\to \infty}\Pr(\beta_j \in \hat C_N)=1-\alpha$
 \end{frame}
 % --------------------------------------------------- Slide --
 \begin{frame}
-    \frametitle{Retornos de la educaci\'on (NLSY) (Blackburn and Neumark (QJE, 1992))}
+    \frametitle{Retornos de la educaci\'on (NLSY) (Blackburn y Neumark (QJE, 1992))}
     \begin{itemize}
         \item ?`Cu\'al es el efecto de un a\~no adicional de educaci\'on sobre los salarios?
         \item \alert{Datos}: Young Men's Cohort of the National Longitudinal Survey (NLSY). 5,225 individuos fueron encuestados por primera vez en 1966 a la edad de 14-24 a\~nos y luego en intervalos de uno o dos a\~nos. La muestra utilizada incluye solamente hombres que no son de raza negra, entrevistados en 1980 y que respondieron la pregunta sobre ingreso. Tama\~no de la muestra $N=935$.
@@ -959,7 +960,7 @@ $\lim_{N\to \infty}\Pr(\beta_j \in \hat C_N)=1-\alpha$
         % En el a\~no 1968 les hicieron un IQ test y el KWW knowledge about the labor market
 % --------------------------------------------------- Slide --
 \begin{frame}
-    \frametitle{Retornos de la educaci\'on (NLSY) (Blackburn and Neumark (QJE, 1992))}
+    \frametitle{Retornos de la educaci\'on (NLSY) (Blackburn y Neumark (QJE, 1992))}
     \begin{itemize}
         \item ?`Cu\'al es el efecto de un a\~no adicional de educaci\'on sobre los salarios?
         \item \alert{Variables}:
@@ -968,7 +969,7 @@ $\lim_{N\to \infty}\Pr(\beta_j \in \hat C_N)=1-\alpha$
             \item A\~nos de educaci\'on (\emph{educ}).
             \item IQ test score realizado en  1968 (\emph{IQ}).
             \item A\~nos de experiencia laboral (\emph{exper}).
-            \item A\~nos de tenure (trabajando en el mismo lugar) (\emph{tenure}).
+            \item A\~nos de antig\"uedad en el empleo actual (\emph{tenure}).
             \item Dummies de est\'a casado (\emph{married}), vive en el sur de USA (\emph{south}) y vive en un \'area urbana (\emph{urban}).
         \end{itemize}
     \end{itemize}
@@ -982,7 +983,7 @@ $\lim_{N\to \infty}\Pr(\beta_j \in \hat C_N)=1-\alpha$
         \item  []
         \begin{small}
         \begin{align*}
-            \log{wage_i} = \beta_0 + \beta_1 \, educ_i&+\beta_2 exper_i+\beta_3 tenure_i +\beta_4 IQ_i+x_i'\beta+u_i,
+            \log{wage_i} = \beta_0 + \beta_1 \, educ_i&+\beta_2 exper_i+\beta_3 tenure_i +\beta_4 IQ_i+x_i'\gamma+u_i,
         \end{align*}
         \end{small}
         donde $x_i$ incluye regresores adicionales.
@@ -1023,15 +1024,15 @@ Salida de Stata\\
             \item  Modelo poblacional
             \begin{small}
             \begin{align*}
-                \log{wage_i} = \beta_0 + \beta_1 \, educ_i+\beta_2 exper_i+\beta_3 tenure_i+\beta_4 IQ_i+x_i'\beta+u_i,
+                \log{wage_i} = \beta_0 + \beta_1 \, educ_i+\beta_2 exper_i+\beta_3 tenure_i+\beta_4 IQ_i+x_i'\gamma+u_i,
             \end{align*}
             \end{small}
-            \item \alert{Hip\'otesis nula}: Un a\~no adicional de experiencia y un a\~no adicional de tenure tienen el mismo efecto sobre el salario.\\
+            \item \alert{Hip\'otesis nula}: Un a\~no adicional de experiencia y un a\~no adicional de antig\"uedad tienen el mismo efecto sobre el salario.\\
             Formalmente:
             \begin{align*}
                 H_0: \beta_2=\beta_3 \text{ \'o } \beta_2 -\beta_3=0.
             \end{align*}
-            \item \alert{Hip\'otesis alternativa}: Un a\~no adicional de experiencia y un a\~no adicional de tenure tienen efectos distintos sobre el salario.\\
+            \item \alert{Hip\'otesis alternativa}: Un a\~no adicional de experiencia y un a\~no adicional de antig\"uedad tienen efectos distintos sobre el salario.\\
             Formalmente:
             \begin{align*}
                 H_1: \beta_2 \neq \beta_3  \text{ \'o } \beta_2 -\beta_3 \neq 0.
@@ -1076,7 +1077,7 @@ married   1.046e-06  -1.873e-06  -.00001243  -9.007e-06   .00156329
             \item Test estad\'istico
             \begin{align*}
                 t_N&=\sqrt{N}\frac{\hat \beta_2-\hat \beta_3}{\sqrt{\hat V_{22}+\hat V_{33}-2 \hat V_{23}}},\\
-                &=\frac{\hat \beta_2-\hat \beta_3}{\sqrt{\widehat{AVar}(\hat \beta_2)+\widehat{AVar}(\hat \beta_3)-2 \widehat{AVar}(\hat \beta_2,\hat \beta_3)}},\\
+                &=\frac{\hat \beta_2-\hat \beta_3}{\sqrt{\widehat{\Avar}(\hat \beta_2)+\widehat{\Avar}(\hat \beta_3)-2 \widehat{\Avar}(\hat \beta_2,\hat \beta_3)}},\\
                 &=\frac{.0142-.0118}{[.0000106 + 6.513\times 10^{-6}- 2(-2.529\times 10^{-6})]^\frac{1}{2}},\\
                 &=0.505.
             \end{align*}
@@ -1124,7 +1125,7 @@ married   1.046e-06  -1.873e-06  -.00001243  -9.007e-06   .00156329
 %        \begin{itemize}
 %            \item Modelo poblacional
 %            \begin{align*}
-%                \log{wage_i} = \beta_0 + \beta_1 \, educ_i+\beta_2 exper_i+\beta_3 tenure_i+\beta_4 IQ_i+x_i'\beta+u_i,
+%                \log{wage_i} = \beta_0 + \beta_1 \, educ_i+\beta_2 exper_i+\beta_3 tenure_i+\beta_4 IQ_i+x_i'\gamma+u_i,
 %            \end{align*}
 %            \item  Para el contraste $H_0: \beta_2 -\beta_3=0$, definimos
 %            \begin{align*}
@@ -1268,7 +1269,7 @@ married   1.046e-06  -1.873e-06  -.00001243  -9.007e-06   .00156329
                 &+2N^{1/2}(R'\beta-\theta_0)'(R'\hat V R)^{-1/2} N^{1/2}(R'\hat V R)^{-1/2}(R'\hat \beta-R'\beta),\\
                 &\dto_{H_1} \chi^2_q + \infty.
             \end{align*}
-             El segundo t\'ermino domina ($N \times \text{ positivo}$) al tercer termino ($N^{1/2} \times \text{ positivo \'o negativo } \times N(0,I)$)
+             El segundo t\'ermino domina ($N \times \text{ positivo}$) al tercer t\'ermino ($N^{1/2} \times \text{ positivo \'o negativo } \times N(0,I)$)
         \end{itemize}
         % .
 \end{frame}
@@ -1279,7 +1280,7 @@ married   1.046e-06  -1.873e-06  -.00001243  -9.007e-06   .00156329
             \item  Modelo poblacional
             \begin{small}
             \begin{align*}
-                \log{wage_i} = \beta_0 + \beta_1 \, educ_i+\beta_2 exper_i+\beta_3 tenure_i+\beta_4 IQ_i+x_i'\beta+u_i,
+                \log{wage_i} = \beta_0 + \beta_1 \, educ_i+\beta_2 exper_i+\beta_3 tenure_i+\beta_4 IQ_i+x_i'\gamma+u_i,
             \end{align*}
             \end{small}
             \item \alert{Hip\'otesis nula}: Ni la educaci\'on ni IQ tienen efecto sobre el salario.\\
@@ -1382,14 +1383,14 @@ Salida de Stata\\
             t_{N-K} &\dto Z\sim \N(0,1),\\
            F_{q,N-K} &\dto \chi^2_q/q \implies q\, F_{q,N-K} \dto \chi^2_q  ,
         \end{align*}
-        donde $t_{N-K}$ es una variable aleatoria con distribuci\'on t de Student con $N-K$ grados de libertad; $F_{q,N-K}$ es una variable aleatoria con distribuci\'on F de Fischer-Snedecor con $q$ grados de libertad en el numerador y $N-K$ grados de libertad en el denominador.
+        donde $t_{N-K}$ es una variable aleatoria con distribuci\'on t de Student con $N-K$ grados de libertad; $F_{q,N-K}$ es una variable aleatoria con distribuci\'on F de Fisher-Snedecor con $q$ grados de libertad en el numerador y $N-K$ grados de libertad en el denominador.
     \end{itemize}
 \end{frame}
 % --------------------------------------------------- Slide --
 \begin{frame}
     \frametitle{Resultados reportados por Stata}
     \begin{itemize}
-        \item Stata reporta en la salida de reg el \alert{p-valor de una t de Student para el estad\'istico t}; y reporta en la salida de test un \alert{estad\'istico $F_N=W_N/q$ con el p-valor de una F de Fischer-Snedecor}. Estos ajustes son irrelevantes en muestras grandes.
+        \item Stata reporta en la salida de reg el \alert{p-valor de una t de Student para el estad\'istico t}; y reporta en la salida de test un \alert{estad\'istico $F_N=W_N/q$ con el p-valor de una F de Fisher-Snedecor}. Estos ajustes son irrelevantes en muestras grandes.
     \end{itemize}
 \end{frame}
 
@@ -1403,10 +1404,11 @@ Salida de Stata\\
         F_N=\frac{(SSR_N^r-SSR_N^u)/q}{SSR_N^u/N}
         \end{align*}
         donde $SSR_N^u$ es la suma de los residuos al cuadrado del modelo no restringido y $SSR_N^r$ es la suma de los residuos al cuadrado del modelo restringido.
-        \item \alert{\'Unicamente bajo homoscedastidad} se cumple que 
+        \item Se cumple que
         \begin{align*}
-        F_N=W_N/q.
+        F_N=W_N/q
         \end{align*}
+        \alert{\'unicamente si $W_N$ utiliza el estimador de $V$ bajo homoscedasticidad}, $\hat V=\hat\sigma^2\left(\frac{1}{N}\sum_i x_ix_i'\right)^{-1}$. Con el estimador robusto a heteroscedasticidad no se cumple, y el estad\'istico $F_N$ basado en $SSR$ no es v\'alido bajo heteroscedasticidad.
     \end{itemize}
 \end{frame}
 
@@ -1432,15 +1434,16 @@ Salida de Stata\\
 \begin{frame}
 \frametitle{Test de significatividad global}
         \begin{itemize}
-            \item \alert{Hip\'otesis nula:} El modelo no tiene poder explicativo.
+            \item Con $y_i=\beta_0+\beta_1x_{1i}+\dots+\beta_Kx_{Ki}+u_i$.
+            \item \alert{Hip\'otesis nula:} El modelo no tiene poder explicativo: todos los coeficientes, salvo la constante, son cero.
             \begin{align*}
-                H_0: \beta_1 = ...=\beta_K = 0,
+                H_0: \beta_1 = \dots=\beta_K = 0,
             \end{align*}
             \item [] \alert{Hip\'otesis alternativa}
             \begin{align*}
                 H_1: \text{ Al menos un coeficiente es distinto de cero}.
             \end{align*}
-            \item [] Test de Wald con $R=I_K$ y $\theta_0$ un vector de ceros de $K\times 1$.
+            \item [] Test de Wald con $q=K$ restricciones, $R'=[0 \;\; I_K]$ (se excluye la constante) y $\theta_0$ un vector de ceros de $K\times 1$.
             \item Es un test irrelevante con los tama\~nos de muestra actuales.
         \end{itemize}
 \end{frame}
@@ -1566,16 +1569,16 @@ Salida de Stata\\
 
 % --------------------------------------------------- Slide --
 \begin{frame}
-	\frametitle{Efectos de la contaminaci\'on en los precios de las viviendas (Harrison and Rubinfeld (JEEM, 1978))}
+	\frametitle{Efectos de la contaminaci\'on en los precios de las viviendas (Harrison y Rubinfeld (JEEM, 1978))}
 	\begin{itemize}
-		\item ?`Cu\'al es el efecto de una mayor concentraci\'on \'oxido nitroso en el aire en el precio de las viviendas?
+		\item ?`Cu\'al es el efecto de una mayor concentraci\'on de \'oxidos de nitr\'ogeno en el aire en el precio de las viviendas?
             \item Modelo 
             \begin{small}            
             \begin{align*}
-            \log(price)  = \beta_0 +\beta_{lnox} \,\log(nox) +\beta_{rooms}\, rooms + \beta_{stratio} \,stratio +u_i,
+            \log(price_i)  = \beta_0 +\beta_{lnox} \,\log(nox_i) +\beta_{rooms}\, rooms_i + \beta_{stratio} \,stratio_i +u_i,
             \end{align*}
             \end{small}
-            donde \emph{price} es el precio de la vivienda, \emph{nox} es la cantidad de \'oxido nitroso en el aire (contaminaci\'on), \emph{rooms} es el n\'umero de habitaciones y \emph{stratio} es el ratio estudiante/profesor en la comuna.
+            donde \emph{price} es el precio de la vivienda, \emph{nox} es la concentraci\'on de \'oxidos de nitr\'ogeno en el aire (contaminaci\'on), \emph{rooms} es el n\'umero de habitaciones y \emph{stratio} es el ratio estudiante/profesor en la comunidad.
 	\end{itemize}
 \end{frame}
 % --------------------------------------------------- Slide --
@@ -1635,7 +1638,7 @@ Linear regression                                      Number of obs =     506
 
 % --------------------------------------------------- Slide --
 \begin{frame}
-	\frametitle{Efectos de la contaminaci\'on en los precios de las viviendas (Harrison and Rubinfeld (JEEM, 1978))}
+	\frametitle{Efectos de la contaminaci\'on en los precios de las viviendas (Harrison y Rubinfeld (JEEM, 1978))}
 	\begin{itemize}
             \item  \alert{Hip\'otesis nula}
             \begin{align*}
@@ -1647,7 +1650,7 @@ Linear regression                                      Number of obs =     506
             \end{align*}
             \item  $r(\hat \beta)=(\exp(\hat\beta_{rooms})-1) \times 100=29.3$
             \item  $\hat R=\exp(\hat\beta_{rooms}) \times 100$
-            \item $\frac{1}{N} \hat R'\hat V \hat R= \exp(\hat\beta_{rooms}) 100\times  \widehat{AVar}(\hat\beta_{rooms}) \times  \exp(\hat\beta_{rooms}) 100 = 10.8$
+            \item $\frac{1}{N} \hat R'\hat V \hat R= \exp(\hat\beta_{rooms}) 100\times  \widehat{\Avar}(\hat\beta_{rooms}) \times  \exp(\hat\beta_{rooms}) 100 = 10.8$
             \item $W_N=N\frac{r(\hat \beta)^2}{\hat R'\hat V \hat R} = \frac{29.3^2}{10.8} = 79.5$                      
 	\end{itemize}
 \end{frame}
