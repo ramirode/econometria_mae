@@ -39,6 +39,7 @@ Material del curso, a cargo de Ramiro de Elejalde.
   - [Tarea 1](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps1.pdf)
   - [Tarea 2](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps2.pdf)
   - [Tarea 3](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps3.pdf) (datos: [wage2.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/wage2.rds), [hprice2.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/hprice2.rds))
+  - [Tarea 4](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps4.pdf) (datos: [veteran.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/veteran.rds), [hprice2.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/hprice2.rds), [christensen_greene.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/christensen_greene.rds), [discrim.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/discrim.rds))
 - [Trabajo grupal: entregas y criterios de evaluación](https://github.com/ramirode/econometria_mae/blob/main/trabajo/trabajo_grupal_2026.pdf)
 - [Material de ayudantía](https://github.com/ramirode/econometria_mae/tree/main/TA)
   - [Ayudantía 1](https://github.com/ramirode/econometria_mae/blob/main/TA/TA1/TA1.pdf)
@@ -48,6 +49,7 @@ Material del curso, a cargo de Ramiro de Elejalde.
   - [Ayudantía 5](https://github.com/ramirode/econometria_mae/blob/main/TA/TA5/TA5.pdf) ([datos](https://github.com/ramirode/econometria_mae/tree/main/TA/TA5/input))
   - [Ayudantía 6](https://github.com/ramirode/econometria_mae/blob/main/TA/TA6/TA6.pdf) ([código y datos](https://github.com/ramirode/econometria_mae/tree/main/TA/TA6))
   - [Ayudantía 7](https://github.com/ramirode/econometria_mae/blob/main/TA/TA7/TA7.pdf)
+  - [Ayudantía 8](https://github.com/ramirode/econometria_mae/blob/main/TA/TA8/TA8.pdf) ([código y datos](https://github.com/ramirode/econometria_mae/tree/main/TA/TA8))
 
 ---
 

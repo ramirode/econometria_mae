@@ -1,0 +1,151 @@
+% !TeX spellcheck = es_ES
+\documentclass[letterpaper,11pt]{article}
+\input{../preambulo.tex}
+
+\title{Análisis Econométrico \\ Ayudantía 8}
+\author{Magíster en Economía, Universidad Alberto Hurtado}
+\date{}
+
+% Funciones de R sugeridas: entre corchetes, alineadas a la derecha; si no caben en la
+% linea pasan enteras a la siguiente.
+\newcommand{\fn}[1]{{\unskip\nobreak\hfill\penalty50\hskip1em\null\nobreak\hfill
+    \mbox{[#1]}\parfillskip=0pt\finalhyphendemerits=0\par}}
+
+\begin{document}
+\maketitle
+
+\noindent Temas: cómo hacer inferencia en R (errores estándar robustos, estadístico t,
+p-valor e intervalos de confianza), contrastes e intervalos para una combinación lineal de
+coeficientes, intervalos para una transformación no lineal (método delta) y un
+primer vistazo al test de Wald con dos restricciones.
+
+\medskip
+\noindent Los ejercicios 1 y 2 son una demostración en R: el ayudante corre el código en
+pantalla, así que no hace falta traer computador. El ejercicio 3 se resuelve en la pizarra si
+queda tiempo; si no, queda como práctica. La parte 2(d) adelanta el test de Wald, que se ve en la
+clase del lunes 2 de noviembre.
+
+\section*{Si quiere replicarlo en su computador}
+
+\noindent El script completo, \texttt{TA8.R}, y los datos están en el repositorio del curso,
+en \href{https://github.com/ramirode/econometria_mae/tree/main/TA/TA8}{\texttt{TA/TA8}}. Los
+pasos son los mismos de la Ayudantía 5: cree una carpeta \texttt{TA8} con las subcarpetas
+\texttt{code} (para \texttt{TA8.R}) e \texttt{input} (para \texttt{caschool.dta} e
+\texttt{injury.dta}), y cambie la
+línea \texttt{dir\_proyecto <- "..."} por la ruta a su carpeta \texttt{TA8}. En Posit Cloud la
+carpeta ya existe: \texttt{/cloud/project/TA/TA8}. Paquetes: \texttt{haven},
+\texttt{sandwich}, \texttt{lmtest} y \texttt{car}.
+
+\section*{Ejercicios}
+
+\begin{enumerate}[itemsep=0.8em]
+
+%% ---------------------------------------------------------------- 1
+\item \emph{Inferencia en R: tamaño de clase y rendimiento académico.} Con los datos
+    \texttt{caschool.dta} (420 distritos escolares de California, 1998--1999), estime
+    \begin{align*}
+    testscr_i=\beta_0+\beta_1\, str_i+\beta_2\, el\_pct_i+u_i,
+    \end{align*}
+    donde $testscr$ es el puntaje promedio en una prueba estandarizada, $str$ es el número de
+    alumnos por profesor y $el\_pct$ es el porcentaje de alumnos que están aprendiendo inglés.
+    Son los datos del ejemplo de la clase: compare sus resultados con las diapositivas.
+    \begin{enumerate}
+        \item Estime el modelo y mire la salida de \texttt{summary}. ¿Qué errores estándar
+              reporta? Calcule los errores estándar robustos a heteroscedasticidad y compárelos.
+              \fn{\texttt{lm}, \texttt{summary}, \texttt{vcovHC}, \texttt{coeftest}}
+        \item Contraste $H_0:\beta_1=0$ contra la alternativa bilateral. Calcule el estadístico
+              t y el p-valor a mano, con el coeficiente y la matriz de varianzas y covarianzas, y
+              compárelos con la salida de \texttt{coeftest}.
+              \fn{\texttt{coef}, \texttt{sqrt}, \texttt{pnorm}}
+        \item Construya un intervalo de confianza al 95\% para $\beta_1$, a mano y con
+              \texttt{coefci}.
+              \fn{\texttt{qnorm}, \texttt{coefci}}
+        \item Contraste $H_0:\beta_1=0$ contra la alternativa de que el tamaño de clase tiene un
+              efecto negativo, $H_1:\beta_1<0$. Calcule el valor crítico y el p-valor.
+              \fn{\texttt{qnorm}, \texttt{pnorm}}
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 2
+\item \emph{Compensación por accidentes laborales (R).} Meyer, Viscusi y Durbin
+    (\textit{American Economic Review}, 1995) estudian el efecto de la compensación semanal que
+    reciben los trabajadores accidentados sobre la duración de la compensación (en semanas). La
+    compensación es proporcional al salario, hasta un tope. En Kentucky, el 15 de julio de 1980
+    el tope subió de 131 a 217 dólares por semana: la compensación aumentó para los
+    trabajadores de altos ingresos y no cambió para los de bajos ingresos.
+    Con los datos \texttt{injury.dta}, sólo para Kentucky ($ky=1$), considere
+    \begin{align*}
+    \log(durat_{i})=\beta_0+\beta_1\, afchnge_i+\beta_2\, highearn_{i} +\beta_3\, afhigh_{i}+u_i,
+    \end{align*}
+    donde $afchnge_i$ es igual a 1 si el accidente ocurrió después del cambio,
+    $highearn_i$ es igual a 1 si el trabajador es de altos ingresos y
+    $afhigh_i=afchnge_i \times highearn_i$.
+    \begin{enumerate}
+        \item Estime el modelo con errores estándar robustos. Escriba la media de
+              $\log(durat)$ en los cuatro grupos en función de los $\beta$'s. ¿Qué mide
+              $\beta_3$?
+              \fn{\texttt{lm}, \texttt{vcovHC}, \texttt{coeftest}}
+        \item Para los trabajadores de altos ingresos, estime la diferencia en la media de
+              $\log(durat)$ después y antes del cambio; llámela $\theta$. Contraste
+              si es distinta de cero de dos formas: a mano, con la matriz de varianzas y
+              covarianzas, y con \texttt{linearHypothesis}.
+              \fn{\texttt{vcovHC}, \texttt{linearHypothesis}}
+        \item Exprese la diferencia de (b) como cambio porcentual exacto en la duración,
+              $100\,(\exp(\theta)-1)$, y construya un intervalo de confianza al 95\% con el
+              método delta, a mano y con \texttt{deltaMethod}.
+              \fn{\texttt{exp}, \texttt{deltaMethod}}
+        \item \emph{Adelanto: test de Wald.} Contraste la hipótesis nula de que el cambio del
+              tope no afectó la duración \emph{ni para los de altos ingresos ni para los de
+              bajos ingresos}. ¿Cuántas restricciones hay? Escriba $R'$ y calcule el
+              estadístico de Wald a mano y con \texttt{linearHypothesis}.
+              \fn{\texttt{solve}, \texttt{pchisq}}
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 3
+\item \emph{Trabajo en equipo y riesgo moral (Examen 2016).} David C. Chan, en
+    \textit{``Teamwork and Moral Hazard: Evidence from the Emergency Department''} (Journal
+    of Political Economy, 2016), estudia cómo la organización del trabajo afecta la
+    productividad, con datos del servicio de urgencias de un hospital con dos salas. En una, las
+    enfermeras asignan cada paciente a un médico determinado. En la otra, el sistema \emph{de
+    trabajo en equipo}, las enfermeras asignan el paciente a una cama que es responsabilidad de
+    dos médicos, quienes deciden entre ellos quién lo atiende. La hipótesis es que, cuando las
+    enfermeras asignan los pacientes, los médicos tienen incentivos a \emph{arrastrar los pies}
+    (demorarse más de lo necesario con cada paciente para recibir menos pacientes nuevos), y que
+    el trabajo en equipo mitiga esos incentivos.
+
+    Suponga que los médicos no eligen en qué sala trabajan y que no hay otras amenazas a la
+    validez interna. El modelo es
+    \begin{align*}
+    \log(length\_of\_stay_{i})=\beta_0+\beta_1 \,self\_managed_{i}+x_{i}'\gamma+u_{i},
+    \end{align*}
+    donde $i$ es una atención de urgencia, $length\_of\_stay_i$ es el tiempo de atención (en
+    horas), $self\_managed_{i}$ es igual a 1 si el paciente se atiende en la sala con trabajo
+    en equipo, y $x_{i}$ incluye características del paciente (edad, sexo, seguro de salud,
+    severidad de la urgencia, diagnóstico, etc.).
+    \begin{enumerate}
+        \item La estimación es $\hat \beta_1 = -0.147$, con $se(\hat \beta_1) = 0.046$.
+              Interprete el resultado. Contraste si el efecto es estadísticamente significativo
+              y construya un intervalo de confianza al 95\%. ¿Es económicamente significativo?
+        \item Para ver si los incentivos a arrastrar los pies son mayores cuando hay más
+              trabajo esperado, el autor estima
+              \begin{align*}
+              \log(length\_of\_stay_{i})=&\beta_0+\beta_1 \, self\_managed_{i}+\beta_2 \, waiting_{i}\\
+              &+\beta_3 \, self\_managed_{i} \times waiting_{i} +x_{i}'\gamma+u_{i},
+              \end{align*}
+              donde $waiting_i$ es el número de pacientes en la sala de espera. Los resultados
+              son $\hat \beta_1 = -0.0101$, $se(\hat \beta_1) = 0.0196$,
+              $\hat \beta_2 = 0.0063$, $se(\hat \beta_2) = 0.0013$, $\hat \beta_3 =-0.0060$ y
+              $se(\hat \beta_3) = 0.0014$. Contraste si el efecto del trabajo en equipo depende
+              del número de pacientes en la sala de espera.
+        \item Escriba el efecto del trabajo en equipo para un valor dado $w$ de $waiting$,
+              $\theta(w)$, en función de los $\beta$'s. Proponga un intervalo de confianza para
+              $\theta(w)$ con nivel de confianza asintótico del 95\%, expresado en función de
+              $w$, los $\hat\beta$'s y los elementos de la matriz de varianzas y covarianzas
+              estimada. Demuestre que su nivel de confianza asintótico es 95\%, enunciando los
+              teoremas que utiliza.
+        \item Con $\widehat{\Avar}(\hat \beta_1,\hat \beta_3)=-0.000014$, calcule el intervalo
+              de (c) cuando no hay pacientes en la sala de espera ($w=0$) y cuando hay 14.1
+              (la media más una desviación estándar). Interprete.
+    \end{enumerate}
+\end{enumerate}
+
+\end{document}

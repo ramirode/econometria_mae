@@ -1,0 +1,293 @@
+% !TeX spellcheck = es_ES
+%\documentclass[letterpaper,12pt]{article}
+\documentclass[letterpaper,11pt]{article}
+
+% Language & Input
+  \usepackage[english]{babel} % Language: English
+  \usepackage[ansinew]{inputenc} % Input
+% Font
+  \usepackage[T1]{fontenc} % Font encoding
+  \usepackage{lmodern,microtype} % Typeface
+% Math
+  \usepackage{amsmath,amsthm,amssymb,amsfonts} % AMS math
+  \usepackage{dsfont,mathrsfs,ushort} % Math style
+% Style
+  \usepackage[bf,sf,tiny,center]{titlesec} % Section titles 
+  \usepackage{geometry} % Page & margins
+  \usepackage{setspace} % Spacing
+  \usepackage{enumitem} % Lists
+  \usepackage{abstract} % Abstract
+  \usepackage{color}
+% References
+  \usepackage[longnamesfirst]{natbib} % Manages bibiography
+% Figures
+  \usepackage{graphicx} % Additional options for includefigure
+  \usepackage[font={small}]{caption}
+% Tables
+  \usepackage{booktabs} % Table format
+  \usepackage{dcolumn} % Align on the decimal point of numbers in tabular columns.
+  \usepackage{multirow} % Multirows in a table
+  \usepackage{lscape} % Tables in landscape form
+  \usepackage{ctable} % Tables with captions and notes all the same width 
+% Hyperlinks
+  \usepackage{hyperref}
+% Addons
+  \usepackage[l2tabu, orthodox]{nag} % Warn the user about the use of such obso­lete things
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Style & Structure
+%% Titles (Carlos Perez)
+%  \titlelabel{\thetitle.}
+%  \titleformat*{\subsection}{\centering\sffamily\itshape}
+%  \titleformat{\subsubsection}[runin]{\sffamily}{}{0em}{}[.]
+%  \titlespacing{\subsubsection}{0pt}{*2}{\wordsep}
+  
+% Title page (Luis Cabral)
+\makeatletter
+    \renewcommand{\@maketitle}{%
+    \newpage\parindent0in\null\vskip2em%
+    {\LARGE\textbf{\textsf{\@title}}\par\vskip2em}%
+    \@author\par\vskip2em%
+    \@date%
+    \par
+    \thispagestyle{empty}\setcounter{page}{1}%\newpage
+    }%
+\makeatother
+\renewenvironment{abstract}% Change the way abstract is presented
+{\vskip2em\noindent{\textbf{\textsf{Abstract.}}}\hspace*{1ex}}{}
+
+% Sections
+  \renewcommand\thesection{\arabic{section}}
+  \renewcommand\thesubsection{\Alph{subsection}}
+% Bibliography
+  \bibliographystyle{apa} %Alternative: {plain} {aea} {econometrica}
+% Spacing & lists and margins
+  \geometry{margin=2.54cm}
+  \setstretch{1.15} % Set spacing
+% Color
+  \definecolor{ntr}{rgb}{0.8,0,0} % not too red
+% Abstract
+  \renewcommand{\abstractnamefont}{\sffamily\small\bfseries}
+  \setlength{\abstitleskip}{-1em}
+% Hyperlinks
+  \hypersetup{colorlinks=true,linkcolor=ntr,citecolor=ntr,urlcolor=black,bookmarksnumbered=true}
+% Notes to tables and figures
+% Significant stars in tables
+  %\newcommand{\sym}[1]{\rlap{#1}}
+  \def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+% Games
+% Miscellaneous
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Theorems
+  \theoremstyle{plain}
+  \newtheorem{prop}{Proposition}
+  \newtheorem{assumption} {Assumption}
+  \newtheorem{theorem}{Theorem}
+  \newtheorem{lem}{Lemma}
+  \newtheorem{corollary}{Corollary}
+  \theoremstyle{definition}
+  \newtheorem{defi}{Definition}
+  \newtheorem{ex}{Example}
+  \theoremstyle{remark}
+  \newtheorem{remark}{Remark}
+  \def\propautorefname{Proposition}
+  \def\propositionautorefname{Proposition}
+  \def\defiautorefname{Definition}
+  \def\lemautorefname{Lemma}
+  \def\exampleautorefname{Example}
+  \def\corollaryautorefname{Corollary}
+  \def\exautorefname{Example}
+
+\newcommand{\SR}{\mathbb{R}}
+
+\DeclareMathOperator*{\Max}{m{a}x}
+\DeclareMathOperator*{\Min}{m{i}n}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\plim}{plim}
+\DeclareMathOperator{\Var}{Var}
+\DeclareMathOperator{\Avar}{AVar}
+\DeclareMathOperator{\Cov}{Cov}
+\DeclareMathOperator{\E}{\mathbb{E}}
+\newcommand{\pto}{\stackrel{p}{\longrightarrow}}
+\newcommand{\dto}{\stackrel{d}{\longrightarrow}}
+\newcommand{\adistr}{\stackrel{a}{\sim}}
+\newcommand{\epsi}{\varepsilon}
+\newcommand{\tmle}{\hat \theta_{ML}}
+\newcommand{\tgmm}{\hat \theta_{GMM}}
+\newcommand\independent{\protect\mathpalette{\protect\independenT}{\perp}}
+\def\independenT#1#2{\mathrel{\rlap{$#1#2$}\mkern2mu{#1#2}}}
+\DeclareMathOperator{\N}{Normal}
+
+\DeclareMathOperator{\Corr}{Corr}
+
+\begin{document}
+
+	\title {An\'alisis Econom\'etrico  \\ Tarea 4}
+	\author{Mag\'ister en Econom\'ia, Universidad Alberto Hurtado}
+	\date{Fecha de entrega: 5 de noviembre de 2026 (al principio de la ayudant\'ia)}
+
+\maketitle
+
+Total: 100 puntos
+
+Los ejercicios 1, 2, 3 y 5 requieren estimar modelos con datos. Utilice R (u otro software
+estad\'istico) y adjunte su c\'odigo. Reporte errores est\'andar robustos a
+heteroscedasticidad y utilice un nivel de significancia del 5\% salvo que se indique otra
+cosa. Los datos est\'an en el repositorio del curso, en formato R:
+\href{https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/veteran.rds}{\texttt{veteran.rds}},
+\href{https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/christensen_greene.rds}{\texttt{christensen\_greene.rds}},
+\href{https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/hprice2.rds}{\texttt{hprice2.rds}} y
+\href{https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/discrim.rds}{\texttt{discrim.rds}}. Se leen con \texttt{readRDS}.
+
+\begin{enumerate}
+
+\item (20 puntos) Utilice los datos de \texttt{veteran} del trabajo de Angrist (Econometrica,
+    1998) sobre el efecto de haber servido en las fuerzas armadas de EE.UU. en los ingresos.
+    Por razones de confidencialidad los datos est\'an agregados: cada fila es una celda de
+    solicitantes con las mismas caracter\'isticas y \texttt{earnvar} es el ingreso anual promedio
+    de la celda en 1988--1991 (en d\'olares). Trate cada celda como una observaci\'on, sin
+    ponderadores: los promedios por grupo son promedios entre celdas. La
+    variable \texttt{dvet} es igual a 1 si sirvi\'o en las fuerzas armadas (veterano) y
+    \texttt{dnwhite} es igual a 1 si la persona no es de raza blanca.
+    \begin{enumerate}
+        \item (5 puntos) Proponga y estime un modelo de regresi\'on que permita diferencias de
+            ingresos ($earnvar$) entre veteranos de raza blanca, veteranos de raza no blanca, no
+            veteranos de raza blanca y no veteranos de raza no blanca. No utilice controles
+            adicionales.
+        \item (5 puntos) Para \emph{personas de raza blanca}, ?`cu\'al es la diferencia entre
+            el ingreso medio de veteranos y de no veteranos? Para \emph{personas que no son de
+            raza blanca}, ?`cu\'al es esa diferencia? Escriba ambas diferencias en funci\'on de
+            los coeficientes del modelo.
+        \item (5 puntos) Contraste si, para \emph{personas de raza blanca}, existen diferencias
+            de ingresos entre veteranos y no veteranos. Realice un contraste similar para
+            \emph{personas que no son de raza blanca}.
+        \item (5 puntos) Contraste si la diferencia de ingresos entre veteranos y no veteranos
+            es la misma para blancos y no blancos. ?`Qu\'e ventaja tiene estimar un solo modelo
+            con dummies en lugar de dos modelos separados (uno para blancos y otro para no
+            blancos)?
+    \end{enumerate}
+
+\item (20 puntos) Utilice los datos de \texttt{hprice2} del trabajo de Harrison y Rubinfeld
+    (JEEM, 1978) sobre el efecto de la contaminaci\'on en el precio de las viviendas: 506
+    comunidades del \'area metropolitana de Boston en 1970. Las variables son \texttt{price}
+    (precio mediano de las viviendas, en d\'olares), \texttt{nox} (concentraci\'on de \'oxido de
+    nitr\'ogeno en el aire, en partes por 100 millones), \texttt{rooms} (n\'umero promedio de
+    habitaciones), \texttt{dist} (distancia ponderada a cinco centros de empleo) y
+    \texttt{stratio} (ratio estudiantes por profesor). Considere el modelo
+    \begin{align*}
+    \log(price_i)=\beta_0+\beta_1 \log(nox_i)+\beta_2\, rooms_i +\beta_3 \log(dist_i) +\beta_4\, stratio_i +u_i.
+    \end{align*}
+    \begin{enumerate}
+        \item (5 puntos) Contraste la hip\'otesis de que la elasticidad del precio de las
+            viviendas con respecto a la contaminaci\'on es igual a $-1$.
+        \item (5 puntos) Agregue $rooms^2$ al modelo y contraste la significatividad de
+            $rooms^2$. Interprete el resultado del contraste.
+        \item (5 puntos) En el modelo con $rooms^2$, escriba el efecto marginal de $rooms$
+            sobre $\log(price)$, $\partial\log(price)/\partial rooms$, en funci\'on de $rooms$. ?`Para qu\'e
+            n\'umero de habitaciones el efecto marginal pasa de negativo a positivo? ?`Cu\'antas
+            observaciones de la muestra tienen menos habitaciones que ese valor? ?`Es
+            preocupante que el efecto marginal estimado sea negativo en ese rango?
+        \item (5 puntos) Construya un intervalo de confianza al 95\% para el efecto marginal
+            de (c), evaluado en la media muestral de $rooms$. Compare con
+            el intervalo de confianza para $\beta_2$ en el modelo sin $rooms^2$. ?`Qu\'e
+            concluye?
+    \end{enumerate}
+
+\item (20 puntos) Los datos de \texttt{christensen\_greene} contienen costos, precios de
+    insumos y producci\'on de empresas generadoras de electricidad de EE.UU. en 1955 y 1970. Los
+    datos de 1955 son de Nerlove (1963), en la versi\'on que usan Christensen y Greene (JPE,
+    1976). Las variables que utilizar\'a son:
+    \begin{itemize}
+        \item $year$: a\~no,
+        \item $tc$: costo total,
+        \item $q$: producci\'on,
+        \item $pl$, $pk$ y $pf$: precios de la mano de obra, del capital y del combustible.
+    \end{itemize}
+    Suponga una funci\'on de producci\'on Cobb-Douglas
+    \begin{align*}
+    q_i = \exp(A+\eta_i)\, l_i^{\alpha_l} k_i^{\alpha_k} f_i^{\alpha_f},
+    \end{align*}
+    donde $\exp(A+\eta_i)$ es la productividad de la empresa, que se separa en la productividad
+    promedio de la industria ($A$) y la productividad espec\'ifica de la empresa ($\eta_i$),
+    $l_i$ es mano de obra, $k_i$ es capital f\'isico y $f_i$ es combustible.
+
+    Si las empresas son tomadoras de precios en el mercado de los insumos y minimizan costos,
+    se puede deducir la siguiente funci\'on de costos:
+    \begin{align*}
+    \log(tc_i) = \log(C_0) &+ \frac{\alpha_l}{\alpha_l+\alpha_k+\alpha_f} \, \log( pl_i) + \frac{\alpha_k}{\alpha_l+\alpha_k+\alpha_f} \, \log(pk_i) \\
+    &+ \frac{\alpha_f}{\alpha_l+\alpha_k+\alpha_f} \, \log(pf_i) + \frac{1}{\alpha_l+\alpha_k+\alpha_f} \, \log(q_i) - \frac{1}{\alpha_l+\alpha_k+\alpha_f} \, \eta_i,
+    \end{align*}
+    donde $C_0$ es una constante que depende de $\alpha_l$, $\alpha_k$, $\alpha_f$ y $A$.
+
+    \emph{Realice los siguientes ejercicios con los datos del a\~no 1955.}
+    \begin{enumerate}
+        \item (5 puntos) Estime la funci\'on de costos
+        \begin{align*}
+        \log(tc_i)=\beta_0+\beta_1 \log(pl_i)+\beta_2 \log(pk_i)+\beta_3 \log(pf_i)+\beta_4 \log(q_i)+u_i.
+        \end{align*}
+        Escriba $\beta_1$, $\beta_2$, $\beta_3$ y $\beta_4$ en funci\'on de $\alpha_l$,
+        $\alpha_k$ y $\alpha_f$.
+        \item (5 puntos) Muestre que la funci\'on de costos implica
+            $\beta_1+\beta_2+\beta_3=1$ (homogeneidad de grado uno en precios: si todos los
+            precios de los insumos se multiplican por $\lambda>0$, el costo total se
+            multiplica por $\lambda$). Contraste esta restricci\'on: es una forma de contrastar
+            con datos el modelo de minimizaci\'on de costos.
+        \item (10 puntos) Utilice el coeficiente de $\log(q_i)$ para construir un intervalo de
+            confianza al 95\% para los rendimientos a escala, $\alpha_l+\alpha_k+\alpha_f$.
+            Contraste la hip\'otesis de rendimientos constantes a escala contra la alternativa
+            bilateral.
+    \end{enumerate}
+
+\item (20 puntos) Suponga el modelo $y_i=\beta_0+\beta_1\,x_{1i}+\beta_2\,x_{2i}+u_i$. Bajo
+    los supuestos usuales, el estimador MCO satisface $\sqrt{N}(\hat \beta-\beta)\dto\N(0,V)$ y
+    $\hat V \pto V$. Usted quiere contrastar $H_0: \beta_1 = 0$ y $\beta_2 = 0$ contra la
+    alternativa $H_1: \beta_1 \neq 0$ o $\beta_2 \neq 0$, con el estad\'istico de Wald
+    \begin{align*}
+    W_N=N\,(R'\hat \beta)'(R'\hat V R)^{-1}(R'\hat \beta), \qquad \text{donde} \qquad
+    R'=\left(\begin{array}{ccc} 0 & 1 & 0\\ 0 & 0 & 1\end{array}\right).
+    \end{align*}
+    Demuestre que el estad\'istico de Wald se puede escribir como la siguiente funci\'on de los
+    estad\'isticos t individuales ($t_{1,N}$, $t_{2,N}$) y del coeficiente de correlaci\'on
+    estimado entre $\hat \beta_1$ y $\hat \beta_2$ ($\hat\rho$):
+    \begin{align*}
+    W_N = \frac{1}{1-\hat\rho^2}\left(t_{1,N}^2 + t_{2,N}^2-2 \hat \rho\, t_{1,N}\,t_{2,N}\right).
+    \end{align*}
+    Pista: Con $\widehat{\Avar}(\hat\beta)=\hat V/N$ y
+    $se(\hat\beta_k)=[\widehat{\Avar}(\hat\beta_k)]^{1/2}$,
+    \begin{align*}
+    t_{1,N} = \frac{\hat \beta_1}{se(\hat \beta_1)}, \quad
+    t_{2,N} = \frac{\hat \beta_2}{se(\hat \beta_2)} \quad \text{y} \quad
+    \hat \rho =\frac{ \widehat{\Avar}(\hat \beta_1,\hat \beta_2)}{ se(\hat \beta_1)\, se(\hat \beta_2)}.
+    \end{align*}
+
+\item (20 puntos) Utilice los datos de \texttt{discrim} del trabajo de Graddy (JBES, 1997)
+    sobre discriminaci\'on por raza e ingreso en los precios de las cadenas de comida r\'apida en
+    New Jersey y Pennsylvania. Cada observaci\'on es un local de comida r\'apida, y las
+    caracter\'isticas de la zona se miden a nivel del c\'odigo postal. Las variables son:
+    \begin{itemize}
+        \item $psoda$: precio de una bebida mediana en el local (en d\'olares),
+        \item $prpblck$: proporci\'on de personas de raza negra en la zona,
+        \item $income$: ingreso familiar mediano en la zona (en d\'olares),
+        \item $prppov$: proporci\'on de personas pobres en la zona,
+        \item $hseval$: valor mediano de la vivienda en la zona (en d\'olares).
+    \end{itemize}
+    Considere el modelo
+    \begin{align*}
+    \log(psoda_i)=\beta_0+\beta_1\, prpblck_i+\beta_2 \log(income_i) +\beta_3\, prppov_i +u_i.
+    \end{align*}
+    \begin{enumerate}
+        \item (5 puntos) Estime el modelo. Interprete $\hat\beta_1$. ?`Es $prpblck$
+            estad\'isticamente significativa al 5\%? ?`Y al 1\%?
+        \item (5 puntos) Agregue $\log(hseval)$ al modelo. Interprete su coeficiente y
+            compare $\hat\beta_1$ con el de (a).
+        \item (5 puntos) En el modelo de (b), ?`son $\log(income)$ y $prppov$
+            estad\'isticamente significativas en forma individual? Contraste si son
+            conjuntamente significativas con el estad\'istico de Wald y reporte el p-valor.
+        \item (5 puntos) Calcule la correlaci\'on muestral entre $\log(income)$ y $prppov$, y
+            la correlaci\'on estimada entre $\hat\beta_2$ y $\hat\beta_3$, $\hat\rho$. ?`Qu\'e
+            relaci\'on hay entre sus signos? Utilice la f\'ormula del ejercicio 4 (que vale para
+            dos coeficientes cualesquiera de un modelo con m\'as regresores) para explicar el
+            resultado de (c): compare $W_N$ con el valor que tendr\'ia si $\hat\rho=0$.
+    \end{enumerate}
+
+\end{enumerate}
+\end{document}
