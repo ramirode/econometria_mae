@@ -35,6 +35,8 @@ Material del curso, a cargo de Ramiro de Elejalde.
 - Pruebas de años anteriores
   - [Prueba 1, 2024](https://github.com/ramirode/econometria_mae/blob/main/pruebas/econometria_I_examen_1_2024.pdf)
   - [Prueba 1, 2025](https://github.com/ramirode/econometria_mae/blob/main/pruebas/econometria_I_examen_1_2025.pdf)
+  - [Prueba 2, 2024](https://github.com/ramirode/econometria_mae/blob/main/pruebas/econometria_I_examen_2_2024.pdf)
+  - [Prueba 2, 2025](https://github.com/ramirode/econometria_mae/blob/main/pruebas/econometria_I_examen_2_2025.pdf)
 - [Tareas](https://github.com/ramirode/econometria_mae/tree/main/problem-sets)
   - [Tarea 1](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps1.pdf)
   - [Tarea 2](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps2.pdf)
