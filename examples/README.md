@@ -14,6 +14,7 @@ descargar sola y correr.
 | [`4.MCO_estimacion_formas-funcionales`](4.MCO_estimacion_formas-funcionales) | Clase 4 | Medias y coeficientes de los ejercicios de efectos marginales (niveles, logaritmos, dummies, interacciones) con datos de Wooldridge y Stock & Watson |
 | [`4.MCO_estimacion_veteranos-angrist`](4.MCO_estimacion_veteranos-angrist) | Clase 4 (complementaria) | Efecto del servicio militar sobre ingresos (Angrist 1998): regresión simple, múltiple, sesgo de variable omitida y su descomposición |
 | [`5.MCO_inferencia_contrastes`](5.MCO_inferencia_contrastes) | Clase 5 | Test t, intervalos de confianza, test de Wald de restricciones lineales y no lineales, y método delta, con errores robustos |
+| [`7.variables_instrumentales_fertilidad-pescado`](7.variables_instrumentales_fertilidad-pescado) | Clase 7 | Primera etapa, forma reducida, 2SLS "a mano" y con la fórmula correcta, estimador de Wald, relevancia, sobreidentificación y endogeneidad (Angrist y Evans 1998; Graddy 1995) |
 | [`extra_discriminacion-mercado-laboral`](extra_discriminacion-mercado-laboral) | Complementaria | Discriminación por nombre: el mismo modelo estimado sobre un experimento y sobre datos observacionales, para ver cuándo los controles importan |
 
 ## Estructura de cada carpeta

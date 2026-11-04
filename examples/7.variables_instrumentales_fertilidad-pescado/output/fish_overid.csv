@@ -1,0 +1,3 @@
+"Test","Estadístico","Gl.","p-valor"
+"Sargan: $LM_N=N\hat R^2$ (homoscedasticidad)",0.0279787373710728,1,0.86715882055619
+"Hansen: $J_N$ (robusto)",0.0279142377331328,1,0.867310607807991

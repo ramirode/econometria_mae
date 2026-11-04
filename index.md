@@ -28,6 +28,8 @@ Material del curso, a cargo de Ramiro de Elejalde.
     - [Código en R: Formas funcionales y efectos marginales (Wooldridge; Stock y Watson)](https://github.com/ramirode/econometria_mae/tree/main/examples/4.MCO_estimacion_formas-funcionales)
   - [Clase 5: Inferencia por MCO](https://github.com/ramirode/econometria_mae/blob/main/slides/5.MCO_inferencia/econometria_I_5.MCO_inferencia.pdf)
     - [Código en R: contrastes de hipótesis, intervalos de confianza y método delta (Stock y Watson; Wooldridge)](https://github.com/ramirode/econometria_mae/tree/main/examples/5.MCO_inferencia_contrastes)
+  - [Clase 7: Variables instrumentales y mínimos cuadrados en dos etapas (2SLS)](https://github.com/ramirode/econometria_mae/blob/main/slides/7.variables_instrumentales/econometria_I_7.variables_instrumentales.pdf)
+    - [Código en R: fertilidad y oferta laboral, y demanda de pescado (Angrist y Evans 1998; Graddy 1995)](https://github.com/ramirode/econometria_mae/tree/main/examples/7.variables_instrumentales_fertilidad-pescado)
   - [Complementaria: Discriminación en el mercado laboral](https://github.com/ramirode/econometria_mae/blob/main/slides/extra/Discriminacion/econometria_I_Discriminacion.pdf)
     - [Código en R: experimento vs. datos observacionales (Bertrand y Mullainathan 2004; CPS 2024)](https://github.com/ramirode/econometria_mae/tree/main/examples/extra_discriminacion-mercado-laboral)
   - [Complementaria: Servicio militar e ingresos (Angrist 1998)](https://github.com/ramirode/econometria_mae/blob/main/slides/extra/Veteranos/econometria_I_Veteranos.pdf)
