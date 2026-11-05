@@ -20,7 +20,7 @@
 #                             con una linea vertical en el valor verdadero beta1 = 1
 #   - estimaciones.csv        las 5 x 500 estimaciones de MCO e IV (los datos de los graficos)
 #   - resumen.csv             mediana y percentiles 5 y 95 de cada estimador en cada escenario
-#   - cobertura.tex/.csv      (y cobertura_2sls.tex, sin la columna de Anderson-Rubin) con x endogena y distintos grados de relevancia de z: F robusto mediano
+#   - cobertura.tex/.csv      (y cobertura_2sls.tex/.csv, sin la columna de Anderson-Rubin) con x endogena y distintos grados de relevancia de z: F robusto mediano
 #                             de la primera etapa, mediana de beta1 estimado por IV, y la proporcion
 #                             de simulaciones en que el IC 95% de 2SLS y el de Anderson-Rubin
 #                             contienen el verdadero beta1 (2,000 simulaciones por fila)
@@ -218,6 +218,7 @@ for (k in 1:nrow(casos)) {
     cobertura_2sls = mean(cubre_2sls), cobertura_ar = mean(cubre_ar)))
 }
 write.csv(cobertura, "output/cobertura.csv", row.names = FALSE)
+write.csv(cobertura[, names(cobertura) != "cobertura_ar"], "output/cobertura_2sls.csv", row.names = FALSE)
 
 # Tablas LaTeX para las diapositivas (booktabs), escritas a mano para no depender de otro paquete:
 # cobertura_2sls.tex sin la columna de Anderson-Rubin, y cobertura.tex con ella.

@@ -23,7 +23,7 @@ No usa datos reales: los datos se simulan adentro del script, no hay carpeta `in
 | `output/density_ols_iv<k>.png` | Densidad de $\hat\beta_1$ por MCO y por IV en el escenario $k$, con una línea en $\beta_1 = 1$. |
 | `output/estimaciones.csv` | Las 500 estimaciones de MCO y de IV de cada escenario (los datos de los gráficos). |
 | `output/resumen.csv` | Mediana y percentiles 5 y 95 de cada estimador en cada escenario. |
-| `output/cobertura.tex`, `.csv` (y `cobertura_2sls.tex`) | Con $x$ endógena y distintos grados de relevancia de $z$ (2.000 simulaciones por fila): $F$ robusto mediano de la primera etapa, mediana de $\hat\beta_{1,IV}$, y cobertura de los intervalos de confianza al 95% de 2SLS y de Anderson-Rubin. |
+| `output/cobertura.tex`, `.csv` (y `cobertura_2sls.tex`, `.csv`, sin la columna de Anderson-Rubin) | Con $x$ endógena y distintos grados de relevancia de $z$ (2.000 simulaciones por fila): $F$ robusto mediano de la primera etapa, mediana de $\hat\beta_{1,IV}$, y cobertura de los intervalos de confianza al 95% de 2SLS y de Anderson-Rubin. |
 
 ## Cómo correrlo
 
