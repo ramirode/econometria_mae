@@ -1,3 +1,5 @@
-"Test","Estadístico","Gl.","p-valor"
-"Sargan: $LM_N=N\hat R^2$ (homoscedasticidad)",0.0279787373710728,1,0.86715882055619
-"Hansen: $J_N$ (robusto)",0.0279142377331328,1,0.867310607807991
+"Instrumentos","Test","Estadístico","Gl.","p-valor"
+"Cuatro","Sargan: $LM_N=N\hat R^2$ (homoscedasticidad)",4.65215917406598,3,0.199113003825123
+"","Hansen: $J_N$ (GMM eficiente, robusto)",4.66744007350316,3,0.197832501040912
+"wave2 y wave3","Sargan: $LM_N=N\hat R^2$ (homoscedasticidad)",0.0279787373710728,1,0.86715882055619
+"","Hansen: $J_N$ (GMM eficiente, robusto)",0.026179183316593,1,0.871463490986815

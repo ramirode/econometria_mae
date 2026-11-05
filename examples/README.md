@@ -15,6 +15,7 @@ descargar sola y correr.
 | [`4.MCO_estimacion_veteranos-angrist`](4.MCO_estimacion_veteranos-angrist) | Clase 4 (complementaria) | Efecto del servicio militar sobre ingresos (Angrist 1998): regresión simple, múltiple, sesgo de variable omitida y su descomposición |
 | [`5.MCO_inferencia_contrastes`](5.MCO_inferencia_contrastes) | Clase 5 | Test t, intervalos de confianza, test de Wald de restricciones lineales y no lineales, y método delta, con errores robustos |
 | [`7.variables_instrumentales_fertilidad-pescado`](7.variables_instrumentales_fertilidad-pescado) | Clase 7 | Primera etapa, forma reducida, 2SLS "a mano" y con la fórmula correcta, estimador de Wald, relevancia, sobreidentificación y endogeneidad (Angrist y Evans 1998; Graddy 1995) |
+| [`7.variables_instrumentales_simulacion-instrumentos-debiles`](7.variables_instrumentales_simulacion-instrumentos-debiles) | Clase 7 | Simulación de Monte Carlo: distribución de MCO e IV con un instrumento válido, endógeno, irrelevante, y con muchos instrumentos irrelevantes; cobertura de los intervalos de 2SLS y de Anderson-Rubin |
 | [`extra_discriminacion-mercado-laboral`](extra_discriminacion-mercado-laboral) | Complementaria | Discriminación por nombre: el mismo modelo estimado sobre un experimento y sobre datos observacionales, para ver cuándo los controles importan |
 
 ## Estructura de cada carpeta

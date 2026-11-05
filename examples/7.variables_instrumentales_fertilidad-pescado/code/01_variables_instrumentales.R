@@ -10,6 +10,7 @@
 #   - ae_2sls_mano          2SLS "a mano": MCO de hourswm sobre la prediccion de la primera etapa
 #   - ae_2sls               2SLS: hourswm ~ morekids, instrumento samesex
 #   - ae_wald               medias de hourswm y morekids segun samesex (estimador de Wald)
+#   - ae_ar                 IC 95% de 2SLS y de Anderson-Rubin para el efecto de morekids
 #   Fertilidad y oferta laboral, modelo con controles y dos instrumentos (boys2, girls2):
 #   - aeg_mco               MCO con controles
 #   - aeg_primera           primera etapa con controles
@@ -21,12 +22,14 @@
 #   - fish_primera4         primera etapa con speed2, speed3, wave2, wave3
 #   - fish_relevancia       tests de relevancia de los instrumentos
 #   - fish_primera2         primera etapa con wave2 y wave3
-#   - fish_2sls             2SLS con wave2 y wave3
-#   - fish_overid_mano      regresion de los residuos de 2SLS sobre todas las exogenas
-#   - fish_overid           tests de sobreidentificacion (Sargan y Hansen)
+#   - fish_2sls             2SLS con los cuatro instrumentos (especificacion base)
+#   - fish_2sls_w23         2SLS con wave2 y wave3 (alternativa)
+#   - fish_overid_mano      regresion de los residuos de 2SLS (cuatro instrumentos) sobre todas las exogenas
+#   - fish_overid           tests de sobreidentificacion (Sargan y Hansen), con cuatro y con dos instrumentos
 #   - fish_2sls_wave2       2SLS solo con wave2 (exactamente identificado)
 #   - fish_2sls_wave3       2SLS solo con wave3 (exactamente identificado)
-#   - fish_cf               MCO controlando por los residuos de la primera etapa (funcion de control)
+#   - fish_cf               MCO controlando por los residuos de la primera etapa con cuatro instrumentos (funcion de control)
+#   - fish_ar               IC 95% de 2SLS y de Anderson-Rubin para el efecto de lavgprc, con cuatro y con dos instrumentos
 #
 # Tablas -> codigo LaTeX (.tex), para \input{} directo en el deck.
 #
@@ -159,6 +162,43 @@ tsls <- function(y, X, Z) {
   list(b = b, V = V, u = u)
 }
 
+# ic_ar() calcula el intervalo de confianza de Anderson-Rubin al 95% para el coeficiente
+# de la variable endogena x. Para cada valor b de la grilla:
+#   1. regresa y - b*x sobre W (las exogenas incluidas y los instrumentos), por MCO,
+#   2. hace el test F robusto (HC1) de que los coeficientes de los instrumentos son cero,
+#   3. b queda en el intervalo si el test no rechaza al 5%.
+# Para no correr una regresion por cada b, se usa que la regresion es lineal: el
+# coeficiente de y - b*x es (coef. de y) - b*(coef. de x), y sus residuos son
+# (residuos de y) - b*(residuos de x). Asi basta con regresar y y x una sola vez;
+# el resultado es exactamente el mismo que correr la regresion para cada b.
+ic_ar <- function(y, x, W, instrumentos, grilla) {
+  N <- nrow(W); K <- ncol(W); q <- length(instrumentos)
+  A  <- solve(crossprod(W))
+  gy <- A %*% crossprod(W, y); ey <- as.numeric(y - W %*% gy)   # regresion de y sobre W
+  gx <- A %*% crossprod(W, x); ex <- as.numeric(x - W %*% gx)   # regresion de x sobre W
+  j  <- match(instrumentos, colnames(W))
+  # partes de la matriz robusta: sum e_i^2 w_i w_i' con e_i = ey_i - b ex_i
+  Myy <- crossprod(W * ey); Mxy <- crossprod(W * ey, W * ex); Mxx <- crossprod(W * ex)
+  F_ar <- sapply(grilla, function(b) {
+    g <- (gy - b * gx)[j]
+    V <- N / (N - K) * A %*% (Myy - b * (Mxy + t(Mxy)) + b^2 * Mxx) %*% A # HC1
+    as.numeric(t(g) %*% solve(V[j, j, drop = FALSE]) %*% g) / q
+  })
+  acepta <- F_ar <= qf(0.95, q, N - K)
+  # el intervalo es [min, max] de los b aceptados, si son contiguos y no tocan los bordes de la grilla
+  stopifnot(any(acepta), !acepta[1], !acepta[length(acepta)], all(diff(which(acepta)) == 1))
+  c(inf = min(grilla[acepta]), sup = max(grilla[acepta]))
+}
+
+# tabla_ar() arma la tabla que compara el IC 95% de 2SLS (b +- 1.96 ee) con el de Anderson-Rubin.
+tabla_ar <- function(iv, x, ar) {
+  b <- iv$b[x]; e <- sqrt(iv$V[x, x])
+  data.frame(`IC 95\\%` = c("2SLS: $\\hat\\beta\\pm 1.96\\,\\widehat{ee}$", "Anderson--Rubin"),
+             Inferior = c(b - qnorm(0.975) * e, ar["inf"]),
+             Superior = c(b + qnorm(0.975) * e, ar["sup"]),
+             check.names = FALSE)
+}
+
 # --- 1. Fertilidad y oferta laboral: modelo simple ---
 ae <- readRDS("input/angrist_evans.rds") # readRDS() lee un archivo .rds (formato nativo de R)
 N_ae <- nrow(ae)
@@ -216,6 +256,12 @@ t_wald <- data.frame(samesex = c("0", "1", "Total"),
                      hourswm  = c(tapply(ae$hourswm, ae$samesex, mean), mean(ae$hourswm)),
                      morekids = c(tapply(ae$morekids, ae$samesex, mean), mean(ae$morekids)))
 a_latex(t_wald, "ae_wald", 4, "lrr")
+
+# Intervalo de confianza de Anderson-Rubin (grilla de b entre -15 y 5, cada 0.001).
+ar_ae <- ic_ar(ae$hourswm, ae$morekids, Z_ae, "samesex", seq(-15, 5, by = 0.001))
+F_ae <- test_f(ae_primera, "samesex")
+a_latex(tabla_ar(ae_iv, "morekids", ar_ae), "ae_ar", 3, "lrr",
+        nota = sprintf("$F$ robusto de la primera etapa: %.1f.", F_ae["F"]))
 
 # --- 2. Fertilidad y oferta laboral: controles y dos instrumentos ---
 controles <- "agem1 + agefstm + boy1st + blackm + hispm + othracem"
@@ -276,47 +322,82 @@ t_rel <- data.frame(
 a_latex(t_rel, "fish_relevancia", 2, "lrcr")
 a_latex(fish_p2$tabla, "fish_primera2", 3, "lrrrrrr", nota = nota_mco(fish_p2))
 
-X_f <- model.matrix(f_(paste("~ lavgprc +", dias)), fish)
-Z_f <- model.matrix(f_(paste("~", dias, "+ wave2 + wave3")), fish)
-fish_iv <- tsls(fish$ltotqty, X_f, Z_f)
+# 2SLS. Especificacion base: los cuatro instrumentos. Alternativa: solo wave2 y wave3,
+# porque speed2 y speed3 no son relevantes (test anterior).
+X_f  <- model.matrix(f_(paste("~ lavgprc +", dias)), fish)
+Z_f4 <- model.matrix(f_(paste("~", dias, "+ speed2 + speed3 + wave2 + wave3")), fish)
+Z_f2 <- model.matrix(f_(paste("~", dias, "+ wave2 + wave3")), fish)
+instr4 <- c("speed2", "speed3", "wave2", "wave3")
+instr2 <- c("wave2", "wave3")
+fish_iv4 <- tsls(fish$ltotqty, X_f, Z_f4)
+fish_iv2 <- tsls(fish$ltotqty, X_f, Z_f2)
 nota_iv_f <- function(instr) sprintf("$N=%d$. Instrumentos: %s. Errores estándar robustos.", N_f, instr)
-a_latex(tabla_coef(fish_iv$b, fish_iv$V, nombres_f), "fish_2sls", 3, "lrrrrrr",
+a_latex(tabla_coef(fish_iv4$b, fish_iv4$V, nombres_f), "fish_2sls", 3, "lrrrrrr",
+        nota = nota_iv_f("speed2, speed3, wave2 y wave3"))
+a_latex(tabla_coef(fish_iv2$b, fish_iv2$V, nombres_f), "fish_2sls_w23", 3, "lrrrrrr",
         nota = nota_iv_f("wave2 y wave3"))
 
-# Modelos exactamente identificados: un instrumento por vez.
+# Intervalos de confianza de Anderson-Rubin para lavgprc (grilla entre -10 y 5, cada 0.001),
+# con los cuatro instrumentos y con wave2 y wave3.
+grilla_f <- seq(-10, 5, by = 0.001)
+ar_f4 <- ic_ar(fish$ltotqty, fish$lavgprc, Z_f4, instr4, grilla_f)
+ar_f2 <- ic_ar(fish$ltotqty, fish$lavgprc, Z_f2, instr2, grilla_f)
+fila_ar <- function(iv, ar, F_1, etiqueta) {
+  t <- tabla_ar(iv, "lavgprc", ar)
+  data.frame(Instrumentos = c(sprintf("%s ($F=%.2f$)", etiqueta, F_1), ""), t, check.names = FALSE)
+}
+t_ar_f <- rbind(fila_ar(fish_iv4, ar_f4, F_4["F"], "Cuatro"),
+                fila_ar(fish_iv2, ar_f2, F_wave["F"], "wave2 y wave3"))
+a_latex(t_ar_f, "fish_ar", 3, "llrr",
+        nota = "$F$: test $F$ robusto de los instrumentos en la primera etapa.")
+
+# Modelos exactamente identificados: un instrumento por vez (wave2 o wave3).
 fish_w2 <- tsls(fish$ltotqty, X_f, model.matrix(f_(paste("~", dias, "+ wave2")), fish))
 fish_w3 <- tsls(fish$ltotqty, X_f, model.matrix(f_(paste("~", dias, "+ wave3")), fish))
 a_latex(tabla_coef(fish_w2$b, fish_w2$V, nombres_f), "fish_2sls_wave2", 3, "lrrrrrr", nota = nota_iv_f("wave2"))
 a_latex(tabla_coef(fish_w3$b, fish_w3$V, nombres_f), "fish_2sls_wave3", 3, "lrrrrrr", nota = nota_iv_f("wave3"))
 
-# Test de sobreidentificacion.
-# (a) Sargan, "a mano": regresion de los residuos de 2SLS sobre todas las exogenas, LM = N R^2.
-fish$uhat <- fish_iv$u
-fish_om <- mco(f_(paste("uhat ~ wave2 + wave3 +", dias)), fish, nombres_f)
-R2_om <- summary(fish_om$modelo)$r.squared
-LM <- N_f * R2_om
-a_latex(fish_om$tabla, "fish_overid_mano", 4, "lrrrrrr",
-        nota = sprintf("$N=%d$, $R^2=%.5f$. Errores estándar robustos (HC1).", N_f, R2_om))
-# (b) Hansen, robusto a heteroscedasticidad, con la formula de las diapositivas:
-#     J = N gbar' [(1/N) sum u_i^2 z_i z_i']^(-1) gbar, con gbar = (1/N) sum z_i u_i.
-gbar <- crossprod(Z_f, fish_iv$u) / N_f
-S    <- crossprod(Z_f * fish_iv$u) / N_f
-J    <- as.numeric(N_f * t(gbar) %*% solve(S) %*% gbar)
-gl_over <- ncol(Z_f) - ncol(X_f) # L - K
+# Tests de sobreidentificacion.
+# (a) Sargan: regresion de los residuos de 2SLS sobre todas las exogenas, LM = N R^2.
+# (b) J de Hansen, robusto a heteroscedasticidad:
+#     J = N gbar' S^(-1) gbar, con gbar = (1/N) sum z_i u_i y S = (1/N) sum u_i^2 z_i z_i'.
+#     S se estima con los residuos de 2SLS, pero gbar usa los residuos de GMM eficiente
+#     (ponderacion S^(-1)). Con los residuos de 2SLS en gbar, J no tiene distribucion
+#     chi-cuadrado(L - K) bajo heteroscedasticidad.
+sobreid <- function(iv, Z, instr) {
+  fish$uhat <- iv$u
+  m <- mco(f_(paste("uhat ~", paste(instr, collapse = " + "), "+", dias)), fish, nombres_f)
+  R2 <- summary(m$modelo)$r.squared
+  S  <- crossprod(Z * iv$u) / N_f
+  A  <- t(X_f) %*% Z %*% solve(S)
+  b_gmm <- solve(A %*% t(Z) %*% X_f, A %*% t(Z) %*% fish$ltotqty)
+  gbar  <- crossprod(Z, as.vector(fish$ltotqty - X_f %*% b_gmm)) / N_f
+  list(mano = m, R2 = R2, LM = N_f * R2, J = as.numeric(N_f * t(gbar) %*% solve(S) %*% gbar),
+       b_gmm = b_gmm[2], gl = ncol(Z) - ncol(X_f)) # gl = L - K
+}
+over4 <- sobreid(fish_iv4, Z_f4, instr4)
+over2 <- sobreid(fish_iv2, Z_f2, instr2)
+a_latex(over4$mano$tabla, "fish_overid_mano", 4, "lrrrrrr",
+        nota = sprintf("$N=%d$, $R^2=%.5f$. Errores estándar robustos (HC1).", N_f, over4$R2))
 t_over <- data.frame(
-  Test = c("Sargan: $LM_N=N\\hat R^2$ (homoscedasticidad)", "Hansen: $J_N$ (robusto)"),
-  Estadístico = c(LM, J),
-  `Gl.` = gl_over,
-  `p-valor` = pchisq(c(LM, J), gl_over, lower.tail = FALSE),
+  Instrumentos = c("Cuatro", "", "wave2 y wave3", ""),
+  Test = rep(c("Sargan: $LM_N=N\\hat R^2$ (homoscedasticidad)", "Hansen: $J_N$ (GMM eficiente, robusto)"), 2),
+  Estadístico = c(over4$LM, over4$J, over2$LM, over2$J),
+  `Gl.` = c(over4$gl, over4$gl, over2$gl, over2$gl),
+  `p-valor` = pchisq(c(over4$LM, over4$J, over2$LM, over2$J), c(over4$gl, over4$gl, over2$gl, over2$gl),
+                     lower.tail = FALSE),
   check.names = FALSE)
-a_latex(t_over, "fish_overid", 3, "lrcr")
+a_latex(t_over, "fish_overid", 3, "llrcr")
 
 # Test de endogeneidad con funcion de control: MCO controlando por los residuos de la
-# primera etapa; el test t (o F = t^2) sobre esos residuos.
-fish$vhat <- residuals(fish_p2$modelo) # residuals() devuelve los residuos de una regresion
+# primera etapa; el test t (o F = t^2) sobre esos residuos. Base: primera etapa con los
+# cuatro instrumentos; alternativa: con wave2 y wave3.
+fish$vhat <- residuals(fish_p4$modelo) # residuals() devuelve los residuos de una regresion
 fish_cf <- mco(f_(paste("ltotqty ~ lavgprc +", dias, "+ vhat")), fish, nombres_f)
 F_cf <- test_f(fish_cf, "vhat")
 a_latex(fish_cf$tabla, "fish_cf", 3, "lrrrrrr", nota = nota_mco(fish_cf))
+fish$vhat <- residuals(fish_p2$modelo)
+F_cf2 <- test_f(mco(f_(paste("ltotqty ~ lavgprc +", dias, "+ vhat")), fish, nombres_f), "vhat")
 
 # --- Puntos de control en la consola ---
 ee <- function(V, v) sqrt(V[v, v])
@@ -328,8 +409,14 @@ cat(sprintf("  2SLS: %.3f (%.3f) | a mano: %.3f (%.3f)\n", ae_iv$b["morekids"], 
 cat(sprintf("  Con controles: MCO %.3f | 2SLS %.3f (%.3f) | dos veces MCO e.e. %.3f | F primera etapa %.2f\n",
             coef(aeg_mco$modelo)["morekids"], aeg_iv$b["morekids"], ee(aeg_iv$V, "morekids"),
             ee(aeg_dos$V, "morekidshat3"), F_aeg["F"]))
-cat(sprintf("Graddy: N = %d | MCO %.3f | 2SLS %.3f (%.3f) | F(wave) %.2f\n", N_f,
-            coef(fish_mco$modelo)["lavgprc"], fish_iv$b["lavgprc"], ee(fish_iv$V, "lavgprc"), F_wave["F"]))
-cat(sprintf("  F primera etapa (4 instr.) %.2f | (speed) %.2f | test endogeneidad: F = %.3f, p = %.3f\n", F_4["F"], F_speed["F"], F_cf["F"], F_cf["p"]))
-cat(sprintf("  Sargan LM = %.3f | Hansen J = %.3f | funcion de control: F = %.2f\n", LM, J, F_cf["F"]))
+cat(sprintf("Graddy: N = %d | MCO %.3f | F primera etapa (4 instr.) %.2f | (speed) %.2f | (wave) %.2f\n", N_f,
+            coef(fish_mco$modelo)["lavgprc"], F_4["F"], F_speed["F"], F_wave["F"]))
+cat(sprintf("  2SLS 4 instr. %.3f (%.3f) | wave2 y wave3 %.3f (%.3f)\n", fish_iv4$b["lavgprc"],
+            ee(fish_iv4$V, "lavgprc"), fish_iv2$b["lavgprc"], ee(fish_iv2$V, "lavgprc")))
+cat(sprintf("  Sobreid. 4 instr.: Sargan %.3f, Hansen J %.3f (GMM %.3f) | wave2 y wave3: Sargan %.3f, Hansen J %.3f (GMM %.3f)\n",
+            over4$LM, over4$J, over4$b_gmm, over2$LM, over2$J, over2$b_gmm))
+cat(sprintf("  Endogeneidad (funcion de control): 4 instr. F = %.2f, p = %.3f | wave2 y wave3 F = %.2f, p = %.3f\n",
+            F_cf["F"], F_cf["p"], F_cf2["F"], F_cf2["p"]))
+cat(sprintf("Anderson-Rubin: Angrist-Evans [%.3f, %.3f] | Graddy 4 instr. [%.3f, %.3f] | wave2 y wave3 [%.3f, %.3f]\n",
+            ar_ae["inf"], ar_ae["sup"], ar_f4["inf"], ar_f4["sup"], ar_f2["inf"], ar_f2["sup"]))
 cat("Listo. Tablas en output/.\n")

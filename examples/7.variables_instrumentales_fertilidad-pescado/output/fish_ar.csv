@@ -1,0 +1,5 @@
+"Instrumentos","IC 95%","Inferior","Superior"
+"Cuatro ($F=10.33$)","2SLS: $\hat\beta\pm 1.96\,\widehat{ee}$",-1.4542185659137,-0.187285438677677
+"","Anderson--Rubin",-1.679,-0.167999999999999
+"wave2 y wave3 ($F=20.77$)","2SLS: $\hat\beta\pm 1.96\,\widehat{ee}$",-1.44972793149542,-0.1819083389666
+"","Anderson--Rubin",-1.859,-0.0449999999999999
