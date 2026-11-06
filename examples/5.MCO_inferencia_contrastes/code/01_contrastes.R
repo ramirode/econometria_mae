@@ -167,7 +167,7 @@ writeLines(gsub("\\bNA\\b", "", tex_v), "output/vcov_nlsy.tex") # celdas vacias 
 Rt_exper_tenure <- matrix(c(0, 0, 0, 1, -1, 0, 0, 0), nrow = 1)
 Rt_educ_iq      <- rbind(c(0, 1, 0, 0, 0, 0, 0, 0),
                          c(0, 0, 1, 0, 0, 0, 0, 0))
-Rt_global       <- cbind(0, diag(7)) # R' = [0  I_K]: todas las pendientes, sin la constante
+Rt_global       <- cbind(0, diag(7)) # R' = [0  I_(K-1)], con K = 8: todas las pendientes, sin la constante
 
 test_et <- wald(m_w, Rt_exper_tenure, 0, "$\\beta_{exper}=\\beta_{tenure}$")
 test_ei <- wald(m_w, Rt_educ_iq, c(0, 0), "$\\beta_{educ}=\\beta_{IQ}=0$")

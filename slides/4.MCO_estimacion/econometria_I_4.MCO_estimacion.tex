@@ -286,7 +286,7 @@
 	% --------------------------------------------------- Slide --
 	\begin{frame}
 		\frametitle{Estimaci\'on MCO: Tama\~no de clase y rendimiento acad\'emico}
-		Regresi\'on de \emph{testscr} sobre \emph{str}, con errores est\'andar robustos entre par\'entesis.
+		Variable dependiente: \emph{testscr}. Regresor: \emph{str}. Errores est\'andar robustos entre par\'entesis.
 		\small
 		\begin{center}\input{tables/reg_model1}\end{center}
 	\end{frame}
@@ -294,7 +294,7 @@
 	% --------------------------------------------------- Slide --
 	\begin{frame}[shrink=5]
 			\frametitle{Estimaci\'on MCO: Tama\~no de clase y rendimiento acad\'emico}
-			Regresi\'on de \emph{testscr} sobre \emph{str} y \emph{el\_pct}, con errores est\'andar robustos entre par\'entesis.
+			Variable dependiente: \emph{testscr}. Regresores: \emph{str} y \emph{el\_pct}. Errores est\'andar robustos entre par\'entesis.
 		\small
 		\begin{center}\renewcommand{\arraystretch}{0.8}\input{tables/reg_model2}\end{center}
 		\begin{itemize}
@@ -302,6 +302,25 @@
 			\item En la siguiente unidad contraste de hip\'otesis (t, F) e intervalos de confianza. 
 		\end{itemize}
 	\end{frame}
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]
+	\frametitle{En R: estimaci\'on por MCO}
+\footnotesize
+\begin{verbatim}
+install.packages("haven")  # una sola vez
+library(haven)             # read_dta() lee archivos .dta de Stata
+
+d <- read_dta("caschool.dta")
+
+# lm(y ~ x1 + x2, data = ...) estima por MCO
+m1 <- lm(testscr ~ str, data = d)
+m2 <- lm(testscr ~ str + el_pct, data = d)
+coef(m1)  # coeficientes estimados
+coef(m2)
+\end{verbatim}
+\small
+Los errores est\'andar robustos de la tabla se calculan con \texttt{vcovHC()}, que vemos en esta unidad.
+\end{frame}
 	
 %	% --------------------------------------------------- Slide --
 %		
@@ -395,10 +414,10 @@
 	\begin{frame}
 		\frametitle{Modelo de regresi\'on lineal}
  			\begin{align*}
-				y_i&=\beta_0 + \beta_1 x_{1i} + ...+\beta_K  x_{Ki}+u_i \\
+				y_i&=\beta_0 + \beta_1 x_{1i} + ...+\beta_{K-1}  x_{K-1,i}+u_i \\
 				&= x_i'\beta+u_i,
 			\end{align*}
-			donde $y_i$ es una variable aleatoria (escalar), $x_i$ es un vector aleatorio de $K \times 1$ (para no tener que trabajar con $K+1$) y $u_i$ es una variable aleatoria (escalar).
+			donde $y_i$ es una variable aleatoria (escalar), $x_i=(1,x_{1i},\dots,x_{K-1,i})'$ es un vector aleatorio de $K \times 1$ que incluye la constante ($K$ es el n\'umero de par\'ametros) y $u_i$ es una variable aleatoria (escalar).
 	\end{frame}
 	\begin{frame}
 		\frametitle{Modelo de regresi\'on lineal}
@@ -579,7 +598,7 @@
 		\begin{itemize}
 			\item <1->[] Dado el modelo de regresi\'on m\'ultiple
 			\begin{align*}
-				y_i = \beta_0+\beta_1x_{1i}+...+\beta_k x_{ki} +...+\beta_K x_{Ki}+ u_i.
+				y_i = \beta_0+\beta_1x_{1i}+...+\beta_k x_{ki} +...+\beta_{K-1} x_{K-1,i}+ u_i.
 			\end{align*}
 			Podemos estimar $\beta_1$ a partir de:
 			\begin{align*}
@@ -598,7 +617,7 @@
 			\item <1-> Demostraci\'on: 
 			\begin{align*}
 				\frac{\widehat{\Cov}(\tilde x_{1i},y_i)}{\widehat{\Var}(\tilde x_{1i})}
-					& = \frac{\widehat{\Cov}(\tilde x_{1i},\hat\beta_0+\hat\beta_1x_{1i}+...+\hat\beta_K x_{Ki}+ \hat u_i)}{\widehat{\Var}(\tilde x_{1i})}.
+					& = \frac{\widehat{\Cov}(\tilde x_{1i},\hat\beta_0+\hat\beta_1x_{1i}+...+\hat\beta_{K-1} x_{K-1,i}+ \hat u_i)}{\widehat{\Var}(\tilde x_{1i})}.
 			\end{align*}
 			\begin{enumerate}
 				\item[(1)] $\widehat{\Cov}(\tilde x_{1i},x_{ji})=0$ para todo $j\neq 1$, por construcci\'on. En particular $\widehat{\Cov}(\tilde x_{1i},\hat x_{1i})=0$, porque $\hat x_{1i}$ es una combinaci\'on lineal de esos $x_{ji}$,
@@ -832,13 +851,13 @@
 		\begin{itemize}
 			\item En el modelo de regresi\'on m\'ultiple
 			\begin{align*}
-				y_i = \beta_0+\beta_1x_{1i}+...+\beta_k x_{ki} +...+\beta_K x_{Ki}+ v_i.
+				y_i = \beta_0+\beta_1x_{1i}+...+\beta_k x_{ki} +...+\beta_{K-1} x_{K-1,i}+ v_i.
 			\end{align*}
 			Usando la regresi\'on particionada,
 			\begin{align*}
 				\Avar(\hat \beta_1)&=\frac{\E(v_i^2)}{N}\frac{1}{\Var(x_{1i}^{\perp})},
 			\end{align*}
-			donde $x_{1i}^{\perp}=x_{1i}-\LP(x_{1i}|x_{2i},...,x_{Ki})$ es el residuo de la proyecci\'on lineal \emph{poblacional} de $x_{1i}$ sobre los dem\'as regresores (incluida la constante). Es la versi\'on poblacional de $\tilde x_{1i}$, el residuo de la regresi\'on \emph{muestral}.
+			donde $x_{1i}^{\perp}=x_{1i}-\LP(x_{1i}|1,x_{2i},...,x_{K-1,i})$ es el residuo de la proyecci\'on lineal \emph{poblacional} de $x_{1i}$ sobre los dem\'as regresores (incluida la constante). Es la versi\'on poblacional de $\tilde x_{1i}$, el residuo de la regresi\'on \emph{muestral}.
 		\end{itemize}
 	\end{frame}
 		
@@ -859,7 +878,7 @@
 			\end{align*}
 			\item En el modelo de regresi\'on m\'ultiple
 			\begin{align*}
-				y_i = \beta_0+\beta_1x_{1i}+...+\beta_k x_{ki} +...+\beta_K x_{Ki}+ v_i.
+				y_i = \beta_0+\beta_1x_{1i}+...+\beta_k x_{ki} +...+\beta_{K-1} x_{K-1,i}+ v_i.
 			\end{align*}
 			\begin{align*}
 				\Avar(\hat \beta_1)&=\frac{\E(v_i^2)}{N}\frac{1}{\Var(x_{1i}^{\perp})}.
@@ -1215,6 +1234,26 @@
 			\item []Interpretaci\'on
 		\end{itemize}
 	\end{frame}
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]
+	\frametitle{En R: errores est\'andar y $R^2$}
+\footnotesize
+\begin{verbatim}
+install.packages(c("sandwich", "lmtest"))  # una sola vez
+library(sandwich); library(lmtest)
+
+vcov(m1)                    # bajo homoscedasticidad
+vcovHC(m1, type = "HC1")    # robusta a heteroscedasticidad
+sqrt(diag(vcovHC(m1, type = "HC1")))  # errores estandar robustos
+
+# tabla de coeficientes con errores estandar robustos
+coeftest(m1, vcov = vcovHC(m1, type = "HC1"))
+
+summary(m1)$r.squared       # R^2
+\end{verbatim}
+\small
+Para el coeficiente de \emph{str}: error est\'andar $0.480$ bajo homoscedasticidad y $0.519$ robusto; $R^2=0.051$. Ojo: \texttt{summary(m1)} reporta los errores est\'andar bajo homoscedasticidad.
+\end{frame}
 	% --------------------------------------------------- Slide --
 	\section{Sesgo de variable omitida}
 	% --------------------------------------------------- Slide --
@@ -1227,7 +1266,7 @@
 	% --------------------------------------------------- Slide --
 	\begin{frame}
 		\frametitle{Estimaci\'on MCO: Tama\~no de clase y rendimiento acad\'emico}
-		Regresi\'on de \emph{testscr} sobre \emph{str}, con errores est\'andar robustos entre par\'entesis.
+		Variable dependiente: \emph{testscr}. Regresor: \emph{str}. Errores est\'andar robustos entre par\'entesis.
 		\small
 		\begin{center}\input{tables/reg_model1}\end{center}
 	\end{frame}	
@@ -1281,6 +1320,25 @@
 			\item Signo del sesgo de variable omitida.
 		\end{itemize}
 	\end{frame}
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]
+	\frametitle{En R: tabla con varios modelos}
+\footnotesize
+\begin{verbatim}
+install.packages("modelsummary")  # una sola vez
+library(modelsummary)
+
+m3 <- lm(testscr ~ str + el_pct + meal_pct, data = d)
+m4 <- lm(testscr ~ str + el_pct + calw_pct, data = d)
+m5 <- lm(testscr ~ str + el_pct + meal_pct + calw_pct, data = d)
+
+modelsummary(list(m1, m2, m3, m4, m5), vcov = "HC1",
+             stars = c("*" = 0.05, "**" = 0.01, "***" = 0.001),
+             gof_map = c("nobs", "r.squared"))
+\end{verbatim}
+\small
+\texttt{vcov = "HC1"} calcula los errores est\'andar robustos de todos los modelos.
+\end{frame}
 	% --------------------------------------------------- Slide --
 	\begin{frame}
 		\frametitle{Sesgo de variable omitida: Tama\~no de clase y rendimiento acad\'emico}
@@ -1346,7 +1404,7 @@
     \begin{frame}
         \frametitle{Efectos marginales}
         \begin{itemize}
-            \item <1-> Dado una forma funcional para $\E(y|x_1,...,x_K)$, el \term{efecto marginal} de cambios en $x_j$ manteniendo constantes $x_k$ para todo $k \neq j$ se puede aproximar por
+            \item <1-> Dado una forma funcional para $\E(y|x_1,...,x_{K-1})$, el \term{efecto marginal} de cambios en $x_j$ manteniendo constantes $x_k$ para todo $k \neq j$ se puede aproximar por
             \begin{align*}
            		 \Delta \E(y|x) \approx \frac{\partial \E(y|x)}{\partial x_j} \Delta x_j,
             \end{align*}
@@ -1433,6 +1491,20 @@
             \item Efecto marginal de $exper$ y $educ$
         \end{itemize}
     \end{frame}
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]
+	\frametitle{En R: t\'erminos cuadr\'aticos e interacciones}
+\footnotesize
+\begin{verbatim}
+w <- read_dta("wage2.dta")
+
+# I(exper^2): exper al cuadrado. educ:IQ: el producto educ x IQ
+m <- lm(wage ~ educ + exper + I(exper^2) + IQ + educ:IQ, data = w)
+coef(m)
+\end{verbatim}
+\small
+Sin \texttt{I()}, R interpreta \texttt{\textasciicircum} como sintaxis de f\'ormulas y no como una potencia. \texttt{educ*IQ} equivale a \texttt{educ + IQ + educ:IQ}.
+\end{frame}
     
 %    \begin{frame}
 %        \frametitle{Efecto de la educaci\'on en salarios}
@@ -1604,6 +1676,24 @@
             \end{enumerate}
         \end{itemize}
     \end{frame}
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]
+	\frametitle{En R: modelos con logaritmos}
+\footnotesize
+\begin{verbatim}
+h <- read_dta("hprice2.dta")
+
+# nivel-log: log() del regresor dentro de la formula
+lm(price ~ log(nox) + rooms + stratio, data = h)
+
+# log-nivel y log-log: log() de la variable dependiente
+m_h <- lm(log(price) ~ log(nox) + rooms + stratio, data = h)
+coef(m_h)                           # rooms: 0.257
+(exp(coef(m_h)["rooms"]) - 1) * 100  # cambio exacto: 29.3%
+\end{verbatim}
+\small
+\texttt{log()} es el logaritmo natural.
+\end{frame}
     % --------------------------------------------------- Slide --
     \subsection*{Modelos con variables binarias o dummies}
     \begin{frame}
@@ -1751,6 +1841,19 @@
             \item Efecto marginal de $educ$.
         \end{itemize}
     \end{frame}
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]
+	\frametitle{En R: variables binarias e interacciones}
+\footnotesize
+\begin{verbatim}
+e <- readRDS("cps_education_2004.rds")
+e$female <- as.numeric(e$gender == "female")  # 1 si es mujer, 0 si no
+
+# education * female = education + female + education:female
+m_e <- lm(log(earnings) ~ education * female, data = e)
+coef(m_e)
+\end{verbatim}
+\end{frame}
 %    
 %    \begin{frame}
 %        \frametitle{Efecto de la educaci\'on en salarios}

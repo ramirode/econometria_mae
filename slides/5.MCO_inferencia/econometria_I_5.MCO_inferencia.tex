@@ -155,7 +155,7 @@
 \frametitle{Estimaci\'on MCO: Tama\~no de clase y rendimiento acad\'emico}
 Modelo (clase 4): $testscr_i = \beta_0 + \beta_1 \, str_i+\beta_2 \, el\_pct_i+u_i$.
 
-Resultados en R: \texttt{lm(testscr \textasciitilde{} str + el\_pct)}, errores est\'andar robustos.
+Variable dependiente: $testscr$. Regresores: $str$ y $el\_pct$. Errores est\'andar robustos.
 \medskip
 \begin{center}
 \footnotesize
@@ -403,7 +403,7 @@ Resultados en R: \texttt{lm(testscr \textasciitilde{} str + el\_pct)}, errores e
 % --------------------------------------------------- Slide --
 \begin{frame}
 \frametitle{Tama\~no de clase y rendimiento acad\'emico}
-Resultados en R: \texttt{lm(testscr \textasciitilde{} str + el\_pct)}, errores est\'andar robustos.
+Variable dependiente: $testscr$. Regresores: $str$ y $el\_pct$. Errores est\'andar robustos.
 \medskip
 \begin{center}
 \footnotesize
@@ -413,6 +413,22 @@ Resultados en R: \texttt{lm(testscr \textasciitilde{} str + el\_pct)}, errores e
     \item $t_N=-1.101/0.433=-2.54$ y $|t_N|>1.96$: rechazamos $H_0$ al 5\%.
     \item Significatividad estad\'istica vs. relevancia econ\'omica: reducir $str$ en 2 alumnos por profesor aumenta $testscr$ en 2.2 puntos, 0.12 desviaciones est\'andar de $testscr$ (19.1).
 \end{itemize}
+\end{frame}
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]
+	\frametitle{En R: test t y p-valor}
+\footnotesize
+\begin{verbatim}
+library(haven); library(sandwich); library(lmtest)
+
+ca <- read_dta("caschool.dta")
+m <- lm(testscr ~ str + el_pct, data = ca)
+
+# coeficientes, errores estandar robustos, t y p-valor
+coeftest(m, vcov = vcovHC(m, type = "HC1"))
+\end{verbatim}
+\small
+Para \emph{str}: $t=-2.544$ y p-valor $=0.011$. \texttt{coeftest} usa la t de Student con $N-K$ grados de libertad.
 \end{frame}
 
 % --------------------------------------------------- Slide --
@@ -449,7 +465,7 @@ Resultados en R: \texttt{lm(testscr \textasciitilde{} str + el\_pct)}, errores e
 % --------------------------------------------------- Slide --
 \begin{frame}
 \frametitle{Tama\~no de clase y rendimiento acad\'emico}
-Resultados en R: \texttt{lm(testscr \textasciitilde{} str + el\_pct)}, errores est\'andar robustos.
+Variable dependiente: $testscr$. Regresores: $str$ y $el\_pct$. Errores est\'andar robustos.
 \medskip
 \begin{center}
 \footnotesize
@@ -782,7 +798,7 @@ $\lim_{N\to \infty}\Pr(\beta_j \in \hat C_N)=1-\alpha$
 % --------------------------------------------------- Slide --
 \begin{frame}
 \frametitle{Estimaci\'on MCO: Tama\~no de clase y rendimiento acad\'emico}
-Resultados en R: \texttt{lm(testscr \textasciitilde{} str + el\_pct)}, errores est\'andar robustos.
+Variable dependiente: $testscr$. Regresores: $str$ y $el\_pct$. Errores est\'andar robustos.
 \medskip
 \begin{center}
 \footnotesize
@@ -793,6 +809,16 @@ Resultados en R: \texttt{lm(testscr \textasciitilde{} str + el\_pct)}, errores e
     \item La tabla reporta $[-1.952,\; -0.250]$: \alert{R y Stata utilizan los valores cr\'iticos de la t de Student} con $N-K$ grados de libertad.
     \item El intervalo contiene los valores $\beta_{j,0}$ que el test t de dos colas no rechaza al nivel $\alpha$. Como $0\notin[-1.950,\; -0.253]$, rechazamos $H_0:\beta_1=0$ al 5\%, igual que con el test t.
 \end{itemize}
+\end{frame}
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]
+	\frametitle{En R: intervalo de confianza}
+\footnotesize
+\begin{verbatim}
+coefci(m, vcov. = vcovHC(m, type = "HC1"), level = 0.95)
+\end{verbatim}
+\small
+Para \emph{str}: $[-1.952,\; -0.250]$, con valores cr\'iticos de la t de Student.
 \end{frame}
 % --------------------------------------------------- Slide --
 \section{Una restricci\'on lineal sobre m\'ultiples par\'ametros}
@@ -908,7 +934,7 @@ Resultados en R: \texttt{lm(testscr \textasciitilde{} str + el\_pct)}, errores e
 % --------------------------------------------------- Slide --
 \begin{frame}
 \frametitle{Estimaci\'on MCO: Retornos de la educaci\'on (NLSY)}
-Resultados en R: variable dependiente $\log(wage)$, errores est\'andar robustos.
+Resultados en R. Variable dependiente: $\log(wage)$. Errores est\'andar robustos.
 \medskip
 \begin{center}
 \footnotesize
@@ -941,7 +967,7 @@ Resultados en R: variable dependiente $\log(wage)$, errores est\'andar robustos.
 % --------------------------------------------------- Slide --
 \begin{frame}
 \frametitle{Estimaci\'on MCO: Retornos de la educaci\'on (NLSY)}
-Matriz de varianzas y covarianzas estimada, $\widehat{\Avar}(\hat\beta)=\hat V/N$ (robusta), para los coeficientes de \emph{educ}, \emph{IQ}, \emph{exper} y \emph{tenure}. En R: \texttt{vcovHC(m, type = "HC1")}.
+Matriz de varianzas y covarianzas estimada, $\widehat{\Avar}(\hat\beta)=\hat V/N$ (robusta), para los coeficientes de \emph{educ}, \emph{IQ}, \emph{exper} y \emph{tenure} (variable dependiente: $\log(wage)$). En R: \texttt{vcovHC(m, type = "HC1")}.
 \medskip
 \begin{center}
 \footnotesize
@@ -979,7 +1005,7 @@ Valores multiplicados por $10^6$. La matriz es sim\'etrica.
 % --------------------------------------------------- Slide --
 \begin{frame}
 \frametitle{Estimaci\'on MCO: Retornos de la educaci\'on (NLSY)}
-Test de Wald calculado en R con la f\'ormula de las diapositivas.
+Test de Wald calculado en R con la f\'ormula de las diapositivas (variable dependiente: $\log(wage)$).
 \medskip
 \begin{center}
 \footnotesize
@@ -988,6 +1014,26 @@ Test de Wald calculado en R con la f\'ormula de las diapositivas.
 \begin{itemize}
     \item Con una restricci\'on, $W_N=t_N^2=0.505^2=0.255$, y el p-valor es el mismo: $0.614$.
 \end{itemize}
+\end{frame}
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]
+	\frametitle{En R: una restricci\'on lineal sobre varios par\'ametros}
+\footnotesize
+\begin{verbatim}
+install.packages("car")  # una sola vez
+library(car)
+
+w <- read_dta("wage2.dta")
+m_w <- lm(log(wage) ~ educ + IQ + exper + tenure + married + south + urban,
+          data = w)
+
+# H0: beta_exper = beta_tenure
+linearHypothesis(m_w, "exper = tenure", vcov. = vcovHC(m_w, type = "HC1"))
+linearHypothesis(m_w, "exper = tenure", vcov. = vcovHC(m_w, type = "HC1"),
+                 test = "Chisq")
+\end{verbatim}
+\small
+Por defecto reporta $F_N=W_N/q$ con la F de Fisher-Snedecor; con \texttt{test = "Chisq"}, $W_N$ con la $\chi^2_q$. Aqu\'i ambos dan $0.255$ y p-valor $0.614$.
 \end{frame}
 
 %% --------------------------------------------------- Slide --
@@ -1217,7 +1263,7 @@ Test de Wald calculado en R con la f\'ormula de las diapositivas.
 % --------------------------------------------------- Slide --
 \begin{frame}
 \frametitle{Estimaci\'on MCO: Retornos de la educaci\'on (NLSY)}
-Resultados en R: variable dependiente $\log(wage)$, errores est\'andar robustos.
+Resultados en R. Variable dependiente: $\log(wage)$. Errores est\'andar robustos.
 \medskip
 \begin{center}
 \footnotesize
@@ -1262,7 +1308,7 @@ Resultados en R: variable dependiente $\log(wage)$, errores est\'andar robustos.
 % --------------------------------------------------- Slide --
 \begin{frame}
 \frametitle{Estimaci\'on MCO: Retornos de la educaci\'on (NLSY)}
-Test de Wald calculado en R con la f\'ormula de las diapositivas.
+Test de Wald calculado en R con la f\'ormula de las diapositivas (variable dependiente: $\log(wage)$).
 \medskip
 \begin{center}
 \footnotesize
@@ -1271,6 +1317,18 @@ Test de Wald calculado en R con la f\'ormula de las diapositivas.
 \begin{itemize}
     \item $W_N=168.2>5.99$, el valor cr\'itico de una $\chi^2_2$ al 5\%: rechazamos $H_0$.
 \end{itemize}
+\end{frame}
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]
+	\frametitle{En R: m\'ultiples restricciones lineales}
+\footnotesize
+\begin{verbatim}
+# H0: beta_educ = beta_IQ = 0
+linearHypothesis(m_w, c("educ = 0", "IQ = 0"),
+                 vcov. = vcovHC(m_w, type = "HC1"), test = "Chisq")
+\end{verbatim}
+\small
+$W_N=168.23$. Cada restricci\'on es un elemento del vector de texto.
 \end{frame}
 % --------------------------------------------------- Slide --
 \begin{frame}
@@ -1318,23 +1376,23 @@ Test de Wald calculado en R con la f\'ormula de las diapositivas.
 \begin{frame}
 \frametitle{Test de significatividad global}
         \begin{itemize}
-            \item Con $y_i=\beta_0+\beta_1x_{1i}+\dots+\beta_Kx_{Ki}+u_i$.
+            \item Con $y_i=\beta_0+\beta_1x_{1i}+\dots+\beta_{K-1}x_{K-1,i}+u_i$ ($K$ par\'ametros, incluida la constante).
             \item \term{Hip\'otesis nula:} El modelo no tiene poder explicativo: todos los coeficientes, salvo la constante, son cero.
             \begin{align*}
-                H_0: \beta_1 = \dots=\beta_K = 0,
+                H_0: \beta_1 = \dots=\beta_{K-1} = 0,
             \end{align*}
             \item [] \term{Hip\'otesis alternativa}
             \begin{align*}
                 H_1: \text{ Al menos un coeficiente es distinto de cero}.
             \end{align*}
-            \item [] Test de Wald con $q=K$ restricciones, $R'=[0 \;\; I_K]$ (se excluye la constante) y $\theta_0$ un vector de ceros de $K\times 1$.
+            \item [] Test de Wald con $q=K-1$ restricciones, $R'=[0 \;\; I_{K-1}]$ (se excluye la constante) y $\theta_0$ un vector de ceros de $(K-1)\times 1$.
             \item Con muestras grandes casi siempre se rechaza, as\'i que es poco informativo.
         \end{itemize}
 \end{frame}
 % --------------------------------------------------- Slide --
 \begin{frame}
 \frametitle{Estimaci\'on MCO: Retornos de la educaci\'on (NLSY)}
-Test de significatividad global en el modelo con siete regresores ($q=K=7$).
+Test de significatividad global en el modelo con siete regresores ($K=8$ par\'ametros, $q=K-1=7$). Variable dependiente: $\log(wage)$.
 \medskip
 \begin{center}
 \footnotesize
@@ -1344,6 +1402,17 @@ Test de significatividad global en el modelo con siete regresores ($q=K=7$).
     \item Es el $F(7,927)=52.82$ que Stata reporta en el encabezado de \texttt{reg, robust}.
     \item Ojo: \texttt{summary()} en R reporta el $F_N$ basado en $SSR$ (44.70), que no es v\'alido bajo heteroscedasticidad.
 \end{itemize}
+\end{frame}
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]
+	\frametitle{En R: test de significatividad global}
+\footnotesize
+\begin{verbatim}
+# compara el modelo con el modelo que solo tiene la constante
+waldtest(m_w, vcov = vcovHC(m_w, type = "HC1"))
+\end{verbatim}
+\small
+$F_N=52.82$, con la matriz robusta. \texttt{waldtest} es del paquete \texttt{lmtest}.
 \end{frame}
 % --------------------------------------------------- Slide --
 \section{Restricciones no lineales}
@@ -1460,7 +1529,7 @@ Test de significatividad global en el modelo con siete regresores ($q=K=7$).
 % --------------------------------------------------- Slide --
 \begin{frame}
 \frametitle{Estimaci\'on MCO: Efectos de la contaminaci\'on en los precios de las viviendas}
-Resultados en R: \texttt{lm(log(price) \textasciitilde{} log(nox) + rooms + stratio)}.
+Resultados en R: \texttt{lm(log(price) \textasciitilde{} log(nox) + rooms + stratio)}. Variable dependiente: $\log(price)$. Errores est\'andar robustos.
 \medskip
 \begin{center}
 \footnotesize
@@ -1492,7 +1561,7 @@ Resultados en R: \texttt{lm(log(price) \textasciitilde{} log(nox) + rooms + stra
 % --------------------------------------------------- Slide --
 \begin{frame}
 \frametitle{Estimaci\'on MCO: Efectos de la contaminaci\'on en los precios de las viviendas}
-M\'etodo delta calculado en R con las f\'ormulas de las diapositivas.
+M\'etodo delta calculado en R con las f\'ormulas de las diapositivas (variable dependiente: $\log(price)$).
 \medskip
 \begin{center}
 \footnotesize
@@ -1501,6 +1570,20 @@ M\'etodo delta calculado en R con las f\'ormulas de las diapositivas.
 \begin{itemize}
     \item $W_N=z^2=8.916^2=79.5$: rechazamos $H_0$.
 \end{itemize}
+\end{frame}
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]
+	\frametitle{En R: m\'etodo delta}
+\footnotesize
+\begin{verbatim}
+h <- read_dta("hprice2.dta")
+m_h <- lm(log(price) ~ log(nox) + rooms + stratio, data = h)
+
+# estimador, error estandar e IC de una funcion de los coeficientes
+deltaMethod(m_h, "(exp(rooms) - 1) * 100", vcov. = vcovHC(m_h, type = "HC1"))
+\end{verbatim}
+\small
+Estimador $29.269$, error est\'andar $3.283$ e IC $[22.835,\; 35.703]$, como en la tabla. \texttt{deltaMethod} es del paquete \texttt{car}.
 \end{frame}
 % --------------------------------------------------- Slide --
 \begin{frame}
