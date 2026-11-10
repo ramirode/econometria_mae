@@ -1,0 +1,191 @@
+% !TeX spellcheck = es_ES
+\documentclass[letterpaper,11pt]{article}
+\input{../preambulo.tex}
+
+\title{Análisis Econométrico \\ Ayudantía 9}
+\author{Magíster en Economía, Universidad Alberto Hurtado}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent Esta ayudantía comienza con un control breve (\textbf{Control 4}, 15 minutos, sin
+apuntes) sobre el contenido de la Tarea 4. Luego revisamos en conjunto los ejercicios 4, 5, 2 y
+3 de la Tarea 4, en ese orden; se reproducen aquí para tenerlos a mano durante la revisión. El
+ejercicio 1 se revisa si queda tiempo. Los datos son \texttt{veteran.rds}, \texttt{hprice2.rds},
+\texttt{christensen\_greene.rds} y \texttt{discrim.rds}, en la carpeta
+\texttt{problem-sets/datos/} del repositorio del curso.
+
+\vspace{1em}
+
+\noindent\textbf{Ejercicio 4 de la Tarea 4 (20 puntos). Test de Wald en función de los estadísticos t.}
+
+Suponga el modelo $y_i=\beta_0+\beta_1\,x_{1i}+\beta_2\,x_{2i}+u_i$. Bajo
+los supuestos usuales, el estimador MCO satisface $\sqrt{N}(\hat \beta-\beta)\dto\N(0,V)$ y
+$\hat V \pto V$. Usted quiere contrastar $H_0: \beta_1 = 0$ y $\beta_2 = 0$ contra la
+alternativa $H_1: \beta_1 \neq 0$ o $\beta_2 \neq 0$, con el estad\'istico de Wald
+\begin{align*}
+W_N=N\,(R'\hat \beta)'(R'\hat V R)^{-1}(R'\hat \beta), \qquad \text{donde} \qquad
+R'=\left(\begin{array}{ccc} 0 & 1 & 0\\ 0 & 0 & 1\end{array}\right).
+\end{align*}
+Demuestre que el estad\'istico de Wald se puede escribir como la siguiente funci\'on de los
+estad\'isticos t individuales ($t_{1,N}$, $t_{2,N}$) y del coeficiente de correlaci\'on
+estimado entre $\hat \beta_1$ y $\hat \beta_2$ ($\hat\rho$):
+\begin{align*}
+W_N = \frac{1}{1-\hat\rho^2}\left(t_{1,N}^2 + t_{2,N}^2-2 \hat \rho\, t_{1,N}\,t_{2,N}\right).
+\end{align*}
+Pista: Con $\widehat{\Avar}(\hat\beta)=\hat V/N$ y
+$se(\hat\beta_k)=[\widehat{\Avar}(\hat\beta_k)]^{1/2}$,
+\begin{align*}
+t_{1,N} = \frac{\hat \beta_1}{se(\hat \beta_1)}, \quad
+t_{2,N} = \frac{\hat \beta_2}{se(\hat \beta_2)} \quad \text{y} \quad
+\hat \rho =\frac{ \widehat{\Avar}(\hat \beta_1,\hat \beta_2)}{ se(\hat \beta_1)\, se(\hat \beta_2)}.
+\end{align*}
+
+\vspace{1em}
+
+\noindent\textbf{Ejercicio 5 de la Tarea 4 (20 puntos). Discriminación de precios.}
+
+Utilice los datos de \texttt{discrim} del trabajo de Graddy (JBES, 1997)
+sobre discriminaci\'on por raza e ingreso en los precios de las cadenas de comida r\'apida en
+New Jersey y Pennsylvania. Cada observaci\'on es un local de comida r\'apida, y las
+caracter\'isticas de la zona se miden a nivel del c\'odigo postal. Las variables son:
+\begin{itemize}
+    \item $psoda$: precio de una bebida mediana en el local (en d\'olares),
+    \item $prpblck$: proporci\'on de personas de raza negra en la zona,
+    \item $income$: ingreso familiar mediano en la zona (en d\'olares),
+    \item $prppov$: proporci\'on de personas pobres en la zona,
+    \item $hseval$: valor mediano de la vivienda en la zona (en d\'olares).
+\end{itemize}
+Considere el modelo
+\begin{align*}
+\log(psoda_i)=\beta_0+\beta_1\, prpblck_i+\beta_2 \log(income_i) +\beta_3\, prppov_i +u_i.
+\end{align*}
+\begin{enumerate}
+    \item Estime el modelo. Interprete $\hat\beta_1$. ?`Es $prpblck$
+        estad\'isticamente significativa al 5\%? ?`Y al 1\%?
+    \item Agregue $\log(hseval)$ al modelo. Interprete su coeficiente y
+        compare $\hat\beta_1$ con el de (a).
+    \item En el modelo de (b), ?`son $\log(income)$ y $prppov$
+        estad\'isticamente significativas en forma individual? Contraste si son
+        conjuntamente significativas con el estad\'istico de Wald y reporte el p-valor.
+    \item Calcule la correlaci\'on muestral entre $\log(income)$ y $prppov$, y
+        la correlaci\'on estimada entre $\hat\beta_2$ y $\hat\beta_3$, $\hat\rho$. ?`Qu\'e
+        relaci\'on hay entre sus signos? Utilice la f\'ormula del ejercicio 4 (que vale para
+        dos coeficientes cualesquiera de un modelo con m\'as regresores) para explicar el
+        resultado de (c): compare $W_N$ con el valor que tendr\'ia si $\hat\rho=0$.
+\end{enumerate}
+
+\vspace{1em}
+
+\noindent\textbf{Ejercicio 2 de la Tarea 4 (20 puntos). Contaminación y precio de las viviendas.}
+
+Utilice los datos de \texttt{hprice2} del trabajo de Harrison y Rubinfeld
+(JEEM, 1978) sobre el efecto de la contaminaci\'on en el precio de las viviendas: 506
+comunidades del \'area metropolitana de Boston en 1970. Las variables son \texttt{price}
+(precio mediano de las viviendas, en d\'olares), \texttt{nox} (concentraci\'on de \'oxido de
+nitr\'ogeno en el aire, en partes por 100 millones), \texttt{rooms} (n\'umero promedio de
+habitaciones), \texttt{dist} (distancia ponderada a cinco centros de empleo) y
+\texttt{stratio} (ratio estudiantes por profesor). Considere el modelo
+\begin{align*}
+\log(price_i)=\beta_0+\beta_1 \log(nox_i)+\beta_2\, rooms_i +\beta_3 \log(dist_i) +\beta_4\, stratio_i +u_i.
+\end{align*}
+\begin{enumerate}
+    \item Contraste la hip\'otesis de que la elasticidad del precio de las
+        viviendas con respecto a la contaminaci\'on es igual a $-1$.
+    \item Agregue $rooms^2$ al modelo y contraste la significatividad de
+        $rooms^2$. Interprete el resultado del contraste.
+    \item En el modelo con $rooms^2$, escriba el efecto marginal de $rooms$
+        sobre $\log(price)$, $\partial\log(price)/\allowbreak\partial rooms$, en funci\'on de $rooms$. ?`Para qu\'e
+        n\'umero de habitaciones el efecto marginal pasa de negativo a positivo? ?`Cu\'antas
+        observaciones de la muestra tienen menos habitaciones que ese valor? ?`Es
+        preocupante que el efecto marginal estimado sea negativo en ese rango?
+    \item Construya un intervalo de confianza al 95\% para el efecto marginal
+        de (c), evaluado en la media muestral de $rooms$. Compare con
+        el intervalo de confianza para $\beta_2$ en el modelo sin $rooms^2$. ?`Qu\'e
+        concluye?
+\end{enumerate}
+
+\vspace{1em}
+
+\noindent\textbf{Ejercicio 3 de la Tarea 4 (20 puntos). Función de costos.}
+
+Los datos de \texttt{christensen\_greene} contienen costos, precios de
+insumos y producci\'on de empresas generadoras de electricidad de EE.UU. en 1955 y 1970. Los
+datos de 1955 son de Nerlove (1963), en la versi\'on que usan Christensen y Greene (JPE,
+1976). Las variables que utilizar\'a son:
+\begin{itemize}
+    \item $year$: a\~no,
+    \item $tc$: costo total,
+    \item $q$: producci\'on,
+    \item $pl$, $pk$ y $pf$: precios de la mano de obra, del capital y del combustible.
+\end{itemize}
+Suponga una funci\'on de producci\'on Cobb-Douglas
+\begin{align*}
+q_i = \exp(A+\eta_i)\, l_i^{\alpha_l} k_i^{\alpha_k} f_i^{\alpha_f},
+\end{align*}
+donde $\exp(A+\eta_i)$ es la productividad de la empresa, que se separa en la productividad
+promedio de la industria ($A$) y la productividad espec\'ifica de la empresa ($\eta_i$),
+$l_i$ es mano de obra, $k_i$ es capital f\'isico y $f_i$ es combustible.
+
+Si las empresas son tomadoras de precios en el mercado de los insumos y minimizan costos,
+se puede deducir la siguiente funci\'on de costos:
+\begin{align*}
+\log(tc_i) = \log(C_0) &+ \frac{\alpha_l}{\alpha_l+\alpha_k+\alpha_f} \, \log( pl_i) + \frac{\alpha_k}{\alpha_l+\alpha_k+\alpha_f} \, \log(pk_i) \\
+&+ \frac{\alpha_f}{\alpha_l+\alpha_k+\alpha_f} \, \log(pf_i) + \frac{1}{\alpha_l+\alpha_k+\alpha_f} \, \log(q_i) - \frac{1}{\alpha_l+\alpha_k+\alpha_f} \, \eta_i,
+\end{align*}
+donde $C_0$ es una constante que depende de $\alpha_l$, $\alpha_k$, $\alpha_f$ y $A$.
+
+\emph{Realice los siguientes ejercicios con los datos del a\~no 1955.}
+\begin{enumerate}
+    \item Estime la funci\'on de costos
+    \begin{align*}
+    \log(tc_i)=\beta_0+\beta_1 \log(pl_i)+\beta_2 \log(pk_i)+\beta_3 \log(pf_i)+\beta_4 \log(q_i)+u_i.
+    \end{align*}
+    Escriba $\beta_1$, $\beta_2$, $\beta_3$ y $\beta_4$ en funci\'on de $\alpha_l$,
+    $\alpha_k$ y $\alpha_f$.
+    \item Muestre que la funci\'on de costos implica
+        $\beta_1+\beta_2+\beta_3=1$ (homogeneidad de grado uno en precios: si todos los
+        precios de los insumos se multiplican por $\lambda>0$, el costo total se
+        multiplica por $\lambda$). Contraste esta restricci\'on: es una forma de contrastar
+        con datos el modelo de minimizaci\'on de costos.
+    \item Utilice el coeficiente de $\log(q_i)$ para construir un intervalo de
+        confianza al 95\% para los rendimientos a escala, $\alpha_l+\alpha_k+\alpha_f$.
+        Contraste la hip\'otesis de rendimientos constantes a escala contra la alternativa
+        bilateral.
+\end{enumerate}
+
+\vspace{1em}
+
+\section*{Si queda tiempo}
+
+\noindent\textbf{Ejercicio 1 de la Tarea 4 (20 puntos). Veteranos e ingresos.}
+
+Utilice los datos de \texttt{veteran} del trabajo de Angrist (Econometrica,
+1998) sobre el efecto de haber servido en las fuerzas armadas de EE.UU. en los ingresos.
+Por razones de confidencialidad los datos est\'an agregados: cada fila es una celda de
+solicitantes con las mismas caracter\'isticas y \texttt{earnvar} es el ingreso anual promedio
+de la celda en 1988--1991 (en d\'olares). Trate cada celda como una observaci\'on, sin
+ponderadores: los promedios por grupo son promedios entre celdas. La
+variable \texttt{dvet} es igual a 1 si sirvi\'o en las fuerzas armadas (veterano) y
+\texttt{dnwhite} es igual a 1 si la persona no es de raza blanca.
+\begin{enumerate}
+    \item Proponga y estime un modelo de regresi\'on que permita diferencias de
+        ingresos ($earnvar$) entre veteranos de raza blanca, veteranos de raza no blanca, no
+        veteranos de raza blanca y no veteranos de raza no blanca. No utilice controles
+        adicionales.
+    \item Para \emph{personas de raza blanca}, ?`cu\'al es la diferencia entre
+        el ingreso medio de veteranos y de no veteranos? Para \emph{personas que no son de
+        raza blanca}, ?`cu\'al es esa diferencia? Escriba ambas diferencias en funci\'on de
+        los coeficientes del modelo.
+    \item Contraste si, para \emph{personas de raza blanca}, existen diferencias
+        de ingresos entre veteranos y no veteranos. Realice un contraste similar para
+        \emph{personas que no son de raza blanca}.
+    \item Contraste si la diferencia de ingresos entre veteranos y no veteranos
+        es la misma para blancos y no blancos. ?`Qu\'e ventaja tiene estimar un solo modelo
+        con dummies en lugar de dos modelos separados (uno para blancos y otro para no
+        blancos)?
+\end{enumerate}
+
+
+\end{document}
