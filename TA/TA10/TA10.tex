@@ -1,0 +1,125 @@
+% !TeX spellcheck = es_ES
+\documentclass[letterpaper,11pt]{article}
+\input{../preambulo.tex}
+
+\title{Análisis Econométrico \\ Ayudantía 10}
+\author{Magíster en Economía, Universidad Alberto Hurtado}
+\date{}
+
+% Funciones de R sugeridas: entre corchetes, alineadas a la derecha; si no caben en la
+% linea pasan enteras a la siguiente.
+\newcommand{\fn}[1]{{\unskip\nobreak\hfill\penalty50\hskip1em\null\nobreak\hfill
+    \mbox{[#1]}\parfillskip=0pt\finalhyphendemerits=0\par}}
+
+\begin{document}
+\maketitle
+
+\noindent Temas: cómo estimar por variables instrumentales en R. Primera etapa, forma
+reducida, mínimos cuadrados indirectos y estimador de Wald; 2SLS ``a mano'' y por qué sus
+errores estándar están mal; \texttt{ivreg} con errores estándar robustos; variables
+instrumentales con controles y con muchas dummies; y un modelo con varios instrumentos, con
+el test de relevancia conjunta y los tests de Sargan y de Wu--Hausman.
+
+\medskip
+\noindent Toda la ayudantía es una demostración en R: el ayudante corre el código en
+pantalla, así que no hace falta traer computador. Las partes 1(e)--(f) y el ejercicio 2
+adelantan el modelo con controles y con varios instrumentos, que se ve en clase el lunes 16
+de noviembre: acá el foco es cómo se estima en R.
+
+\section*{Si quiere replicarlo en su computador}
+
+\noindent El script completo, \texttt{TA10.R}, y los datos están en el repositorio del curso,
+en \href{https://github.com/ramirode/econometria_mae/tree/main/TA/TA10}{\texttt{TA/TA10}}. Los
+pasos son los mismos de la Ayudantía 5: cree una carpeta \texttt{TA10} con las subcarpetas
+\texttt{code} (para \texttt{TA10.R}) e \texttt{input} (para \texttt{divorcio.rds} y
+\texttt{bancos.rds}), y cambie la línea \texttt{dir\_proyecto <- "..."} por la ruta a su
+carpeta \texttt{TA10}. En Posit Cloud la carpeta ya existe:
+\texttt{/cloud/project/TA/TA10}. Paquetes: \texttt{sandwich}, \texttt{lmtest}, \texttt{car},
+\texttt{ivreg} y \texttt{fixest}.
+
+\section*{Ejercicios}
+
+\begin{enumerate}[itemsep=0.8em]
+
+%% ---------------------------------------------------------------- 1
+\item \emph{Divorcio y situación económica de la mujer.} Bedard y Deschênes
+    (\textit{Journal of Human Resources}, 2005) estudian el efecto del divorcio sobre la
+    situación económica de la mujer. Con los datos \texttt{divorcio.rds} (Censo de EE.UU. de
+    1980: 576{,}017 mujeres de 21 a 40 años, alguna vez casadas y con al menos un hijo),
+    considere
+    \begin{align*}
+    ingreso_i=\beta_0+\beta_1\, divorcio_i+u_i,
+    \end{align*}
+    donde $ingreso$ es el ingreso del hogar por persona (en dólares) y $divorcio$ es una
+    dummy igual a 1 si el primer matrimonio de la mujer terminó. Los autores proponen como
+    instrumento $nina$, una dummy igual a 1 si el primer hijo es mujer: en EE.UU., los
+    matrimonios cuyo primer hijo es mujer se divorcian algo más.
+    \begin{enumerate}
+        \item Calcule la media y la desviación estándar de $ingreso$, $divorcio$ y $nina$.
+              \fn{\texttt{readRDS}, \texttt{mean}, \texttt{sd}}
+        \item Estime el modelo por MCO con errores estándar robustos. ¿Cree que
+              $\hat\beta_{1}^{MCO}$ mide el efecto causal del divorcio? ¿En qué dirección
+              esperaría el sesgo?
+              \fn{\texttt{lm}, \texttt{vcovHC}, \texttt{coeftest}}
+        \item Estime la primera etapa ($divorcio$ sobre $nina$) y la forma reducida
+              ($ingreso$ sobre $nina$). Interprete los coeficientes de $nina$. Calcule el
+              estimador de mínimos cuadrados indirectos como el cociente de ambos
+              coeficientes, y el estimador de Wald con diferencias de medias.
+              \fn{\texttt{lm}, \texttt{coef}, \texttt{tapply}}
+        \item Estime por 2SLS ``a mano'': guarde el valor predicho de la primera etapa y
+              regrese $ingreso$ sobre él por MCO. Luego estime con \texttt{ivreg}, con
+              errores estándar robustos. Compare los coeficientes y los errores estándar.
+              ¿Cuál error estándar es el correcto? ¿Es el efecto estadísticamente
+              significativo? Compare con MCO.
+              \fn{\texttt{fitted}, \texttt{lm}, \texttt{ivreg}, \texttt{vcovHC}}
+        \item Agregue como controles la edad, la edad al primer matrimonio, la edad al
+              nacer el primer hijo y los años de educación (cada una con su cuadrado), y la
+              dummy $metro$. Estime por MCO y por variables instrumentales con
+              \texttt{feols} del paquete \texttt{fixest} (con 576 mil observaciones y
+              tantos regresores, \texttt{lm} e \texttt{ivreg} usan mucha memoria).
+              Contraste la relevancia del instrumento en la primera etapa con controles.
+              ¿Cambian mucho los resultados?
+              \fn{\texttt{feols}, \texttt{coeftable}, \texttt{fitstat}}
+        \item Agregue dummies de estado de residencia y de lugar de nacimiento (unas 100
+              dummies) y estime de nuevo con \texttt{feols}, que trata las dummies como
+              efectos fijos. Compare con (e).
+              \fn{\texttt{feols}, \texttt{coeftable}, \texttt{fitstat}}
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 2
+\item \emph{Bancos y desarrollo.} Pascali (\textit{Review of Economics and Statistics},
+    2016) estudia si el desarrollo financiero de las ciudades italianas afecta su ingreso
+    per cápita. Con los datos \texttt{bancos.rds} (municipios del centro y norte de Italia,
+    2002 y 2003), considere
+    \begin{align*}
+    pib_{it}=\beta_0+\beta_1\, credito_{it}+x_{it}'\gamma+u_{it},
+    \end{align*}
+    donde $pib$ es el valor agregado per cápita (miles de euros), $credito$ es el crédito
+    privado como porcentaje del PIB y $x$ incluye características geográficas del municipio
+    (altitud, clase sísmica, acceso al mar y a un río) y dummies de provincia y de año. El
+    instrumento propuesto es $jew$, una dummy igual a 1 si en el municipio hubo una
+    comunidad judía en el siglo XV: en el Renacimiento, para competir con los prestamistas
+    judíos se fundaron instituciones de crédito locales (los \textit{Monti di Pietà}), muchas
+    de las cuales se convirtieron después en bancos.
+    \begin{enumerate}
+        \item Estime el modelo por MCO con errores estándar robustos. ¿Cree que mide un
+              efecto causal?
+              \fn{\texttt{lm}, \texttt{factor}, \texttt{coeftest}}
+        \item Estime la primera etapa con $jew$ como instrumento y contraste su relevancia.
+              ¿Qué condiciones debe cumplir $jew$ para ser un instrumento válido? ¿Cuál se
+              puede contrastar?
+              \fn{\texttt{lm}, \texttt{linearHypothesis}}
+        \item Estime el modelo por variables instrumentales con $jew$. Compare con MCO.
+              \fn{\texttt{ivreg}, \texttt{vcovHC}}
+        \item Use ahora tres instrumentos: dummies de comunidad judía pequeña ($jew\_peq$),
+              mediana ($jew\_med$) y grande ($jew\_gde$). Estime la primera etapa y
+              contraste la relevancia conjunta de los tres instrumentos. Estime por 2SLS y
+              reporte los tests que entrega \texttt{summary(\dots, diagnostics = TRUE)}:
+              instrumentos débiles, Wu--Hausman y Sargan. ¿Qué hipótesis contrasta cada uno
+              y qué concluye?
+              \fn{\texttt{linearHypothesis}, \texttt{ivreg}, \texttt{summary}}
+    \end{enumerate}
+
+\end{enumerate}
+
+\end{document}
