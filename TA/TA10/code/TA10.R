@@ -82,7 +82,7 @@ m_d <- tapply(dv$divorcio, dv$nina, mean)
 (m_y["1"] - m_y["0"]) / (m_d["1"] - m_d["0"])
 
 # Con 576 mil observaciones cada modelo de lm ocupa unos 140 MB. rm() borra los que ya
-# no se usan, para no pasar el limite de memoria (1 GB en Posit Cloud gratuito).
+# no se usan, para ahorrar memoria.
 rm(mco, fr)
 
 # (d) 2SLS "a mano": MCO de ingreso sobre el valor predicho de la primera etapa.
