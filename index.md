@@ -31,6 +31,7 @@ Material del curso, a cargo de Ramiro de Elejalde.
   - [Clase 7: Variables instrumentales y mínimos cuadrados en dos etapas (2SLS)](https://github.com/ramirode/econometria_mae/blob/main/slides/7.variables_instrumentales/econometria_I_7.variables_instrumentales.pdf)
     - [Código en R: fertilidad y oferta laboral, y demanda de pescado (Angrist y Evans 1998; Graddy 1995)](https://github.com/ramirode/econometria_mae/tree/main/examples/7.variables_instrumentales_fertilidad-pescado)
     - [Código en R: simulación de instrumentos débiles](https://github.com/ramirode/econometria_mae/tree/main/examples/7.variables_instrumentales_simulacion-instrumentos-debiles)
+    - [Código en R: relevancia con dos variables endógenas, F condicional y Cragg–Donald (simulación)](https://github.com/ramirode/econometria_mae/tree/main/examples/7.variables_instrumentales_relevancia-varias-endogenas)
   - [Complementaria: Discriminación en el mercado laboral](https://github.com/ramirode/econometria_mae/blob/main/slides/extra/Discriminacion/econometria_I_Discriminacion.pdf)
     - [Código en R: experimento vs. datos observacionales (Bertrand y Mullainathan 2004; CPS 2024)](https://github.com/ramirode/econometria_mae/tree/main/examples/extra_discriminacion-mercado-laboral)
   - [Complementaria: Servicio militar e ingresos (Angrist 1998)](https://github.com/ramirode/econometria_mae/blob/main/slides/extra/Veteranos/econometria_I_Veteranos.pdf)
