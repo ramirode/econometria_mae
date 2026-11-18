@@ -45,6 +45,7 @@ Material del curso, a cargo de Ramiro de Elejalde.
   - [Tarea 2](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps2.pdf)
   - [Tarea 3](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps3.pdf) (datos: [wage2.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/wage2.rds), [hprice2.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/hprice2.rds))
   - [Tarea 4](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps4.pdf) (datos: [veteran.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/veteran.rds), [hprice2.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/hprice2.rds), [christensen_greene.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/christensen_greene.rds), [discrim.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/discrim.rds))
+  - [Tarea 5](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps5.pdf) (datos: [card.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/card.rds), [jec.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/jec.rds))
 - [Trabajo grupal: entregas y criterios de evaluación](https://github.com/ramirode/econometria_mae/blob/main/trabajo/trabajo_grupal_2026.pdf)
 - [Material de ayudantía](https://github.com/ramirode/econometria_mae/tree/main/TA)
   - [Ayudantía 1](https://github.com/ramirode/econometria_mae/blob/main/TA/TA1/TA1.pdf)
@@ -57,6 +58,7 @@ Material del curso, a cargo de Ramiro de Elejalde.
   - [Ayudantía 8](https://github.com/ramirode/econometria_mae/blob/main/TA/TA8/TA8.pdf) ([código y datos](https://github.com/ramirode/econometria_mae/tree/main/TA/TA8))
   - [Ayudantía 9](https://github.com/ramirode/econometria_mae/blob/main/TA/TA9/TA9.pdf)
   - [Ayudantía 10](https://github.com/ramirode/econometria_mae/blob/main/TA/TA10/TA10.pdf) ([código y datos](https://github.com/ramirode/econometria_mae/tree/main/TA/TA10))
+  - [Ayudantía 11](https://github.com/ramirode/econometria_mae/blob/main/TA/TA11/TA11.pdf) ([código y datos](https://github.com/ramirode/econometria_mae/tree/main/TA/TA11))
 
 ---
 

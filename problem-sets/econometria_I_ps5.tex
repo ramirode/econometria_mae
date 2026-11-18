@@ -1,0 +1,138 @@
+% !TeX spellcheck = es_ES
+\documentclass[letterpaper,11pt]{article}
+\input{../TA/preambulo.tex}
+
+\begin{document}
+
+	\title {Análisis Econométrico  \\ Tarea 5}
+	\author{Magíster en Economía, Universidad Alberto Hurtado}
+	\date{Fecha de entrega: 26 de noviembre de 2026 (al principio de la ayudantía)}
+
+\maketitle
+
+Total: 100 puntos
+
+Los ejercicios 2 y 4 requieren estimar modelos con datos. Utilice R (u otro software
+estadístico) y adjunte su código. Reporte errores estándar robustos a
+heteroscedasticidad y utilice un nivel de significancia del 5\% salvo que se indique otra
+cosa. Los datos están en el repositorio del curso, en formato R:
+\href{https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/card.rds}{\texttt{card.rds}} y
+\href{https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/jec.rds}{\texttt{jec.rds}}.
+Se leen con \texttt{readRDS}.
+
+\begin{enumerate}
+
+\item (20 puntos) Considere el modelo con una variable explicativa endógena $y_2$
+    \begin{align*}
+    y_{1}=z_{1}'\delta_1+\alpha\, y_{2}+u,
+    \end{align*}
+    con $\E(zu)=0$, donde $z=(z_1',z_2')'$, $z_1$ incluye la constante y las demás variables
+    explicativas exógenas, y $z_2$ son los instrumentos. Considere el siguiente procedimiento
+    para estimar el modelo:
+    \begin{enumerate}
+        \item Regresar $y_2$ en una constante y $z_2$ (\emph{no} en $z_1$) y obtener los valores
+            predichos $\hat y_2=\hat\pi_0+\hat\pi'z_2$.
+        \item Regresar $y_1$ en $z_1$ y $\hat y_2$ para obtener $\hat\delta_1$ y $\hat\alpha$.
+    \end{enumerate}
+    Demuestre que, en general, $\hat\delta_1$ y $\hat\alpha$ son inconsistentes. ¿Cuándo serán
+    consistentes?
+
+    \emph{Pista:} sea $y_2^0=\pi_0+\pi'z_2$ la regresión poblacional de $y_2$ en una constante
+    y $z_2$, y sea $a_2$ el error de proyección, de modo que $y_2=y_2^0+a_2$ con $\E(a_2)=0$ y
+    $\E(a_2z_2)=0$. Para simplificar, suponga que $\pi_0$ y $\pi$ son conocidos, es decir,
+    asuma que $\hat y_2$ es $y_2^0$. Escriba
+    \begin{align*}
+    y_1=z_1'\delta_1+\alpha\, y_2^0+u+\alpha\, a_2,
+    \end{align*}
+    y verifique si el error compuesto está correlacionado con las variables explicativas.
+
+\item (30 puntos) Utilice los datos de \texttt{card} del trabajo de Card (1993) sobre los
+    retornos de la educación: 3,010 hombres de la encuesta \textit{National Longitudinal
+    Survey of Young Men}, con datos de 1976. Las variables son $lwage$ (log del salario por
+    hora), $educ$ (años de educación), $exper$ (años de experiencia), $black$, $south$ y $smsa$
+    (dummies para raza negra, vivir en el sur y vivir en un área metropolitana en 1976),
+    $smsa66$ (dummy para vivir en un área metropolitana en 1966), $reg661,\dots,reg669$
+    (dummies de región de residencia en 1966), $nearc4$ y $nearc2$ (dummies iguales a 1 si en
+    1966 vivía cerca de una universidad de cuatro y de dos años, respectivamente) e $iq$
+    (puntaje de un test de IQ, disponible para una parte de la muestra). Considere el modelo
+    \begin{align*}
+    \log(wage_i)=\beta_0&+\beta_1\, educ_i+\beta_2\, exper_i+\beta_3\, exper_i^2+\beta_4\, black_i
+    +\beta_5\, south_i\\&+\beta_6\, smsa_i+\beta_7\, smsa66_i+\boldsymbol\beta_{reg}'\, reg_i+u_i,
+    \end{align*}
+    donde $reg=(reg661,\dots,reg668)'$.
+    \begin{enumerate}
+        \item (6 puntos) Estime el modelo por MCO. Construya un intervalo de confianza al 95\%
+            para el retorno de la educación $\beta_1$.
+        \item (6 puntos) Card propone como instrumento de $educ$ la variable $nearc4$. Estime la
+            primera etapa, incluyendo los controles del modelo. Contraste el supuesto de
+            relevancia.
+        \item (6 puntos) Estime el modelo por variables instrumentales con $nearc4$ como
+            instrumento. Compare el intervalo de confianza al 95\% para $\beta_1$ con el de (a).
+            ¿Qué explica la diferencia en el ancho de los intervalos?
+        \item (6 puntos) Estime el modelo por 2SLS con $nearc4$ y $nearc2$ como instrumentos.
+            Contraste la relevancia conjunta de los dos instrumentos y realice el contraste de
+            sobreidentificación de Sargan. ¿Qué concluye? Compare con el resultado de (c).
+        \item (6 puntos) Regrese $iq$ en $nearc4$. ¿Está $iq$ correlacionado con $nearc4$?
+            Regrese ahora $iq$ en $nearc4$, $smsa66$, $reg661$, $reg662$ y $reg669$. ¿Están $iq$
+            y $nearc4$ parcialmente correlacionados? ¿Qué concluye sobre la importancia de
+            controlar por la ubicación geográfica en 1966 para la validez de $nearc4$ como
+            instrumento?
+    \end{enumerate}
+
+\item (20 puntos) La demanda de un bien está dada por $q_i^d=\alpha_0+\alpha_1 p_i+u_i$, donde
+    $q_i^d$ denota la cantidad demandada, $p_i$ el precio y $u_i$ otros factores distintos del
+    precio que afectan la cantidad demandada. La oferta del bien está dada por
+    $q_i^s=\beta_0+\beta_1 p_i+v_i$, donde $q_i^s$ denota la cantidad ofrecida y $v_i$ otros
+    factores distintos del precio que afectan la cantidad ofrecida. Suponga que $\E(u_i)=0$,
+    $\E(v_i)=0$, $\Cov(u_i,v_i)=0$ y $\alpha_1\neq\beta_1$. Las cantidades observadas son de
+    equilibrio, por lo tanto $q_i=q_i^s=q_i^d$.
+    \begin{enumerate}
+        \item (5 puntos) Resuelva el sistema de ecuaciones para mostrar cómo $q_i$ y $p_i$
+            dependen de $u_i$ y $v_i$.
+        \item (5 puntos) Calcule $\Cov(p_i,u_i)$ y $\Cov(p_i,v_i)$.
+        \item (5 puntos) Tenemos una muestra aleatoria de $q_i$ y $p_i$ y regresamos $q_i$ en
+            $p_i$ (con constante). ¿A qué converge en probabilidad el estimador de la pendiente,
+            $\hat\alpha_1$, cuando se lo interpreta como estimador de la pendiente de la
+            demanda? ¿Cuál es el signo del sesgo asintótico?\\
+            \emph{Pista:} utilice $\Cov(p_i,u_i)$ y la ecuación de demanda.
+        \item (5 puntos) Interprete ahora la misma pendiente como estimador de la pendiente de
+            la oferta, $\hat\beta_1$. ¿A qué converge en probabilidad? ¿Cuál es el signo del
+            sesgo asintótico?\\
+            \emph{Pista:} utilice $\Cov(p_i,v_i)$ y la ecuación de oferta.
+    \end{enumerate}
+    En (c) y (d) suponga que la demanda tiene pendiente negativa y la oferta pendiente positiva.
+
+\item (30 puntos) Utilice los datos de \texttt{jec} del trabajo de Porter (1983, \textit{Bell
+    Journal of Economics}) para estimar la función de demanda de transporte ferroviario de
+    granos. A partir de 1880 un cartel conocido como \textit{Joint Executive Committee} (JEC)
+    controló el transporte ferroviario de granos desde el Medio Oeste hacia las ciudades del
+    este de EE.UU. El cartel era anterior a la ley antimonopolio de 1890 y por lo tanto operaba
+    legalmente. Cada tanto, los miembros del cartel se desviaban del precio acordado, lo que
+    provocaba un colapso temporal del acuerdo colusivo. En este ejercicio utilizamos las
+    variaciones en la oferta asociadas al funcionamiento del cartel para estimar la elasticidad
+    de la demanda de transporte ferroviario de granos. Los datos son semanales (328 semanas).
+    Suponga que la demanda es
+    \begin{align*}
+    \log(Q_t)=\beta_0+\beta_1\log(P_t)+\beta_2\, ice_t+\sum_{j=2}^{12}\beta_{1+j}\, seas_{j,t}+u_t,
+    \end{align*}
+    donde $Q_t$ son las toneladas de granos transportadas en la semana $t$, $P_t$ es el precio
+    de transportar una tonelada de granos por ferrocarril, $ice_t$ es una dummy igual a 1 si los
+    Grandes Lagos no son navegables por el hielo, y $seas_{j,t}$ es una dummy igual a 1 si la
+    semana $t$ pertenece al mes $j$ (el mes 1 es la categoría omitida). La variable $cartel_t$
+    es una dummy igual a 1 si en la semana $t$ el cartel estaba operando (es decir, no había
+    colapsado).
+    \begin{enumerate}
+        \item (6 puntos) Estime la ecuación de demanda por MCO. Interprete el resultado.
+        \item (6 puntos) Explique por qué la interacción entre oferta y demanda puede hacer
+            inconsistente la estimación por MCO. Sugiera el signo del sesgo asintótico.
+        \item (6 puntos) Considere utilizar $cartel_t$ como instrumento de $\log(P_t)$. Utilice el
+            razonamiento económico para justificar que es un instrumento válido.
+        \item (6 puntos) Estime la primera etapa. Contraste el supuesto de relevancia.
+        \item (6 puntos) Estime la ecuación de demanda por variables instrumentales. Interprete
+            los resultados y compare con los de MCO. Utilice el intervalo de confianza al 95\%
+            para evaluar si la elasticidad estimada es consistente con el comportamiento de un
+            cartel que maximiza beneficios.
+    \end{enumerate}
+
+\end{enumerate}
+\end{document}

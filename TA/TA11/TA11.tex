@@ -1,0 +1,149 @@
+% !TeX spellcheck = es_ES
+\documentclass[letterpaper,11pt]{article}
+\input{../preambulo.tex}
+
+\title{Análisis Econométrico \\ Ayudantía 11}
+\author{Magíster en Economía, Universidad Alberto Hurtado}
+\date{}
+
+% Funciones de R sugeridas: entre corchetes, alineadas a la derecha; si no caben en la
+% linea pasan enteras a la siguiente.
+\newcommand{\fn}[1]{{\unskip\nobreak\hfill\penalty50\hskip1em\null\nobreak\hfill
+    \mbox{[#1]}\parfillskip=0pt\finalhyphendemerits=0\par}}
+
+\begin{document}
+\maketitle
+
+\noindent Temas: supuestos de variables instrumentales (relevancia, exogeneidad y
+no colinealidad) y qué pasa cuando no se cumplen; condición de rango y relevancia conjunta con
+varios instrumentos; validez de un instrumento en aplicaciones; y los contrastes de
+sobreidentificación (Sargan) y de endogeneidad (Wu--Hausman) calculados a mano en R.
+
+\medskip
+\noindent Los ejercicios 1 a 3 se resuelven en la pizarra. El ejercicio 4 es una demostración en
+R: el ayudante corre el código en pantalla, así que no hace falta traer computador.
+
+\section*{Si quiere replicar el ejercicio 4 en su computador}
+
+\noindent El script \texttt{TA11.R} y los datos están en el repositorio del curso, en
+\href{https://github.com/ramirode/econometria_mae/tree/main/TA/TA11}{\texttt{TA/TA11}}. Los pasos
+son los mismos de la Ayudantía 5: cree una carpeta \texttt{TA11} con las subcarpetas
+\texttt{code} (para \texttt{TA11.R}) e \texttt{input} (para \texttt{bancos.rds}, los mismos datos
+de la Ayudantía 10), y cambie la línea \texttt{dir\_proyecto <- "..."} por la ruta a su carpeta
+\texttt{TA11}. Paquetes: \texttt{sandwich}, \texttt{lmtest}, \texttt{car} e \texttt{ivreg}.
+
+\section*{Ejercicios}
+
+\begin{enumerate}[itemsep=0.8em]
+
+%% ---------------------------------------------------------------- 1
+\item Dado un modelo con una variable explicativa exógena $x_1$ y una variable explicativa
+    endógena $x_2$,
+    \begin{align*}
+    y=\beta_0+\beta_1 x_1+\beta_2 x_2+u,
+    \end{align*}
+    donde $\E(u)=0$, $\E(x_1u)=0$ pero $\E(x_2u)\neq0$. Suponga que tiene un instrumento $z_1$
+    disponible. Sea $z=(1,x_1,z_1)'$ el vector de variables exógenas y $x=(1,x_1,x_2)'$. Los
+    supuestos son: (i) exogeneidad, $\E(zu)=0$; (ii) relevancia,
+    $\operatorname{rango}\E(zx')=3$; y (iii) no multicolinealidad perfecta entre las exógenas,
+    $\operatorname{rango}\E(zz')=3$. Explique qué supuesto \emph{no} se cumple en cada uno de los
+    siguientes casos (y por qué):
+    \begin{enumerate}
+        \item $z_1$ es independiente de $(y,x_1,x_2)$.
+        \item $z_1=x_2$.
+        \item $z_1=1$.
+        \item $z_1=x_1$.
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 2
+\item Considere el modelo del ejercicio 1, pero ahora con dos instrumentos disponibles,
+    $z_1$ y $z_2$, y sea $z=(1,x_1,z_1,z_2)'$ el vector de variables exógenas.
+    \begin{enumerate}
+        \item Escriba la primera etapa de $x_2$,
+            $x_2=\pi_{0}+\pi_{1}x_1+\pi_{2}z_1+\pi_{3}z_2+e$. Muestre que la condición de rango,
+            $\operatorname{rango}\E(zx')=3$ con $x=(1,x_1,x_2)'$, se cumple si y sólo si
+            $\pi_2\neq0$ o $\pi_3\neq0$. ¿Cómo contrastaría la condición de rango?
+        \item Suponga que $\pi_2\neq0$ pero $\pi_3=0$. ¿Está identificado el modelo? ¿Qué se
+            pierde, o se gana, al incluir $z_2$ como instrumento?
+        \item Suponga ahora que $x_1$ \emph{también} es endógena y que se usan los mismos dos
+            instrumentos $z_1$ y $z_2$ para las dos variables endógenas; en este caso
+            $z=(1,z_1,z_2)'$. Si en la primera etapa de $x_1$ y en la de $x_2$ los dos
+            instrumentos son individual y conjuntamente significativos, ¿puede estar seguro de
+            que el modelo está identificado? Dé un ejemplo en el que no lo esté.
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 3
+\item Para cada uno de los siguientes estudios, (i) explique por qué MCO puede ser inconsistente
+    y sugiera el signo del sesgo, (ii) explique por qué el instrumento puede ser relevante y
+    (iii) describa un canal por el cual el instrumento podría no ser exógeno y qué le haría esto
+    a la estimación por variables instrumentales.
+    \begin{enumerate}
+        \item \emph{Servicio militar e ingresos} (Angrist, \textit{American Economic Review}, 1990).
+            Efecto de haber servido en el ejército durante la guerra de Vietnam sobre los
+            ingresos posteriores. A comienzos de los años setenta EE.UU. asignó por sorteo, según la fecha de
+            nacimiento, un número a cada joven; los jóvenes con número bajo
+            eran elegibles para ser reclutados y los demás no. Instrumento: elegibilidad según el
+            número del sorteo.
+        \item \emph{Instituciones y desarrollo} (Acemoglu, Johnson y Robinson,
+            \textit{American Economic Review}, 2001). Efecto de la calidad de las instituciones
+            (protección contra la expropiación) sobre el ingreso per cápita de los países hoy.
+            Instrumento: la mortalidad de los colonos europeos en cada colonia en el siglo XIX.
+        \item \emph{Policía y crimen} (Levitt, \textit{American Economic Review}, 1997). Efecto
+            del número de policías por habitante sobre la tasa de crimen violento en las ciudades
+            de EE.UU. Instrumento: si hubo elecciones de alcalde o gobernador ese año, porque los
+            políticos contratan más policías en años electorales.
+    \end{enumerate}
+
+%% ---------------------------------------------------------------- 4
+\item \emph{Sargan y Wu--Hausman a mano.} Aún no hemos visto estos dos contrastes en clase,
+    así que primero una introducción breve. En ambos, $z$ es el vector de todas las variables
+    exógenas (los controles y los instrumentos), $L$ es su número y $K$ el número de coeficientes
+    del modelo.
+    \begin{itemize}
+        \item \emph{Sargan} contrasta la exogeneidad de los instrumentos cuando hay más
+            instrumentos que endógenas, es decir, $L-K>0$. $H_0$: $\E(zu)=0$. Si los instrumentos
+            son exógenos, los residuos de 2SLS, $\hat u_i$, no deberían poder predecirse con $z$.
+            Se regresa $\hat u_i$ en $z$ y se calcula $S=N\cdot R^2$, que bajo $H_0$ (y con
+            errores homoscedásticos) se distribuye $\chi^2_{L-K}$. Si $L=K$, $R^2=0$ por
+            construcción y no hay nada que contrastar. Si rechaza, al menos uno de los
+            instrumentos no es exógeno. Si no rechaza, no queda demostrado que lo sean.
+        \item \emph{Wu--Hausman} contrasta si una variable explicativa es endógena.
+            $H_0$: $\E(x_ju)=0$. Si $H_0$ es cierta, MCO y 2SLS son consistentes y deberían dar
+            estimaciones parecidas; si difieren, $x_j$ es endógena. Una forma de calcularlo
+            (función de control): (i) se estima la primera etapa de $x_j$ y se guardan los
+            residuos $\hat v_i$; (ii) se estima por MCO la ecuación de interés agregando
+            $\hat v_i$ como regresor; (iii) se contrasta que el coeficiente de $\hat v_i$ es
+            cero con un test $t$. Si rechaza, hay endogeneidad y conviene usar el estimador de
+            variables instrumentales. Si no rechaza, MCO y VI no son distinguibles, pero eso
+            tampoco prueba que $x_j$ sea exógena.
+    \end{itemize}
+    Con los datos \texttt{bancos.rds} del ejercicio 2 de la
+    Ayudantía 10 (Pascali, 2016), considere el modelo
+    \begin{align*}
+    pib_{it}=\beta_0+\beta_1\, credito_{it}+x_{it}'\gamma+u_{it},
+    \end{align*}
+    donde $x$ incluye las características geográficas del municipio y dummies de provincia y de
+    año, e instrumente $credito$ con $jew\_peq$, $jew\_med$ y $jew\_gde$.
+    \begin{enumerate}
+        \item Estime por 2SLS con \texttt{ivreg} y guarde los tests de Sargan y de Wu--Hausman que
+            entrega \texttt{summary(\dots, diagnostics = TRUE)}.
+            \fn{\texttt{ivreg}, \texttt{summary}}
+        \item \emph{Sargan a mano.} Guarde los residuos de 2SLS, $\hat u_i$. Regréselos en todas
+            las exógenas (los controles y los tres instrumentos). ¿Cuántas restricciones de
+            sobreidentificación hay? Calcule $N\cdot R^2$ y compárelo con el valor crítico de la
+            $\chi^2$ con ese número de grados de libertad.
+            \fn{\texttt{resid}, \texttt{lm}, \texttt{pchisq}}
+        \item \emph{Wu--Hausman a mano.} Estime la primera etapa de $credito$ (con los tres
+            instrumentos) y guarde los residuos $\hat v_i$. Estime por MCO la ecuación de interés
+            agregando $\hat v_i$ como regresor. Contraste que el coeficiente de $\hat v_i$ es
+            cero con errores estándar robustos. Compare el estadístico $t^2$ con el de (a), y el
+            coeficiente de $credito$ con el de 2SLS. ¿Qué dice el signo del coeficiente de
+            $\hat v_i$?
+            \fn{\texttt{lm}, \texttt{vcovHC}, \texttt{coeftest}}
+        \item El test de Sargan no rechaza. ¿Significa que los tres instrumentos son
+            exógenos? ¿Se podría hacer este test con un solo instrumento?
+    \end{enumerate}
+
+\end{enumerate}
+
+\end{document}

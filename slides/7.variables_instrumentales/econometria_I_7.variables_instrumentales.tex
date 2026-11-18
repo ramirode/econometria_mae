@@ -1957,23 +1957,100 @@ Da $[-1.63,\,-0.19]$ en lugar de $[-1.68,\,-0.17]$ (con $wave2$ y $wave3$: $[-1.
     \end{itemize}
 \end{frame}
 
-%% --------------------------------------------------- Slide --
-%\begin{frame}
-%    \frametitle{Ejemplo 2: Regresi\'on m\'ultiple con una variable end\'ogena $x_K$}
-%\end{frame}
-%
-%
-%% --------------------------------------------------- Slide --
-%\begin{frame}
-%    \frametitle{Ejemplo 3: Regresi\'on m\'ultiple con m\'ultiples variables end\'ogenas}
-%    \begin{itemize}
-%        \item  Es suficiente que $\pi_{11}: L_1\times K_2$ tenga elementos distintos de cero en la diagonal principal.
-%    \end{itemize}
-%\end{frame}
-%
-%\begin{frame}
-%    \frametitle{Ejemplo 3: Regresi\'on m\'ultiple con m\'ultiples variables end\'ogenas}
-%\end{frame}
+% --------------------------------------------------- Slide --
+\begin{frame}
+    \frametitle{Ejemplo 3: Regresi\'on m\'ultiple con $K_2$ variables end\'ogenas}
+    \begin{itemize}
+        \item Escribimos la primera etapa de cada end\'ogena $x_j$ con los mismos $L_1$ instrumentos excluidos $z_1$. Entonces
+        \begin{align*}
+            \Pi = \left[
+            \begin{array} {c c}
+                I_{K-K_2} & \pi_{10}\\
+                0_{L_1,K-K_2} & \pi_{11}
+            \end{array}
+            \right],
+        \end{align*}
+        donde $\pi_{11}$ es $L_1\times K_2$: una columna por end\'ogena.
+        \item <2-> La condici\'on de rango es $rango(\pi_{11})=K_2$: se necesitan $L_1\geq K_2$ instrumentos y que sus efectos sobre las $K_2$ end\'ogenas sean \term{linealmente independientes}.
+        \item <3-> Que cada columna de $\pi_{11}$ sea distinta de cero (cada primera etapa es significativa) \alert{no basta}. Si las dos end\'ogenas responden casi igual a los mismos instrumentos, las filas de $\pi_{11}$ son casi proporcionales y no se pueden separar sus efectos.
+    \end{itemize}
+\end{frame}
+% --------------------------------------------------- Slide --
+\begin{frame}
+    \frametitle{Relevancia con m\'as de una variable end\'ogena}
+    \small
+    \begin{itemize}
+        \item El $F$ usual de cada primera etapa contrasta $H_0:\pi_{11,j}=0$ por separado: no mira si las columnas de $\pi_{11}$ son distintas.
+        \item <2-> \term{$F$ condicional} (Sanderson y Windmeijer, 2016): para cada $x_j$, se quita de $x_j$ la parte que explican las predicciones de las otras end\'ogenas, y se contrasta la significancia conjunta de los instrumentos en esa primera etapa.
+        Mide si los instrumentos identifican a $x_j$ \emph{separadamente} de las dem\'as. Regla pr\'actica: $F>10$.
+        \item <3-> \term{Cragg--Donald}: resume la matriz de estad\'isticos $F$ de las primeras etapas con su valor propio m\'as chico. Se compara con los valores cr\'iticos de Stock y Yogo. Supone errores homosced\'asticos.
+        \item <3-> \term{Kleibergen--Paap}: la versi\'on robusta a heterocedasticidad y a conglomerados. Contrasta $H_0:rango(\Pi)=K-1$ (subidentificaci\'on). En Stata lo reporta \texttt{ivreg2}.
+        \item <4-> Con una sola end\'ogena, el $F$ condicional y Cragg--Donald coinciden con el $F$ usual.
+    \end{itemize}
+\end{frame}
+% --------------------------------------------------- Slide --
+\begin{frame}
+    \frametitle{$F$ condicional a mano}
+    \small
+    Para la end\'ogena $x_j$, con $z$ todas las ex\'ogenas (incluidas e instrumentos excluidos $z_1$):
+    \begin{enumerate}
+        \item <1-> Primeras etapas: regresar cada end\'ogena en $z$ y guardar las predicciones $\hat x_j$ y $\hat x_{-j}$.
+        \item <2-> Regresar $\hat x_j$ en $\hat x_{-j}$ y en las ex\'ogenas incluidas; sea $\hat\gamma$ el coeficiente de $\hat x_{-j}$.
+        \item <3-> Construir $d_j=x_j-x_{-j}'\hat\gamma$: lo que de $x_j$ no explican las otras end\'ogenas.
+        \item <4-> Regresar $d_j$ en $z$ y calcular el $F$ de $H_0$: los coeficientes de los $L_1$ instrumentos excluidos son cero.
+        \item <5-> Ajustar los grados de libertad: $F_{SW}\approx F\cdot\dfrac{L_1}{L_1-K_2+1}$.
+    \end{enumerate}
+    \uncover<5->{Con $K_2=1$ el factor vale 1 y se obtiene el $F$ usual.}
+\end{frame}
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]
+    \frametitle{En R: $F$ condicional a mano}
+\scriptsize
+\begin{verbatim}
+# x1 y x2 endogenas, w exogena incluida, z1 y z2 instrumentos (L1 = 2, K2 = 2)
+xhat1 <- fitted(lm(x1 ~ w + z1 + z2, data = d))      # 1. primeras etapas
+xhat2 <- fitted(lm(x2 ~ w + z1 + z2, data = d))
+g  <- coef(lm(xhat1 ~ xhat2 + w, data = d))["xhat2"] # 2. gamma
+d$d1 <- d$x1 - g * d$x2                              # 3. x1 menos lo que explica x2
+f  <- anova(lm(d1 ~ w, data = d),
+            lm(d1 ~ w + z1 + z2, data = d))$F[2]     # 4. F de z1 y z2
+f * 2 / (2 - 2 + 1)                                  # 5. ajuste de grados de libertad
+\end{verbatim}
+    \normalsize
+    Coincide (casi) con \texttt{condfstat}: la diferencia viene de c\'omo se estima la varianza.
+\end{frame}
+% --------------------------------------------------- Slide --
+\begin{frame}
+    \frametitle{Ejemplo simulado: dos end\'ogenas y dos instrumentos}
+    \small
+    Modelo $y=1+x_1+x_2+w+u$, con $\beta_1=\beta_2=1$, $N=500$, $w$ ex\'ogena y las dos end\'ogenas correlacionadas con $u$.
+    \begin{itemize}
+        \item A: $x_1$ depende de $z_1$ y $x_2$ de $z_2$.
+        \item B: $x_1=0.5z_1+0.5z_2+\dots$ y $x_2=0.5z_1+0.6z_2+\dots$
+    \end{itemize}
+    \begin{center}
+    \footnotesize
+    \input{tables/relevancia_varias_endogenas.tex}
+    \end{center}
+    En B los $F$ usuales (48 y 67) superan 10, pero el $F$ condicional (1.7) y Cragg--Donald (0.9) muestran que los instrumentos no separan los efectos de $x_1$ y $x_2$: $\hat\beta_1=0.06$ con error est\'andar 1.14.
+\end{frame}
+% --------------------------------------------------- Slide --
+\begin{frame}[fragile]
+    \frametitle{En R: $F$ condicional y Cragg--Donald}
+\footnotesize
+\begin{verbatim}
+install.packages(c("fixest", "lfe"))  # una sola vez
+library(fixest); library(lfe)
+
+# F usual de cada primera etapa y Cragg-Donald
+m <- feols(y ~ w | 0 | x1 + x2 ~ z1 + z2, data = d, vcov = "iid")
+fitstat(m, ~ ivf1 + cd)
+
+# F condicional de Sanderson-Windmeijer (una columna por endogena)
+m2 <- felm(y ~ w | 0 | (x1 | x2 ~ z1 + z2), data = d)
+condfstat(m2, type = "iid")   # type = "robust": errores robustos
+\end{verbatim}
+\end{frame}
 
 % --------------------------------------------------- Slide --
 \subsection{Exogeneidad de los instrumentos}
