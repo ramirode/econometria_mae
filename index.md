@@ -48,6 +48,7 @@ Material del curso, a cargo de Ramiro de Elejalde.
   - [Tarea 4](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps4.pdf) (datos: [veteran.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/veteran.rds), [hprice2.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/hprice2.rds), [christensen_greene.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/christensen_greene.rds), [discrim.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/discrim.rds))
   - [Tarea 5](https://github.com/ramirode/econometria_mae/blob/main/problem-sets/econometria_I_ps5.pdf) (datos: [card.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/card.rds), [jec.rds](https://github.com/ramirode/econometria_mae/raw/main/problem-sets/datos/jec.rds))
 - [Trabajo grupal: entregas y criterios de evaluación](https://github.com/ramirode/econometria_mae/blob/main/trabajo/trabajo_grupal_2026.pdf)
+  - [Horas de consulta del trabajo grupal: martes 24 de noviembre, 18:00 a 21:00 (reservar un bloque por grupo)](https://calendar.google.com/calendar/appointments/schedules/AcZssZ3cRSB1Nqlg0f3959BGnoAMRfeqlZgvZCl8hiB9JNn4Ck1OMfte1q1uYESUKt55aGDFAs2v3nJD)
 - [Material de ayudantía](https://github.com/ramirode/econometria_mae/tree/main/TA)
   - [Ayudantía 1](https://github.com/ramirode/econometria_mae/blob/main/TA/TA1/TA1.pdf)
   - [Ayudantía 2](https://github.com/ramirode/econometria_mae/blob/main/TA/TA2/TA2.pdf)
