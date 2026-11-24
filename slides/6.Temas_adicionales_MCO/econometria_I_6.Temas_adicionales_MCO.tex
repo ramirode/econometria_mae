@@ -34,6 +34,7 @@
 % \usepackage[latin1]{inputenc} % Allows to type in latin (accents). Note: Does not work with XeLaTex
 % \usefonttheme[onlymath]{serif}  % Changes fonts for math to serif
 \usepackage[english]{babel} % Manages differences between languages: hyphenation etc
+\addto\captionsenglish{\renewcommand{\figurename}{Figura}\renewcommand{\tablename}{Tabla}} % Spanish caption labels
 
 \usepackage{appendixnumberbeamer} % Does not include backup slides in the number of pages
 
@@ -52,6 +53,8 @@
 
 % Customized commands
   \newcommand{\vs}{\vskip0pt plus.5fill}
+  \newcommand{\compactmath}{\setlength{\abovedisplayskip}{3pt}\setlength{\belowdisplayskip}{3pt}\setlength{\abovedisplayshortskip}{0pt}\setlength{\belowdisplayshortskip}{2pt}\setlength{\jot}{1pt}} % tighter display-math spacing for tall frames
+  \newcommand{\term}[1]{\structure{\textbf{#1}}} % label/definition markup, distinct from \alert (reserved for genuine callouts)
   \newcommand{\SR}{\mathbb{R}}
   \DeclareMathOperator{\plim}{plim}
   \DeclareMathOperator{\Var}{Var}
@@ -80,15 +83,15 @@ Temas Adicionales MCO}
 	
 %------------------------------------------------------------
 
-\begin{frame}
-    \titlepage
+\begin{frame}[plain,c]
+    \vspace{-1cm}\titlepage
 \end{frame}
 
 % --------------------------------------------------- Slide --
 \begin{frame}
 	\frametitle{Outline}
 	\tableofcontents
-	\alert{Referencias}: Cap. 4.3.2 y 4.4 de Wooldridge, cap. 8 y 9 de Stock and Watson, y cap. 3.2.3 Angrist and Pischke.
+	\term{Referencias}: Cap. 4.4 de Wooldridge, cap. 8 y 9 de Stock and Watson, y cap. 3.2.3 Angrist and Pischke.
 \end{frame}
 % --------------------------------------------------- Slide --
 %\section{Variable proxy}
@@ -97,7 +100,7 @@ Temas Adicionales MCO}
 %    \begin{itemize}
 %        \item Modelo de regresi\'on
 %        \begin{align*}
-%            y = \beta_0 + \beta_1 x_{1}+....+ \beta_K x_{K}+\gamma q +v,
+%            y = \beta_0 + \beta_1 x_{1}+\dots+ \beta_{K-1} x_{K-1}+\gamma q +v,
 %        \end{align*}
 %        donde $\E(v|x)=0$.
 %        \item No observamos $q$.
@@ -134,7 +137,7 @@ Temas Adicionales MCO}
 %        La \alert{estimaci\'on es consistente}.
 %        \item Demostraci\'on
 %        \begin{align*}
-%            y = (\beta_0 +\gamma \delta_0)+ \beta_1 x_{1}+....+ \beta_K x_{K}+\gamma \delta_1 z+(\gamma r +v).
+%            y = (\beta_0 +\gamma \delta_0)+ \beta_1 x_{1}+\dots+ \beta_{K-1} x_{K-1}+\gamma \delta_1 z+(\gamma r +v).
 %        \end{align*}
 %        Llamamos $u=\gamma r +v$. Tenemos 
 %        \begin{align*}
@@ -225,17 +228,17 @@ Temas Adicionales MCO}
     \begin{itemize}  
         \item Modelo de regresi\'on
         \begin{align*}
-            y^* = \beta_0 + \beta_1 x_{1}+....+ \beta_K x_{K}+v,
+            y^* = \beta_0 + \beta_1 x_{1}+\dots+ \beta_{K-1} x_{K-1}+v,
         \end{align*}
         donde $\Cov(v, x_{j})=0$ para todo $j$.
-        \item No observamos $y^*$ pero observamos un medida de $y^*$ dada por $y$.
+        \item No observamos $y^*$ pero observamos una medida de $y^*$ dada por $y$.
         \item Definimos el error de medida poblacional como,
         \begin{align*}
             e_{0} = y-y^*.
         \end{align*}
         \item [] El modelo que podemos estimar es,
         \begin{align*}
-            y = \beta_0 + \beta_1 x_{1}+....+ \beta_K x_{K}+v+e_{0}.
+            y = \beta_0 + \beta_1 x_{1}+\dots+ \beta_{K-1} x_{K-1}+v+e_{0}.
         \end{align*}
         \item ?`Es la estimaci\'on MCO consistente?
         \end{itemize}
@@ -254,23 +257,23 @@ Temas Adicionales MCO}
 %    \frametitle{Error de medida en la variable dependiente}
 %\end{frame}
 
-\begin{frame}
+\begin{frame}\compactmath
     \frametitle{Error de medida en la variable dependiente}
-    \small
+    \footnotesize\compactmath
     \begin{itemize}  
         \item Modelo de regresi\'on
         \begin{align*}
-            y^* = \beta_0 + \beta_1 x_{1}+....+ \beta_K x_{K}+v,
+            y^* = \beta_0 + \beta_1 x_{1}+\dots+ \beta_{K-1} x_{K-1}+v,
         \end{align*}
         donde $\Cov(v, x_{j})=0$ para todo $j$.
-        \item No observamos $y^*$ pero observamos un medida de $y^*$ dada por $y$.
+        \item No observamos $y^*$ pero observamos una medida de $y^*$ dada por $y$.
         \item Definimos el error de medida poblacional como,
         \begin{align*}
             e_{0} = y-y^*.
         \end{align*}
         \item [] El modelo que podemos estimar es,
         \begin{align*}
-            y = \beta_0 + \beta_1 x_{1}+....+ \beta_K x_{K}+v+e_{0}.
+            y = \beta_0 + \beta_1 x_{1}+\dots+ \beta_{K-1} x_{K-1}+v+e_{0}.
         \end{align*}
         \item ?`Es la estimaci\'on MCO consistente? Si, si el error de medida no est\'a correlado con las $x$'s, $\Cov(x_{j},e_{0})=0$ para todo $j$.
         \item Mayor varianza del error: Si $\Cov(v, e_{0})=0$, $\Var(v+e_{0})=\Var(v)+\Var(e_{0})\geq \Var(v)$.    
@@ -279,16 +282,16 @@ Temas Adicionales MCO}
 
 
 % --------------------------------------------------- Slide --
-\begin{frame}
+\begin{frame}\compactmath
     \frametitle{Error de medida en la variable explicativa}
-    \small
+    \footnotesize\compactmath
     \begin{itemize} 
         \item Modelo de regresi\'on
         \begin{align*}
-            y = \beta_0 + \beta_1 x_{1}^*+....+ \beta_K x_{K}+v,
+            y = \beta_0 + \beta_1 x_{1}^*+\dots+ \beta_{K-1} x_{K-1}+v,
         \end{align*}
         donde $\Cov(v, x_j)=0$ para todo $j\neq 1$ y $\Cov(v, x_{1}^*)=0$.
-        \item No observamos $x_{1}^*$ pero observamos un medida de $x_{1}^*$ dada por $x_{1}$. 
+        \item No observamos $x_{1}^*$ pero observamos una medida de $x_{1}^*$ dada por $x_{1}$. 
         Suponemos que $\Cov(x_{1},v)=0$.
         \item Definimos el error de medida poblacional como,
         \begin{align*}
@@ -298,7 +301,7 @@ Temas Adicionales MCO}
         % Si no se verifica afecta a la constante.
         \item [] El modelo que podemos estimar es,
         \begin{align*}
-            y = \beta_0 + \beta_1 x_{1}+....+ \beta_K x_{K}+(v-\beta_1 e_{1}).
+            y = \beta_0 + \beta_1 x_{1}+\dots+ \beta_{K-1} x_{K-1}+(v-\beta_1 e_{1}).
         \end{align*}
         \item ?`Es la estimaci\'on MCO consistente?
 \end{itemize}
@@ -308,9 +311,9 @@ Temas Adicionales MCO}
 	\frametitle{Error de medida en la variable explicativa}
 	?`Es la estimaci\'on MCO consistente? Suponemos que $\Cov(x_{j},e_{1})=0$ para todo $j\neq 1$. El supuesto clave es la relaci\'on entre $e_{1}$ con $x_{1}$ y $x^*_{1}$
 	\begin{itemize}  
-			\item \alert{Error de medida no est\'a correlado con la variable observada}: $\Cov(x_{1},e_{1})=0$.
+			\item \term{Error de medida no est\'a correlado con la variable observada}: $\Cov(x_{1},e_{1})=0$.
 			\item [] Es consistente pero hay una pérdida de eficiencia.
-			\item \alert{Error de medida cl\'asico}: Error de medida no est\'a correlado con la variable NO observada, $\Cov(x_{1}^*,e_{1})=0$.
+			\item \term{Error de medida cl\'asico}: Error de medida no est\'a correlado con la variable NO observada, $\Cov(x_{1}^*,e_{1})=0$.
 			\item [] No es consistente $\implies$ \alert{Sesgo de atenuación}
 	\end{itemize}
 \end{frame}
@@ -373,11 +376,11 @@ Temas Adicionales MCO}
 \end{frame}
 
 % --------------------------------------------------- Slide --
-\begin{frame}
+\begin{frame}\compactmath
 	\frametitle{Error de medida cl\'asico: $\Cov(x_{1}^*,e_{1})=0$}
 	\begin{itemize}  
 		\item Sesgo asint\'otico? $\implies$ \alert{Sesgo de atenuaci\'on}.
-		\small
+		\footnotesize\compactmath
 		\item [] Demostraci\'on (sketch para el modelo de regresi\'on simple $y=\beta_0+\beta_1 x_1^*+v$):
 		\begin{align*}
 		\plim \hat \beta_1 &= \frac{\Cov(x_1, y)}{\Var(x_1)},\\
@@ -392,15 +395,15 @@ Temas Adicionales MCO}
 
 % --------------------------------------------------- Slide --
 \section{M\'inimos cuadrados generalizados (GLS)}
-\begin{frame}
+\begin{frame}\compactmath
     \frametitle{M\'inimos cuadrados generalizados (GLS)}
     \begin{itemize}
     \item []
     \begin{align*}
-        y_i=\beta_0 + \beta_1 x_{1i} + ...+\beta_K  x_{Ki}+u_i = x_i'\beta+u_i,
+        y_i=\beta_0 + \beta_1 x_{1i} + \dots+\beta_{K-1}  x_{K-1,i}+u_i = x_i'\beta+u_i,
     \end{align*}
-    donde $y_i$ es una variable aleatoria, $x_i$ es un vector aleatorio de $K \times 1$ y $u_i$ es una variable aleatoria.
-    \item <2->\alert{Supuestos}:
+    donde $y_i$ es una variable aleatoria, $x_i=(1,x_{1i},\dots,x_{K-1,i})'$ es un vector aleatorio de $K \times 1$ y $u_i$ es una variable aleatoria.
+    \item <2->\term{Supuestos}:
     \begin{enumerate}
         \bigskip
         \item [GLS1] Muestra aleatoria de tama\~no $N$ $\implies \{y_i,x_i\}_{i=1}^N$ i.i.d.,
@@ -409,7 +412,7 @@ Temas Adicionales MCO}
         \bigskip
         \item [GLS3] $\Var(u_i|x_i)=\sigma^2(x_i)$,
         \bigskip
-        \item [GLS4] $\E \left(\frac{x_ix_i'}{\sigma^2(x_i)}\right)$ no singular.
+        \item [GLS4] $\E \left(\frac{x_ix_i'}{\sigma^2(x_i)}\right)$ existe (es finita) y es no singular.
         \bigskip
     \end{enumerate}
     \end{itemize}
@@ -418,7 +421,7 @@ Temas Adicionales MCO}
 \begin{frame}
     \frametitle{M\'inimos cuadrados generalizados (GLS)}
     \begin{itemize}
-    \item Idea: Transformar el modelo en homosced\'astico y luego aplicar MCO que sabemos es eficiente bajo homoscedasticidad e independencia en media.
+    \item Idea: Transformar el modelo en homosced\'astico y luego aplicar MCO, que es eficiente bajo homoscedasticidad e independencia en media (lo demostramos m\'as adelante, en la diapositiva sobre la eficiencia de GLS).
     \end{itemize}
 \end{frame}
 
@@ -426,10 +429,10 @@ Temas Adicionales MCO}
 %    \frametitle{M\'inimos cuadrados generalizados (GLS)}
 %\end{frame}
 
-\begin{frame}
+\begin{frame}\compactmath
     \frametitle{M\'inimos cuadrados generalizados (GLS)}
     \begin{itemize}
-    \item Idea: Transformar el modelo en homosced\'astico y luego aplicar MCO que sabemos es eficiente bajo homoscedasticidad e independencia en media.
+    \item Idea: Transformar el modelo en homosced\'astico y luego aplicar MCO, que es eficiente bajo homoscedasticidad e independencia en media (lo demostramos m\'as adelante, en la diapositiva sobre la eficiencia de GLS).
     \item []
         \begin{align*}
             \frac{y_i}{\sigma(x_i)}= \frac{x_i}{\sigma(x_i)}'\beta+\frac{u_i}{\sigma(x_i)},
@@ -464,7 +467,7 @@ Temas Adicionales MCO}
             & = \beta + \left( \plim \frac{1}{N}\sum_{i=1}^{N} \frac{x_ix_i'}{\sigma^2(x_i)}\right)^{-1}\plim\left( \frac{1}{N} \sum_{i=1}^{N} \frac{x_iu_i}{\sigma^2(x_i)}\right),\\
             & = \beta,
         \end{align*}
-        usando LGN, TFC y $\E(u_i|x_i)=0$.
+        usando la LGN, el teorema de la funci\'on continua y $\E(u_i|x_i)=0$.
 \end{frame}
 %Necesitamos imponer un supuesto mas fuerte de independencia en media.
 % --------------------------------------------------- Slide --
@@ -476,9 +479,9 @@ Temas Adicionales MCO}
 %    \frametitle{Propiedades: Distribuci\'on asint\'otica normal} 
 %\end{frame}
 
-\begin{frame}
-    \frametitle{Propiedades: Distribuci\'on asint\'otica normal} 
-    \small
+\begin{frame}\compactmath
+    \frametitle{Propiedades: Distribuci\'on asint\'otica normal}\vspace{-6pt}
+    \footnotesize\compactmath
         \begin{align*}
             \sqrt{N} (\hat \beta_{GLS} - \beta)&= \left( \frac{1}{N}\sum_{i=1}^{N} \frac{x_ix_i'}{\sigma^2(x_i)}\right)^{-1 }N^{1/2} \frac{1}{N} \sum_{i=1}^{N} \frac{x_iu_i}{\sigma^2(x_i)}.
         \end{align*}
@@ -495,15 +498,31 @@ Temas Adicionales MCO}
 \end{frame}
 % --------------------------------------------------- Slide --
 \begin{frame}
+    \frametitle{GLS es m\'as eficiente que MCO}
+    \small
+    \begin{itemize}
+        \item Con heteroscedasticidad, MCO es consistente y $\sqrt{N}(\hat\beta_{MCO}-\beta)\dto \N(0,V_{MCO})$, donde $V_{MCO}=A^{-1}BA^{-1}$, con $A=\E(x_ix_i')$ y $B=\E(u_i^2x_ix_i')=\E(\sigma^2(x_i)x_ix_i')$. Para GLS, $V_{GLS}=C^{-1}$, con $C=\E\left(\frac{x_ix_i'}{\sigma^2(x_i)}\right)$.
+        \item Definimos $w_i=\sigma(x_i)x_i$ y $v_i=x_i/\sigma(x_i)$. Entonces $A=\E(w_iv_i')$, $B=\E(w_iw_i')$ y $C=\E(v_iv_i')$.
+        \item Sea $r_i=w_i-\E(w_iv_i')\E(v_iv_i')^{-1}v_i$ el residuo de la proyecci\'on lineal de $w_i$ en $v_i$. Entonces $\E(r_ir_i')=B-AC^{-1}A$ es semidefinida positiva y, como $A$ es sim\'etrica,
+        \begin{align*}
+            V_{MCO}-V_{GLS}=A^{-1}\left(B-AC^{-1}A\right)A^{-1}=A^{-1}\E(r_ir_i')A^{-1},
+        \end{align*}
+        que es una matriz semidefinida positiva (por ser de la forma $A^{-1}\E(r_ir_i')A^{-1}$). Entonces MCO nunca es m\'as eficiente que GLS.
+        \item Bajo homoscedasticidad $w_i=\sigma^2v_i$, entonces $r_i=0$ y $V_{MCO}=V_{GLS}$.
+    \end{itemize}
+\end{frame}
+% --------------------------------------------------- Slide --
+\begin{frame}
     \frametitle{M\'inimos cuadrados generalizados factibles (FGLS)}
     \begin{itemize}
         \item  En la pr\'actica no conocemos $\sigma^2(x_i)$.
-        \item []Si suponemos una forma funcional $\sigma^2(x_i, \gamma)$, podemos estimar $\sigma^2(x_i, \gamma)$ consistentemente usando los residuos de la estimaci\'on por MCO,
+        \item []\term{Supuesto}: la forma funcional es correcta, es decir, existe $\gamma_0$ tal que $\sigma^2(x_i)=\sigma^2(x_i, \gamma_0)$. Entonces podemos estimar $\gamma$ consistentemente usando los residuos de la estimaci\'on por MCO,
         \begin{align*}
             \hat u_i^2=\sigma^2(x_i, \gamma)+error.
         \end{align*}
-        \item []Luego podemos estimar por $GLS$ usando $\sigma^2(x_i, \hat \gamma)$: \alert{M\'inimos cuadrados generalizados factibles}.
-        \item  []Se puede demostrar que $GLS$ y $FGLS$ son asint\'oticamente equivalentes.
+        \item []Luego podemos estimar por $GLS$ usando $\sigma^2(x_i, \hat \gamma)$: \term{M\'inimos cuadrados generalizados factibles}.
+        \item  []Bajo el supuesto anterior, $GLS$ y $FGLS$ son asint\'oticamente equivalentes.
+        \item []Si la forma funcional es incorrecta, $FGLS$ sigue siendo consistente (porque $\E(u_i|x_i)=0$) pero no es eficiente y los errores est\'andar usuales no son v\'alidos.
         \item []En la pr\'actica es preferible utilizar errores robustos.
     \end{itemize}
 \end{frame}
@@ -519,7 +538,7 @@ Temas Adicionales MCO}
 %        \end{align*}
 %        donde $\E(u_i|x_i)=0$.
 %        \item <2-> Contraste de  hip\'otesis: $H_0:\E(u_i^2|x_i)=\sigma^2$.
-%        \item <3-> []Dado una funci\'on de $x_i$, $h(x_i)$ bajo la hip\'otesis nula $\Cov(u_i^2,h(x_i))=0$.
+%        \item <3-> []Dada una funci\'on de $x_i$, $h(x_i)$, bajo la hip\'otesis nula $\Cov(u_i^2,h(x_i))=0$.
 %        \item <4-> []Podemos utilizar el modelo:
 %        \begin{align*}
 %            u_i^2=\delta_0+h(x_i)'\delta+v_i,
@@ -527,7 +546,7 @@ Temas Adicionales MCO}
 %        bajo los supuestos usuales.
 %        \item <5-> []Bajo $H_0$, tenemos que $\delta_0=\sigma^2$ y $\delta=0$, y podemos hacer un test multiplicadores de Lagrange ($LM_N$) del tipo $H_0:\delta=0$.
 %        \item <6-> En realidad no observamos $u_i^2$ pero lo podemos reemplazar por $\hat u_i^2$ y asint\'oticamente nada cambia.
-%        \item <7-> Cuando $h(x_i)=x_i$ tenemos el test de Breusch-Pagan, y para $h(x_i)$ incluye $x_i$ y $x_ix_i'$ tenemos el test de White.
+%        \item <7-> Cuando $h(x_i)=x_i$ tenemos el test de Breusch-Pagan, y cuando $h(x_i)$ incluye $x_i$ y $x_ix_i'$ tenemos el test de White.
 %        \item <8-> En Stata despues de reg usamos \verb|estat hettest, iid|.
 %    \end{itemize}
 %\end{frame}
@@ -565,23 +584,24 @@ Temas Adicionales MCO}
 %    \end{itemize}
 %\end{frame}
 % --------------------------------------------------- Slide --
-\begin{frame}
-    \frametitle{Test de Heteroscedasticidad}
+\begin{frame}\compactmath
+    \frametitle{Test de Heteroscedasticidad}\vspace{-6pt}
     \begin{itemize}
-        \small
+        \footnotesize\compactmath
         \item  Dado el modelo,
         \begin{align*}
             y_i=\beta'x_i+u_i,
         \end{align*}
         donde $\E(u_i|x_i)=0$.
-        \item  \alert{Contraste de  hip\'otesis}: $H_0:\E(u_i^2|x_i)=\sigma^2$.
-        \item  []Dado una funci\'on de $x_i$, $h(x_i)$ bajo la hip\'otesis nula $\Cov(u_i^2,h(x_i))=0$.
+        \item  \term{Contraste de  hip\'otesis}: $H_0:\E(u_i^2|x_i)=\sigma^2$.
+        \item  []Dada una funci\'on de $x_i$, $h(x_i)$, bajo la hip\'otesis nula $\Cov(u_i^2,h(x_i))=0$.
         \item  []Podemos utilizar el modelo:
         \begin{align*}
             u_i^2=\delta_0+h(x_i)'\delta+v_i,
         \end{align*}
-        bajo los supuestos usuales.
-        \item  []Bajo $H_0$, tenemos que $\delta_0=\sigma^2$ y $\delta=0$, y podemos hacer el contraste $H_0:\delta=0$ utilizando un test multiplicadores de Lagrange ($LM_N=N \hat R^2 \pto \chi^2_q$).
+        donde $\E(v_i|x_i)=0$ bajo $H_0$.
+        \item  []Bajo $H_0$, tenemos que $\delta_0=\sigma^2$ y $\delta=0$, y podemos hacer el contraste $H_0:\delta=0$ utilizando un test multiplicadores de Lagrange, $LM_N=N \hat R^2 \dto \chi^2_q$, donde $\hat R^2$ es el $R^2$ de la regresi\'on de $u_i^2$ en una constante y $h(x_i)$, y $q=\dim h(x_i)$.
+        \item  []Este resultado requiere que, bajo $H_0$, $\Var(v_i|x_i)$ sea constante (por ejemplo, $\E(u_i^4|x_i)$ constante) y $\E(u_i^4)<\infty$.
         \item  En realidad no observamos $u_i^2$ pero lo podemos reemplazar por $\hat u_i^2$ y asint\'oticamente nada cambia.
     \end{itemize}
 \end{frame}
@@ -595,22 +615,22 @@ Temas Adicionales MCO}
         \end{align*}
         donde $\E(u_i|x_i)=0$.
         \item  Contraste de  hip\'otesis: $H_0:\E(u_i^2|x_i)=\sigma^2$.
-        \item Cuando $h(x_i)=x_i$ tenemos el test de Breusch-Pagan, y para $h(x_i)$ incluye $x_i$ y $x_ix_i'$ tenemos el test de White.
-        \item  En Stata despues de reg usamos \verb|estat hettest, iid|.
+        \item Cuando $h(x_i)=x_i$ tenemos el test de Breusch-Pagan, y cuando $h(x_i)$ incluye $x_i$ y $x_ix_i'$ tenemos el test de White.
+        \item  En R, despu\'es de \verb|lm()| usamos \verb|lmtest::bptest(modelo, studentize = TRUE)|, que calcula $N\hat R^2$. Para White, incluimos cuadrados y productos cruzados en el argumento \verb|varformula|.
     \end{itemize}
 \end{frame}
 % --------------------------------------------------- Slide --
-\section{Validaci\'on interna y validaci\'on externa}
+\section{Validez interna y validez externa}
 \begin{frame}
-    \frametitle{Validaci\'on interna y validaci\'on externa}
+    \frametitle{Validez interna y validez externa}
     \begin{itemize}
-        \item \alert{Validez interna}: la inferencia estad\'istica de los efectos causales de inter\'es son v\'alidos para la poblaci\'on estudiada.
-        \item \alert{Validez externa}: la inferencia estad\'istica sobre los efectos causales se puede generalizar a poblaciones con diferentes condiciones institucionales, legales, sociales y econ\'omicas.
+        \item \term{Validez interna}: la inferencia estad\'istica de los efectos causales de inter\'es es v\'alida para la poblaci\'on estudiada.
+        \item \term{Validez externa}: la inferencia estad\'istica sobre los efectos causales se puede generalizar a poblaciones con diferentes condiciones institucionales, legales, sociales y econ\'omicas.
     \end{itemize}
 \end{frame}
 % --------------------------------------------------- Slide --
 \begin{frame}
-    \frametitle{Amenazas a la validaci\'on externa}
+    \frametitle{Amenazas a la validez externa}
     \begin{itemize}
         \item  Diferencias entre la poblaci\'on y contexto estudiados, y la poblaci\'on y contexto de inter\'es.
         \begin{itemize}
@@ -627,14 +647,14 @@ Temas Adicionales MCO}
 \end{frame}
 % --------------------------------------------------- Slide --
 \begin{frame}
-    \frametitle{Amenazas a la validaci\'on interna}
+    \frametitle{Amenazas a la validez interna}
     \begin{itemize}
         \item Sesgo por omisi\'on de variable
         \item Mala especificaci\'on de la forma funcional
         \item Sesgo por error de medida
         \item Sesgo por selecci\'on de muestra
         \item Sesgo por simultaneidad
-        \item [] Nota: Todas estos problemas generan correlaci\'on entre variables explicativas y el error, y se suelen llamar \alert{problemas de endogeneidad}.
+        \item [] Nota: Todos estos problemas generan correlaci\'on entre variables explicativas y el error, y se suelen llamar \term{problemas de endogeneidad}.
     \end{itemize}
 \end{frame}
 % 1. El estimador debe ser consistente
@@ -645,7 +665,7 @@ Temas Adicionales MCO}
     \begin{itemize}
         \item Surge si una variable omitida
         \begin{itemize}
-            \item Est\'a correlada con la variable dependiente $y$
+            \item Afecta a la variable dependiente $y$ (forma parte de $u$)
             \item Est\'a correlada con al menos una variable explicativa $x_{j}$.
         \end{itemize}
         \item Soluciones
@@ -656,10 +676,9 @@ Temas Adicionales MCO}
             % 2. Determinar a priori, los factores omitidos que puede generar un sesgo por omisi\'on de variable.
             % 3. Contrastar si las variables inclu\'idas son significativas o el coeficiente de interes cambia
             % 4. Mostrar los resultados de varias especificaciones para que el lector pueda evaluar la robustez de los resultados.
-            \item Si tenemos una buena proxy, utilizar la proxy en la regresi\'on como variable explicativa adicional.
-            \item Utilizar \alert{variables intrumentales} (el tema de la siguiente unidad del curso).
-            \item Si observamos la misma unidad en distintos momentos del tiempo utilizar \alert{datos de panel} que nos permite controlar por factores inobservados que permanecen fijos a lo largo del tiempo (el tema de Econometr\'ia II).
-            \item Realizar un experimento aleatorio controlado (\alert{randomized controlled experiment}).
+            \item Utilizar \term{variables instrumentales} (el tema de la unidad anterior).
+            \item Si observamos la misma unidad en distintos momentos del tiempo utilizar \term{datos de panel} que nos permite controlar por factores inobservados que permanecen fijos a lo largo del tiempo (el tema de Econometr\'ia II).
+            \item Realizar un experimento aleatorio controlado (\term{randomized controlled experiment}).
         \end{itemize}
     \end{itemize}
 \end{frame}
@@ -671,12 +690,12 @@ Temas Adicionales MCO}
         % Aunque siempre podemos justificar que el modelo de regresi\'on es la mejor aproximaci\'on lineal al modelo de esperanza condicional.
         \item Soluciones
         \begin{itemize}
-            \item Variable dependiente continua: utilizar una forma no lineal apropiada: logaritmos, polinomios, interacciones,etc.
+            \item Variable dependiente continua: utilizar una forma no lineal apropiada: logaritmos, polinomios, interacciones, etc.
             % Para detectar la formas funcional adecuada:
             % 1. Graficar los datos (y versus x_j,\'o u versus x_j)
             % 2. En caso de modelos anidados, contrastar sin los polinomios adicionales son significativos o test mas generales como RESET.
             % 3. En caso de modelos no anidados, existen test para este tipo de contraste como Box-Cox
-            \item Variable dependiente discreta: modelos econom\'etricos espec\'ificos para este tipo de variables. Por ejemplo, para variables binarias tenemos el modelo Logit y Probit (el tema de la \'ultima unidad del curso).
+            \item Variable dependiente discreta: modelos econom\'etricos espec\'ificos para este tipo de variables. Por ejemplo, para variables binarias tenemos los modelos Logit y Probit (que no vemos en este curso).
         \end{itemize}
     \end{itemize}
 \end{frame}
@@ -689,7 +708,7 @@ Temas Adicionales MCO}
         \item Soluciones
         \begin{itemize}
             \item Obtener mejores datos.
-            \item Utilizar \alert{variables instrumentales}.
+            \item Utilizar \term{variables instrumentales}.
         \end{itemize}
     \end{itemize}
 \end{frame}
@@ -697,7 +716,7 @@ Temas Adicionales MCO}
 \begin{frame}
     \frametitle{Sesgo por selecci\'on de muestra}
     \begin{itemize}
-        \item El sesgo por selecci\'on de muestra surge si la disponibilidad datos depende de un proceso de selecci\'on que est\'a relacionado con la variable dependiente.
+        \item El sesgo por selecci\'on de muestra surge si la disponibilidad de datos depende de un proceso de selecci\'on que est\'a relacionado con la variable dependiente.
         % Genera correlaci\'on entre el error y la variable explicativa.
         % Por ejemplo, efecto de salarios en educaci\'on.
         % Factores observados e inobservados que afectan la posibilidad que una persona est\'e empleada a su vez afectan el salario que puede recibir la persona.
@@ -713,12 +732,12 @@ Temas Adicionales MCO}
 \begin{frame}
     \frametitle{Sesgo por simultaneidad}
     \begin{itemize}
-        \item Hasta ahora hemos supuesto que $x$ causa a $y$ .?`Qu\'e pasa si $y$ causa a $x$? \alert{(feedback effect)}
+        \item Hasta ahora hemos supuesto que $x$ causa a $y$. ?`Qu\'e pasa si $y$ causa a $x$? \term{(feedback effect)}
         % Ejemplo: Subsidio del gobierno para contratar profesores en escuelas con malos resultados acad\'emicos.
         \item Soluciones
         \begin{itemize}
             \item Realizar un experimento aleatorio controlado.
-            \item Estimar un modelo completo con las ambas causalidades: Sistema de ecuaciones.
+            \item Estimar un modelo completo con ambas causalidades: Sistema de ecuaciones.
             \item Utilizar variables instrumentales.
         \end{itemize}
     \end{itemize}
@@ -733,16 +752,17 @@ Temas Adicionales MCO}
     \end{itemize}
 \end{frame}
 % --------------------------------------------------- Slide --
+\section{Ejemplo: tama\~no de clase, forma funcional y validez}
 \begin{frame}
     \frametitle{Ejemplo: Tama\~no de clase y rendimiento acad\'emico para California}
     \begin{itemize}
-        \item \alert{Objetivo}: Analizar las amenazas a la validez interna y externa en los resultados emp\'iricos con los datos de California.
-        \item \alert{Validez externa}
+        \item \term{Objetivo}: Analizar las amenazas a la validez interna y externa en los resultados emp\'iricos con los datos de California. C\'odigo en R: ejemplo \texttt{6.Temas\_adicionales\_MCO\_tamano-clase-validez}.
+        \item \term{Validez externa}
         \begin{itemize}
             \item Comparar los resultados de California con los resultados de Massachusetts.
         \end{itemize}
         % Depende del contexto en que queremos hacer la generalizacion, en este caso nos referimos a otros distritos de escuelas publicas primarias de USA
-        \item \alert{Validez interna}
+        \item \term{Validez interna}
         \begin{itemize}
             \item Evaluar la lista de 5 amenazas a la validez interna.
         \end{itemize}
@@ -753,8 +773,8 @@ Temas Adicionales MCO}
     \frametitle{Forma funcional}
     \begin{itemize}
         \item ?`Efecto del ingreso en el rendimiento acad\'emico es lineal?
-        \item ?`Efecto marginal de aumentar el tama\~no del clase depende del porcentaje de ni\~nos que deben aprenden ingl\'es?
-        \item ?`Efecto marginal de aumentar el tama\~no del clase depende del tama\~no de clase?
+        \item ?`Efecto marginal de aumentar el tama\~no de la clase depende del porcentaje de estudiantes que deben aprender ingl\'es?
+        \item ?`Efecto marginal de aumentar el tama\~no de la clase depende del tama\~no de clase?
     \end{itemize}
 \end{frame}
 % --------------------------------------------------- Slide --
@@ -765,9 +785,8 @@ Temas Adicionales MCO}
         \item An\'alisis gr\'afico puede ayudar en determinar la forma funcional.
         % Explicativas contra dependientes
         % Explicativa filtrada contra dependiente filtrada: partial regression plots (avplot avginc)
-        \item Si la variable dependientes es la misma y los modelos alternativos son anidados, podemos utilizar un test de Wald.
-        \item Si la variable dependientes es la misma pero los modelos no son anidados, podemos utilizar el $R^2$ ajustado.
-        \item Si la variable dependiente es distinta, podemos utilizar un test del modelo de Box-Cox
+        \item Si la variable dependiente es la misma y los modelos alternativos son anidados, podemos utilizar un test de Wald.
+        \item Si la variable dependiente es la misma pero los modelos no son anidados, podemos utilizar el $R^2$ ajustado.
         % ()y^\theta-1)/\theta: \theta=1 es lineal, \theta=0 es log. Es un modelo no lineal pero se puede estimar con el comando boxcox.
     \end{itemize}
 \end{frame}
@@ -776,9 +795,9 @@ Temas Adicionales MCO}
     \frametitle{Efecto del ingreso}
     \vspace{-0.5cm}
     \begin{figure}[h!]
-          \caption{Scatter plot: Lineal, nivel-log, cuadr\'atico}
+          \caption{Puntaje e ingreso: ajuste lineal, nivel-log y cuadr\'atico}
           \centering
-          \includegraphics[width=0.70\textwidth]{figures/test_income.png}
+          \includegraphics[width=0.58\textwidth]{figures/fig_ingreso_dispersion.pdf}
     \end{figure}
 \end{frame}
 % --------------------------------------------------- Slide --
@@ -786,9 +805,9 @@ Temas Adicionales MCO}
     \frametitle{Efecto del ingreso}
     \vspace{-0.5cm}
     \begin{figure}[h!]
-          \caption{Regresi\'on particionada: avplot avginc }
+          \caption{Regresi\'on particionada: puntaje e ingreso, netos de str, el\_pct y meal\_pct}
           \centering
-          \includegraphics[width=0.70\textwidth]{figures/partial_regression_plot_income.png}
+          \includegraphics[width=0.58\textwidth]{figures/fig_ingreso_particionada.pdf}
     \end{figure}
 \end{frame}
 
@@ -797,91 +816,51 @@ Temas Adicionales MCO}
     \frametitle{Efecto del ingreso}
     \vspace{-0.5cm}
     \begin{figure}[h!]
-          \caption{Valores predichos y residuos: rvfplot}
+          \caption{Valores predichos y residuos del modelo lineal en el ingreso}
           \centering
-          \includegraphics[width=0.70\textwidth]{figures/fitted_residuals_plot_income.png}
+          \includegraphics[width=0.58\textwidth]{figures/fig_ingreso_residuos.pdf}
     \end{figure}
 \end{frame}
 
 
 % --------------------------------------------------- Slide --
-\begin{frame}  [fragile]
-    \frametitle{Estimaci\'on MCO}
-    \tiny{
-    \begin{verbatim}
-------------------------------------------------------------------------------------
-                          Model 1         Model 2         Model 3         Model 4   
-------------------------------------------------------------------------------------
-Stud/teacher (str)         -0.998***       -0.734***       -0.947***       65.286** 
-                          (0.270)         (0.257)         (0.347)        (25.259)   
-English learn % (el)       -0.122***       -0.176***       -0.482*         -0.166***
-                          (0.033)         (0.034)         (0.246)         (0.034)   
-Lunch subsidy              -0.547***       -0.398***       -0.401***       -0.402***
-                          (0.024)         (0.033)         (0.033)         (0.033)   
-Log(Average income)                        11.569***       11.433***       11.509***
-                                          (1.819)         (1.818)         (1.806)   
-el X str                                                    0.015                   
-                                                          (0.012)                   
-str^2                                                                      -3.466***
-                                                                          (1.271)   
-str^3                                                                       0.060***
-                                                                          (0.021)   
-Constant                  700.150***      658.552***      663.158***      244.803   
-                          (5.568)         (8.642)        (10.054)       (165.722)   
-------------------------------------------------------------------------------------
-R-squared                   0.775           0.796           0.797           0.801   
-N                         420.000         420.000         420.000         420.000   
-------------------------------------------------------------------------------------
-* p<0.10, ** p<0.05, *** p<0.01
-    \end{verbatim}
-    }
+\begin{frame}
+    \frametitle{Estimaci\'on MCO: California}
+    \small
+    Variable dependiente: $testscr$.
+    \begin{center}
+    \scriptsize
+    \input{tables/reg_ca_formas.tex}
+    \end{center}
 \end{frame}
 % --------------------------------------------------- Slide --
-\begin{frame}  [fragile]
-    \frametitle{Efectos marginales de Student/teacher}
-    \tiny{
-    \begin{verbatim}
-------------------------------------------------------------------------------------
-                          Model 1         Model 2         Model 3         Model 4   
-------------------------------------------------------------------------------------
-Student/teacher            -0.998***       -0.734***       -0.703***       -0.874***
-------------------------------------------------------------------------------------
-* p<0.05, ** p<0.01, *** p<0.001
-    \end{verbatim}
-    }
+\begin{frame}
+    \frametitle{Efectos marginales promedio de Student/teacher}
+    \small
+    \begin{itemize}
+        \item Variable dependiente: $testscr$.
+        \item Efecto marginal promedio sobre la muestra: $\frac{1}{N}\sum_i \partial\hat\E(testscr_i|x_i)/\partial str_i$.
+        \item En el Modelo 4 es $\frac{1}{N}\sum_i(\hat\beta_1+2\hat\beta_2 str_i+3\hat\beta_3 str_i^2)$, que no es el efecto evaluado en la media de $str$.
+    \end{itemize}
+    \begin{center}
+    \small
+    \input{tables/me_ca.tex}
+    \end{center}
 \end{frame}
 % --------------------------------------------------- Slide --
-\begin{frame}  [fragile]
+\begin{frame}\compactmath
     \frametitle{Efectos marginales de Student/teacher}
-\footnotesize{
+    \footnotesize\compactmath
     \begin{align*}
         testscr_i&=\beta_0+ \beta_1 str_i+\beta_2 el\_pct_i+\beta_3 meal\_pct_i\\
         &+\beta_4 lavginc_i+\beta_5 (el\_pct_i-\overline{el\_pct})\times str_i+u_i
     \end{align*}
-    }
-    \tiny{
-    \begin{verbatim}
-.     reg testscr str el_pct meal_pct lavginc el_str_demean, robust
-
-Linear regression                                      Number of obs =     420
-                                                       F(  5,   414) =  343.25
-                                                       Prob > F      =  0.0000
-                                                       R-squared     =  0.7969
-                                                       Root MSE      =  8.6385
-
-------------------------------------------------------------------------------
-             |               Robust
-     testscr |      Coef.   Std. Err.      t    P>|t|     [95% Conf. Interval]
--------------+----------------------------------------------------------------
-         str |  -.7025698   .2550764    -2.75   0.006    -1.203976   -.2011634
-      el_pct |  -.4818238   .2461291    -1.96   0.051    -.9656424    .0019949
-    meal_pct |  -.4013796   .0332698   -12.06   0.000    -.4667784   -.3359809
-     lavginc |   11.43307   1.817734     6.29   0.000     7.859935    15.00621
-el_str_dem~n |   .0154803    .012334     1.26   0.210    -.0087647    .0397254
-       _cons |   663.1576   10.05435    65.96   0.000     643.3937    682.9216
-------------------------------------------------------------------------------
-    \end{verbatim}
-    }
+    Variable dependiente: $testscr$. El coeficiente de $str$ es el efecto marginal en la media de $el\_pct$.
+    \begin{center}
+    \renewcommand{\arraystretch}{0.85}
+    \scriptsize
+    \input{tables/reg_ca_interaccion.tex}
+    \end{center}
 \end{frame}
 % --------------------------------------------------- Slide --
 \begin{frame}
@@ -889,18 +868,18 @@ el_str_dem~n |   .0154803    .012334     1.26   0.210    -.0087647    .0397254
     \begin{itemize}
         \item Es importante controlar por el ingreso (en forma logar\'itmica o cuadr\'atica)
         % Sesgo por omisi\'on de variable
-        \item No hay evidencia que el efecto marginal del tama\~no de clase dependa del porcentaje de habitantes que deben aprender ingl\'es.
-        \item Existe evidencia que el efecto marginal del tama\~no de clase depende del tama\~no de clase.
+        \item No hay evidencia que el efecto marginal del tama\~no de clase dependa del porcentaje de estudiantes que deben aprender ingl\'es.
+        \item Existe evidencia que el efecto marginal del tama\~no de clase depende del tama\~no de clase: test $F$ robusto de $H_0:\beta_{str^2}=\beta_{str^3}=0$ en el Modelo 4, $F=5.96$ ($p=0.003$).
     \end{itemize}
 \end{frame}
 % --------------------------------------------------- Slide --
 \begin{frame}
     \frametitle{Validez interna}
     \begin{itemize}
-        \item Omisi\'on de variable: Pueden existir otras variable omitidas como la calidad de los profesores.
+        \item Omisi\'on de variable: Pueden existir otras variables omitidas como la calidad de los profesores.
         \item Forma funcional: Se evaluaron distintas formas funcionales y el efecto marginal es robusto a las distintas formas funcionales.
         \item Error de medida: Puede existir error de medida en el tama\~no de clase y el ingreso.
-        \item Selecci\'on de muestra: La muestra cubre todas la escuelas p\'ublicas primarias de California.
+        \item Selecci\'on de muestra: La muestra cubre todos los distritos escolares primarios (K-6 y K-8) de California.
         \item Simultaneidad: No existen programas de fondos o becas basados en el rendimiento de los estudiantes en California.
         \item Heteroscedasticidad: Se utilizaron errores robustos.
     \end{itemize}
@@ -909,105 +888,50 @@ el_str_dem~n |   .0154803    .012334     1.26   0.210    -.0087647    .0397254
 \begin{frame}
     \frametitle{Validez externa}
     \begin{itemize}
-        \item Para evaluar la validez externa necesitamos un poblaci\'on de inter\'es.
-        \item Poblaci\'on de inter\'es: Escuelas primarias p\'ublicas en otros estados de USA.
+        \item Para evaluar la validez externa necesitamos una poblaci\'on de inter\'es.
+        \item Poblaci\'on de inter\'es: Distritos escolares primarios p\'ublicos en otros estados de USA.
         \item Utilizar datos de Massachusetts para estimar el efecto del tama\~no de clase.
     \end{itemize}
 \end{frame}
 % --------------------------------------------------- Slide --
-\begin{frame}  [fragile]
+\begin{frame}
     \frametitle{Estad\'isticas descriptivas}
-    \tiny{
-    
-    \begin{verbatim}
-.     use caschool.dta, clear
-
-. 
-. * Descriptive statistics for test score and student-teacher ratio
-.     tabstat testscr str  el_pct meal_pct avginc, statistics(mean sd)
-
-   stats |   testscr       str    el_pct  meal_pct    avginc
----------+--------------------------------------------------
-    mean |  654.1565  19.64043  15.76816  44.70524  15.31659
-      sd |  19.05335  1.891812  18.28593  27.12338   7.22589
-------------------------------------------------------------
-.     use mcas.dta, clear
-
-. 
-. * Descriptive statistics for test score and student-teacher ratio
-.     tabstat  totsc4 tchratio  pctel lnch_pct percap, statistics(mean sd)
-
-   stats |    totsc4  tchratio     pctel  lnch_pct    percap
----------+--------------------------------------------------
-    mean |  709.8273  17.34409  1.117676  15.31591  18.74676
-      sd |  15.12647  2.276666   2.90094  15.06007  5.807637
-------------------------------------------------------------
-
-
-
-    \end{verbatim}
-    }
-    %1.Resultado promedio es mayor pero los tests son diferentes asi que no son directamente comparables
-    %2. Las clases son mas peque\~nas en MA, el ingreso medio es 20 % mayor en MA, % de extranjeros es mayor en CA, y el % de pobres es mayor en CA.
+    \begin{center}
+    \small
+    \input{tables/desc_ca_ma.tex}
+    \end{center}
 \end{frame}
 % --------------------------------------------------- Slide --
 \begin{frame}
     \frametitle{Estad\'isticas descriptivas: CA versus MA}
 \begin{itemize}
-    \item Resultado promedio es mayor pero los tests son diferentes asi que no son directamente comparables.
-    \item Las clases son mas peque\~nas en MA, el ingreso medio es 20\% mayor en MA, \% de habitantes que deben aprender ingl\'es es mayor en CA, y el \% de pobres es mayor en CA.
+    \item Resultado promedio es mayor pero los tests son diferentes as\'i que no son directamente comparables.
+    \item Las clases son m\'as peque\~nas en MA, el ingreso medio es 22\% mayor en MA (aunque se mide distinto: promedio del distrito en CA, per c\'apita en MA), \% de estudiantes que deben aprender ingl\'es es mayor en CA, y el \% de pobres es mayor en CA.
 \end{itemize}
 \end{frame}
 % --------------------------------------------------- Slide --
-\begin{frame}  [fragile]
-    \frametitle{Estimaci\'on MCO}
-    \tiny{
-    \begin{verbatim}
--------------------------------------------------------------------------------------------------
-                       Model 1         Model 2         Model 3         Model 4         Model 5   
--------------------------------------------------------------------------------------------------
-Stud/teacher (str)      -1.718***       -0.801***       -0.641**        -0.713**        12.426   
-                       (0.499)         (0.279)         (0.268)         (0.301)        (14.010)   
-English learn % (el)                    -0.032          -0.437          -1.103          -0.434   
-                                       (0.287)         (0.303)         (1.096)         (0.300)   
-Lunch subsidy                           -0.762***       -0.582***       -0.593***       -0.587***
-                                       (0.064)         (0.097)         (0.101)         (0.104)   
-Average income                                          -3.067          -3.142          -3.382   
-                                                       (2.353)         (2.391)         (2.491)   
-Average income^2                                         0.164*          0.166*          0.174*  
-                                                       (0.085)         (0.087)         (0.089)   
-Average income^3                                        -0.002**        -0.002**        -0.002** 
-                                                       (0.001)         (0.001)         (0.001)   
-el X str                                                                 0.038                   
-                                                                       (0.055)                   
-str^2                                                                                   -0.680   
-                                                                                       (0.737)   
-str^3                                                                                    0.011   
-                                                                                       (0.013)   
-Constant               739.621***      735.413***      744.025***      746.236***      665.497***
-                       (8.607)         (4.896)        (21.318)        (22.238)        (81.332)   
--------------------------------------------------------------------------------------------------
-R-squared                0.067           0.629           0.685           0.686           0.687   
-N                      220.000         220.000         220.000         220.000         220.000   
--------------------------------------------------------------------------------------------------
-* p<0.10, ** p<0.05, *** p<0.01
-
-    \end{verbatim}
-    }
+\begin{frame}
+    \frametitle{Estimaci\'on MCO: Massachusetts}
+    \small
+    Variable dependiente: $totsc4$.
+    \begin{center}
+    \fontsize{7}{8}\selectfont
+    \setlength{\tabcolsep}{2pt}
+    \input{tables/reg_ma_formas.tex}
+    \end{center}
 \end{frame}
 % --------------------------------------------------- Slide --
-\begin{frame}  [fragile]
-    \frametitle{Efectos marginales de Student/teacher}
-    \tiny{
-    \begin{verbatim}
--------------------------------------------------------------------------------------------------
-                       Model 1         Model 2         Model 3         Model 4         Model 5   
--------------------------------------------------------------------------------------------------
-Student/teacher         -1.718***       -0.801***       -0.641**        -0.671**        -0.640**
--------------------------------------------------------------------------------------------------
-* p<0.05, ** p<0.01, *** p<0.001
-    \end{verbatim}
-    }
+\begin{frame}
+    \frametitle{Efectos marginales promedio de Student/teacher}
+    \small
+    \begin{itemize}
+        \item Variable dependiente: $totsc4$.
+        \item Efecto marginal promedio sobre la muestra. En el Modelo 5 es $\frac{1}{N}\sum_i(\hat\beta_1+2\hat\beta_2 tchratio_i+3\hat\beta_3 tchratio_i^2)$.
+    \end{itemize}
+    \begin{center}
+    \small
+    \input{tables/me_ma.tex}
+    \end{center}
 \end{frame}
 % --------------------------------------------------- Slide --
 \begin{frame}
@@ -1015,93 +939,54 @@ Student/teacher         -1.718***       -0.801***       -0.641**        -0.671**
     \begin{itemize}
         \item Es importante controlar por el ingreso (en forma logar\'itmica o c\'ubica)
         % Sesgo por omisi\'on de variable
-        \item No hay evidencia que el efecto marginal del tama\~no de clase dependa del porcentaje de habitantes que deben aprender ingl\'es.
-        \item No hay evidencia que el efecto marginal del tama\~no de clase depende del tama\~no de clase.
+        \item No hay evidencia que el efecto marginal del tama\~no de clase dependa del porcentaje de estudiantes que deben aprender ingl\'es.
+        \item No hay evidencia que el efecto marginal del tama\~no de clase depende del tama\~no de clase: test $F$ robusto de $H_0:\beta_{str^2}=\beta_{str^3}=0$ en el Modelo 5, $F=0.45$ ($p=0.64$).
         % Puede deberser al tam\~no de muestra.
     \end{itemize}
 \end{frame}
 % --------------------------------------------------- Slide --
 \begin{frame}
     \frametitle{Efecto de disminuir el tama\~no de clase en 2 estudiantes: CA versus MA}
-\begin{table}
-    \caption{Ratios de estudianes/profesor y rendimiento de los estudiantes: CA versus MA}
-    \centering
-    \scriptsize
-    \begin{tabular}{l c c c c}
-    \toprule
-                             &       &            & \multicolumn{2}{c}{Efecto estimado de 2 estudiantes}\\
-                             &       &            & \multicolumn{2}{c}{menos por profesor} \\
-                             \cmidrule(r){4-5}                                                       \\
-                             & Estimador MCO       & sd(test scores) &   Puntos &   sd   \\
-    \midrule
-    \textbf{California} \\
-    \midrule
-    Modelo lineal       &  -0.73 &     19.1   &   1.46 &  0.076 \\
-    Modelo c\'ubico       &  -0.87 &     19.1   &   1.74 &  0.091 \\
-    \midrule
-    \textbf{Massachusetts} \\
-    \midrule
-    Modelo lineal      &  -0.64 &      15.1   &   1.28 &  0.085 \\
-    \bottomrule
-    \end{tabular}
-\end{table}
+    \begin{center}
+    \small
+    \input{tables/efecto_2_estudiantes.tex}
+    \end{center}
 \end{frame}
 % --------------------------------------------------- Slide --
 \begin{frame}
     \frametitle{Proyecto STAR (Student-teacher Achievement Ratio): Tennessee}
     \begin{itemize}
-        \item Experimento aleatorio que dur\'o 4 a\~nos y comenzo 1985-86 en 80 escuelas.
+        \item Experimento aleatorio que dur\'o 4 a\~nos y comenz\'o 1985-86 en 80 escuelas.
         \item 3 clases distintas: regulares con 22-25 alumnos, peque\~nas con 13-17 alumnos, y regulares con un ayudante para el profesor.
         \item Alumnos desde kinder a 3er grado.
     \end{itemize}
 \end{frame}
 % --------------------------------------------------- Slide --
-\begin{frame}  [fragile]
+\begin{frame}
     \frametitle{Proyecto STAR (Student-teacher Achievement Ratio): Tennessee}
-    \tiny{
-    \begin{verbatim}
-------------------------------------------------------------------------------------
-                          Kinder         1er grado         2do grado       3er grado 
-------------------------------------------------------------------------------------
-Small class                13.899***       29.781***       19.394***      15.587***                                    
-                          (2.409)         (2.807)         (2.710)        (2.395)                                       
-Regular size with aide      0.314          11.959***        3.479         -0.291                                       
-                          (2.310)         (2.686)         (2.566)        (2.302)                                       
-_cons                     918.043***     1039.393***     1157.807***     1228.506***
-                          (1.641)         (1.836)         (1.849)         (1.715)   
-------------------------------------------------------------------------------------
-R-squared                   0.007           0.017           0.009           0.010   
-N                        5786.000        6379.000        6049.000        5967.000   
-------------------------------------------------------------------------------------
-* p<0.10, ** p<0.05, *** p<0.01
-    \end{verbatim}
-    }
+    \small
+    Variable dependiente: puntaje del test del estudiante en cada grado.
+    \begin{center}
+    \scriptsize
+    \input{tables/reg_star.tex}
+    \end{center}
 \end{frame}
 % --------------------------------------------------- Slide --
 \begin{frame}
     \frametitle{Resultados}
     \begin{itemize}
-        \item Tener un ayudante no tiene efecto, excepto en en 1er grado.
+        \item Tener un ayudante no tiene efecto, excepto en 1er grado.
         \item Disminuir el tama\~no de clase en 7 alumnos tiene un efecto estad\'isticamente significativo.
+        \item STAR tambi\'en tiene amenazas a la validez interna: atrici\'on y estudiantes que cambiaron de tipo de clase despu\'es de la asignaci\'on inicial. La asignaci\'on fue aleatoria dentro de cada escuela y la tabla no incluye efectos fijos de escuela.
     \end{itemize}
 \end{frame}
 % --------------------------------------------------- Slide --
 \begin{frame}
     \frametitle{Efecto de disminuir el tama\~no de clase}
-\begin{table}
-    \caption{Ratios de estudianes/profesor y rendimiento de los estudiantes: STAR versus CA-MA}
-    \centering
-    \scriptsize
-    \begin{tabular}{l c c c  c}
-    \toprule
-                             & Estimador MCO       & Cambio en & sd(test scores &      Efecto   \\
-                             & & estudiantes/profesor  & entre estudiantes)     & estimado\\
-    \midrule   
-    STAR (Kinder)      &  -13.90 &   Small vs Regular  & 73.8      &    0.19 \\
-    California         &  -0.73  &   -7.5              & 38.0      &    0.14 \\
-    Massachusetts      &  -0.64  &   -7.5              & 39.0      &    0.12 \\
-    \bottomrule
-    \end{tabular}
-\end{table}
+    \begin{center}
+    \small
+    \input{tables/comparacion_star.tex}
+    \end{center}
+    Las d.e. del puntaje entre estudiantes de California y Massachusetts son las que reportan Stock y Watson (no se pueden calcular con los datos por distrito).
 \end{frame}
 \end{document}

@@ -28,6 +28,8 @@ Material del curso, a cargo de Ramiro de Elejalde.
     - [Código en R: Formas funcionales y efectos marginales (Wooldridge; Stock y Watson)](https://github.com/ramirode/econometria_mae/tree/main/examples/4.MCO_estimacion_formas-funcionales)
   - [Clase 5: Inferencia por MCO](https://github.com/ramirode/econometria_mae/blob/main/slides/5.MCO_inferencia/econometria_I_5.MCO_inferencia.pdf)
     - [Código en R: contrastes de hipótesis, intervalos de confianza y método delta (Stock y Watson; Wooldridge)](https://github.com/ramirode/econometria_mae/tree/main/examples/5.MCO_inferencia_contrastes)
+  - [Clase 6: Temas adicionales de MCO](https://github.com/ramirode/econometria_mae/blob/main/slides/6.Temas_adicionales_MCO/econometria_I_6.Temas_adicionales_MCO.pdf)
+    - [Código en R: tamaño de clase, forma funcional y validez (California, Massachusetts y STAR; Stock y Watson)](https://github.com/ramirode/econometria_mae/tree/main/examples/6.Temas_adicionales_MCO_tamano-clase-validez)
   - [Clase 7: Variables instrumentales y mínimos cuadrados en dos etapas (2SLS)](https://github.com/ramirode/econometria_mae/blob/main/slides/7.variables_instrumentales/econometria_I_7.variables_instrumentales.pdf)
     - [Código en R: fertilidad y oferta laboral, y demanda de pescado (Angrist y Evans 1998; Graddy 1995)](https://github.com/ramirode/econometria_mae/tree/main/examples/7.variables_instrumentales_fertilidad-pescado)
     - [Código en R: simulación de instrumentos débiles](https://github.com/ramirode/econometria_mae/tree/main/examples/7.variables_instrumentales_simulacion-instrumentos-debiles)
